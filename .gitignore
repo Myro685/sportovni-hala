@@ -1,0 +1,18 @@
+# Ignorování node_modules
+node_modules/
+
+# Ignorování prostředí (hesla, klíče)
+.env
+
+# Ignorování buildů a záložních souborů
+dist/
+out/
+*.log
+*.cache
+
+# Ignorování Vite & Tailwind souborů
+.vite/
+.tailwind/
+
+# Ignorování databázových migrací (volitelné)
+prisma/migrations/
