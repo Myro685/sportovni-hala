@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.4.1",
+    "@supabase/supabase-js": "^2.49.3",
     "i18n": "^0.15.1"
   }
 }
