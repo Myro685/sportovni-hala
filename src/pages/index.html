@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rezervační systém</title>
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="../output.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
   <body>
     <nav
@@ -71,38 +71,5 @@
         </ul>
       </div>
     </nav>
-
-    <script>
-      // ✅ Správná inicializace Supabase
-      const supabase = window.supabase.createClient(
-        "https://xpxurtdkmufuemamajzl.supabase.co",
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhweHVydGRrbXVlgWVtYW1hanpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5NTk3MzksImV4cCI6MjA1NzUzNTczOX0.uRPj22s06XSTvuuHGz-7oAqfTRp2LqUFTCKxC8QprMU"
-      );
-
-      // ✅ Správná async funkce na načtení týmů
-      async function fetchTeams() {
-        const { data, error } = await supabase.from("Tym").select("*");
-
-        if (error) {
-          console.error("Chyba při načítání týmů:", error);
-          return;
-        }
-
-        console.log("📌 Načtené týmy:", data);
-
-        // ✅ Vypsání dat do HTML
-        const tymList = document.getElementById("tym-list");
-        tymList.innerHTML = "";
-
-        data.forEach((tym) => {
-          const li = document.createElement("li");
-          li.textContent = `🏆 ${tym.Nazevtymu} (ID: ${tym.TymID})`;
-          tymList.appendChild(li);
-        });
-      }
-
-      // ✅ Spuštění funkce po načtení stránky
-      //document.addEventListener("DOMContentLoaded", fetchTeams);
-    </script>
   </body>
 </html>
