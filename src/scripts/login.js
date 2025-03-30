@@ -21,16 +21,12 @@ async function fetchTeams() {
   const { data, error } = await supabaseClient.from("Tym").select("*");
 
   if (error) {
-    console.error("Chyba při načítání týmů:", error);
     return;
   }
-
-  console.log("📌 Načtené týmy:", data);
 
   // Vypsání týmů do <select>
   const teamSelect = document.getElementById("team-select");
   if (!teamSelect) {
-    console.error("Element s ID 'team-select' nebyl nalezen!");
     return;
   }
 
@@ -101,7 +97,6 @@ submit.addEventListener("click", async (e) => {
       });
 
       if (error) {
-        console.error("Chyba při registraci:", error.message);
         alert("Registrace selhala: " + error.message);
         return;
       }
@@ -120,7 +115,6 @@ submit.addEventListener("click", async (e) => {
         });
 
       if (insertError) {
-        console.error("Chyba při ukládání dat:", insertError.message);
         alert("Chyba při ukládání dat: " + insertError.message);
         return;
       }
@@ -136,7 +130,6 @@ submit.addEventListener("click", async (e) => {
       });
 
       if (error) {
-        console.error("Chyba při přihlášení:", error.message);
         alert("Přihlášení selhalo: " + error.message);
         return;
       }
@@ -147,7 +140,6 @@ submit.addEventListener("click", async (e) => {
 
     form.reset();
   } catch (error) {
-    console.error("Chyba:", error.message);
     alert("Chyba: " + error.message);
   }
 });
