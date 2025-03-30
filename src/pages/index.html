@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="../output.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
-  <body>
+  <body class="h-screen flex flex-col lg:flex-row bg-slate-600">
     <nav
-      class="relative flex flex-col overflow-hidden p-4 bg-gray-400 lg:w-48 lg:h-screen"
+      class="relative flex flex-col p-4 bg-gray-400 lg:w-48 lg:h-screen min-h-[71px]"
     >
       <a
         href="#"
@@ -42,46 +42,74 @@
         </svg>
       </label>
       <div
-        aria-label="Header Navigation"
-        class="peer-checked:mt-8 peer-checked:max-h-56 flex max-h-0 w-full flex-col items-center justify-between overflow-hidden transition-all lg:hidden"
-      >
-        <ul class="flex flex-col items-center space-y-2">
-          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-            <a href="index.html">Home</a>
-          </li>
-          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-            <a href="#">Pricing</a>
-          </li>
-          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-            <a href="#">Features</a>
-          </li>
-          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-            <a href="#">Support</a>
-          </li>
-          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-            <a href="profile.html">Profile</a>
-          </li>
-        </ul>
-      </div>
+    aria-label="Header Navigation"
+    class="absolute top-full left-0 z-10 w-full bg-gray-400 peer-checked:max-h-screen max-h-0 flex flex-col items-center overflow-hidden transition-all duration-300 ease-in-out lg:hidden" >
+    <ul class="flex flex-col items-center space-y-2 w-full px-4"> <li class="w-full">
+        <a href="index.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Home</a>
+      </li>
+      <li class="w-full">
+        <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Pricing</a>
+      </li>
+      <li class="w-full">
+        <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Features</a>
+      </li>
+      <li class="w-full">
+        <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Support</a>
+      </li>
+      <li class="w-full">
+        <a href="profile.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Profile</a>
+      </li>
+    </ul>
+    <br>
+  </div>
       <div class="hidden lg:flex lg:w-full lg:mt-8">
-        <ul class="flex flex-col gap-4">
-          <li class="hover:text-blue-600">
-            <a href="index.html">Home</a>
+        <ul class="flex flex-col gap-4 w-full">
+          <li class="w-full">
+            <a href="index.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Home</a>
           </li>
-          <li class="hover:text-blue-600">
-            <a href="#">Pricing</a>
+          <li class="w-full">
+            <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Pricing</a>
           </li>
-          <li class="hover:text-blue-600">
-            <a href="#">Features</a>
+          <li class="w-full">
+            <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Features</a>
           </li>
-          <li class="hover:text-blue-600">
-            <a href="#">Support</a>
+          <li class="w-full">
+            <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Support</a>
           </li>
-          <li class="hover:text-blue-600">
-            <a href="profile.html">Profile</a>
+          <li class="w-full">
+            <a href="profile.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Profile</a>
           </li>
         </ul>
       </div>
     </nav>
+
+    <main class="p-6 gap-5">
+      <div class="flex flex-wrap gap-6">
+        <div class="bg-white px-7 py-8 rounded-lg border-2 border-gray-200 shadow-lg flex flex-col justify-between w-96 h-72">
+          <h2 class="text-xl font-bold">Trénink 1</h2>
+          <p class="text-gray-600">Přijďte mrdky</p>
+          <span class="text-gray-500">Čas: 10:00 - 11:00</span>
+          <button type="submit" class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800" id="save" onclick="window.location.href='training.html'">podrobnosti</button>
+        </div>
+        <div class="bg-white px-7 py-8 rounded-lg border-2 border-gray-200 shadow-lg flex flex-col justify-between w-96 h-72">
+          <h2 class="text-xl font-bold">Trénink 2</h2>
+          <p class="text-gray-600">Až vás potkám tak vás chytim za držku</p>
+          <span class="text-gray-500">Čas: 12:00 - 13:00</span>
+          <button type="submit" class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800" id="save" onclick="window.location.href='training.html'">podrobnosti</button>
+        </div>
+        <div class="bg-white px-7 py-8 rounded-lg border-2 border-gray-200 shadow-lg flex flex-col justify-between w-96 h-72">
+          <h2 class="text-xl font-bold">Trénink 3</h2>
+          <p class="text-gray-600">Tohle si dolovat nebudeš jseš proti mě takhle malej ty trpaslíku zkurvenej</p>
+          <span class="text-gray-500">Čas: 14:00 - 15:00</span>
+          <button type="submit" class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800" id="save" onclick="window.location.href='training.html'">podrobnosti</button>
+        </div>
+        <div class="bg-white px-7 py-8 rounded-lg border-2 border-gray-200 shadow-lg flex flex-col justify-between w-96 h-72">
+          <h2 class="text-xl font-bold">Trénink 4</h2>
+          <p class="text-gray-600">Som čierný Portoričan</p>
+          <span class="text-gray-500">Čas: 16:00 - 17:00</span>
+          <button type="submit" class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800" id="save" onclick="window.location.href='training.html'">podrobnosti</button>
+        </div>
+      </div>
+    </main>
   </body>
 </html>

@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../output.css" />
-        <title>Profil</title>
-        <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    </head>
-    <body class="h-screen flex flex-col lg:flex-row bg-slate-600">
-
-        <nav
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trénink</title>
+    <link rel="stylesheet" href="../output.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="h-screen flex flex-col lg:flex-row bg-slate-600">
+    <nav
         class="flex flex-col lg:h-screen lg:w-48 bg-gray-400 p-4"
     >
       <a
@@ -84,35 +83,5 @@
         </ul>
       </div>
     </nav>
-
-        <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:max-w-2xl mx-auto pt-4 px-4 py-3">
-            <div class="bg-white px-8 py-9 rounded-lg shadow-lg flex justify-center items-center w-full">
-                <img src="profile.jpg" class="w-17 h-17 rounded-full" alt="Profilová fotka">
-            </div>
-
-            <form action="POST" class="bg-white w-full sm:max-w-md px-7 py-8 rounded-lg">
-
-                <h2 class="text-3xl font-bold text-center pb-3">Můj Profil</h2>
-                
-                <div class="flex justify-center items-start flex-col gap-3">    
-                    <label for="name">Jméno:</label>
-                    <input type="text" id="name" class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500">
-
-                    <label for="lastname">Příjmení:</label>
-                    <input type="text" id="lastname" class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500">
-                    
-                    <label for="email">E-mail:</label>
-                    <input type="email" id="email" class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500">
-
-                    <label for="number">Telefon:</label>
-                    <input type="tel" id="number" class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500">
-
-                    <label for="team">Člen týmu:</label>
-                    <input type="text" id="team" class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500">
-                    
-                    <button type="submit" class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800" id="save">Uložit</button>
-                </div>
-            </form> 
-        </div>
-    </body>
+</body>
 </html>
