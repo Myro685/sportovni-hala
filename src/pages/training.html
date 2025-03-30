@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trénink</title>
+    <link rel="stylesheet" href="../output.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="h-screen flex flex-col lg:flex-row bg-slate-600">
+    <nav
+        class="flex flex-col lg:h-screen lg:w-48 bg-gray-400 p-4"
+    >
+      <a
+        href="#"
+        class="flex items-center whitespace-nowrap text-2lg font-black"
+      >
+        <img
+          src="../assets/a32b54fa44fb3f94bdb289b5fd8f01dc.jpg"
+          alt="Profile picture"
+          class="size-10 object-cover rounded-full lg:size-24"
+        />
+      </a>
+      <input type="checkbox" class="peer hidden" id="navbar-open" />
+      <label
+        for="navbar-open"
+        class="absolute top-6 right-7 cursor-pointer lg:hidden"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </label>
+      <div
+        aria-label="Header Navigation"
+        class="peer-checked:mt-8 peer-checked:max-h-56 flex max-h-0 w-full flex-col items-center justify-between overflow-hidden transition-all lg:hidden"
+      >
+        <ul class="flex flex-col items-center space-y-2">
+            <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
+                <a href="index.html">Home</a>
+            </li>
+          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
+            <a href="#">Pricing</a>
+          </li>
+          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
+            <a href="#">Features</a>
+          </li>
+          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
+            <a href="#">Support</a>
+          </li>
+          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
+            <a href="profile.html">Profil</a>
+          </li>
+        </ul>
+      </div>
+      <div class="hidden lg:flex lg:w-full lg:mt-8">
+        <ul class="flex flex-col gap-4">
+            <li class="hover:text-blue-600">
+                <a href="index.html">Home</a>
+            </li>
+          <li class="hover:text-blue-600">
+            <a href="#">Pricing</a>
+          </li>
+          <li class="hover:text-blue-600">
+            <a href="#">Features</a>
+          </li>
+          <li class="hover:text-blue-600">
+            <a href="#">Support</a>
+          </li>
+          <li class="hover:text-blue-600">
+            <a href="profile.html">Profile</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+</body>
+</html>
