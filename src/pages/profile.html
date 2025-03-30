@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../output.css" />
-        <title>Profil</title>
-        <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    </head>
-    <body class="h-screen flex flex-col lg:flex-row bg-slate-600">
-
-        <nav
-        class="flex flex-col lg:h-screen lg:w-48 bg-gray-400 p-4"
-    >
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../output.css" />
+    <title>Profil</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+  <body class="bg-slate-600 flex flex-col min-h-screen lg:flex-row">
+    <nav class="flex flex-col w-full lg:h-screen lg:w-48 bg-gray-400 p-4">
+      <!-- Navigační obsah zůstává stejný -->
       <a
-        href="#"
+        href="../pages/index.html"
         class="flex items-center whitespace-nowrap text-2lg font-black"
       >
         <img
@@ -43,13 +41,12 @@
         </svg>
       </label>
       <div
-        aria-label="Header Navigation"
-        class="peer-checked:mt-8 peer-checked:max-h-56 flex max-h-0 w-full flex-col items-center justify-between overflow-hidden transition-all lg:hidden"
+        class="peer-checked:mt-8 peer-checked:max-h-56 flex max-h-0 w-full flex-col items-center justify-between transition-all lg:hidden"
       >
         <ul class="flex flex-col items-center space-y-2">
-            <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-                <a href="index.html">Home</a>
-            </li>
+          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
+            <a href="index.html">Home</a>
+          </li>
           <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
             <a href="#">Pricing</a>
           </li>
@@ -66,9 +63,9 @@
       </div>
       <div class="hidden lg:flex lg:w-full lg:mt-8">
         <ul class="flex flex-col gap-4">
-            <li class="hover:text-blue-600">
-                <a href="index.html">Home</a>
-            </li>
+          <li class="hover:text-blue-600">
+            <a href="index.html">Home</a>
+          </li>
           <li class="hover:text-blue-600">
             <a href="#">Pricing</a>
           </li>
@@ -85,34 +82,198 @@
       </div>
     </nav>
 
-        <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:max-w-2xl mx-auto pt-4 px-4 py-3">
-            <div class="bg-white px-8 py-9 rounded-lg shadow-lg flex justify-center items-center w-full">
-                <img src="profile.jpg" class="w-17 h-17 rounded-full" alt="Profilová fotka">
-            </div>
-
-            <form action="POST" class="bg-white w-full sm:max-w-md px-7 py-8 rounded-lg">
-
-                <h2 class="text-3xl font-bold text-center pb-3">Můj Profil</h2>
-                
-                <div class="flex justify-center items-start flex-col gap-3">    
-                    <label for="name">Jméno:</label>
-                    <input type="text" id="name" class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500">
-
-                    <label for="lastname">Příjmení:</label>
-                    <input type="text" id="lastname" class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500">
-                    
-                    <label for="email">E-mail:</label>
-                    <input type="email" id="email" class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500">
-
-                    <label for="number">Telefon:</label>
-                    <input type="tel" id="number" class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500">
-
-                    <label for="team">Člen týmu:</label>
-                    <input type="text" id="team" class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500">
-                    
-                    <button type="submit" class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600" id="save">Uložit</button>
-                </div>
-            </form> 
+    <div
+      class="flex flex-col justify-center sm:flex-row items-center gap-4 w-full mx-auto lg:my-6 pt-4 px-4 py-3"
+    >
+      <form class="bg-white w-full sm:max-w-md px-7 py-8 rounded-lg">
+        <h2 class="text-3xl font-bold text-center pb-3 uppercase">
+          Můj Profil
+        </h2>
+        <div
+          class="px-8 py-9 rounded-lg flex justify-center items-center w-full"
+        >
+          <img
+            src="../assets/a32b54fa44fb3f94bdb289b5fd8f01dc.jpg"
+            class="size-32 rounded-full object-cover shadow-lg"
+            alt="Profilová fotka"
+          />
         </div>
-    </body>
+
+        <div class="flex justify-center items-center flex-col gap-3">
+          <div class="flex flex-row gap-6">
+            <div class="flex justify-start items-start flex-col gap-3">
+              <label for="firstName" class="font-bold">Jméno:</label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                disabled
+              />
+
+              <label for="lastName" class="font-bold">Příjmení:</label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                disabled
+              />
+
+              <label for="email" class="font-bold">E-mail:</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                disabled
+              />
+
+              <label for="number" class="font-bold">Telefon:</label>
+              <input
+                type="tel"
+                id="number"
+                name="number"
+                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                disabled
+              />
+
+              <label for="team" class="font-bold">Člen týmu:</label>
+              <input
+                type="text"
+                id="team"
+                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                disabled
+              />
+            </div>
+            <div class="flex justify-start items-start flex-col gap-3">
+              <label for="city" class="font-bold">Město:</label>
+              <input
+                type="text"
+                id="city"
+                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                disabled
+              />
+              <label for="psc" class="font-bold">PSČ:</label>
+              <input
+                type="text"
+                id="psc"
+                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                disabled
+              />
+              <label for="street" class="font-bold">Ulice:</label>
+              <input
+                type="text"
+                id="street"
+                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                disabled
+              />
+              <label for="cp" class="font-bold">Číslo popisné:</label>
+              <input
+                type="text"
+                id="cp"
+                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                disabled
+              />
+            </div>
+          </div>
+          <button
+            type="button"
+            class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600"
+            id="openModal"
+          >
+            Upravit profil
+          </button>
+        </div>
+      </form>
+
+      <!-- Modální okno -->
+      <div
+        id="modal"
+        class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 z-50 flex items-center justify-center w-full h-full p-4"
+      >
+        <div
+          class="relative w-full max-w-md bg-white rounded-lg shadow-lg flex flex-col max-h-[90vh]"
+        >
+          <div class="flex justify-between items-center p-4 border-b">
+            <span class="uppercase font-bold text-lg">Upravit profil</span>
+            <button
+              type="button"
+              id="closeModal"
+              class="text-gray-500 hover:text-gray-700"
+            >
+              <img
+                src="../assets/cross-circle-svgrepo-com.svg"
+                alt="Zavřít"
+                class="w-6 h-6"
+              />
+            </button>
+          </div>
+          <form
+            method="post"
+            class="flex-1 overflow-y-auto p-4 flex flex-col gap-3"
+            id="modalForm"
+          >
+            <label for="editFirstName" class="font-bold">Jméno:</label>
+            <input
+              type="text"
+              id="editFirstName"
+              name="editFirstName"
+              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+            />
+
+            <label for="editLastName" class="font-bold">Příjmení:</label>
+            <input
+              type="text"
+              id="editLastName"
+              name="editLastName"
+              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+            />
+
+            <label for="editNumber" class="font-bold">Telefon:</label>
+            <input
+              type="tel"
+              id="editNumber"
+              name="editNumber"
+              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+            />
+
+            <h2 class="font-bold text-center w-full text-3xl">Adresa</h2>
+            <label for="editCity" class="font-bold">Město:</label>
+            <input
+              type="text"
+              id="editCity"
+              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+            />
+            <label for="editPsc" class="font-bold">PSČ:</label>
+            <input
+              type="text"
+              id="editPsc"
+              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+            />
+            <label for="editStreet" class="font-bold">Ulice:</label>
+            <input
+              type="text"
+              id="editStreet"
+              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+            />
+            <label for="editCp" class="font-bold">Číslo popisné:</label>
+            <input
+              type="text"
+              id="editCp"
+              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+            />
+            <button
+              type="submit"
+              id="submit"
+              class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-700 mt-4"
+            >
+              Upravit
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="../scripts/profile.js"></script>
+  </body>
 </html>

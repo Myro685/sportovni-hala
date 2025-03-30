@@ -24,18 +24,12 @@ async function fetchTeams() {
     return;
   }
 
-  // Vypsání týmů do <select>
-  const teamSelect = document.getElementById("team-select");
-  if (!teamSelect) {
-    return;
-  }
-
   // Zachování placeholderu a přidání týmů
   data.forEach((tym) => {
     const option = document.createElement("option");
     option.value = tym.TymID; // Nastavení hodnoty na TymID
     option.textContent = `${tym.Nazevtymu}`;
-    teamSelect.appendChild(option);
+    team.appendChild(option);
   });
 }
 
@@ -49,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   } = await supabaseClient.auth.getSession();
   if (session) {
     // Pokud je už přihlášen, přesměruj na index.html
-    window.location.href = "../pages/index.html";
+    //window.location.href = "../pages/index.html";
   }
 });
 
@@ -101,6 +95,8 @@ submit.addEventListener("click", async (e) => {
         return;
       }
 
+      const teamSelected = team.value;
+
       // Vložení uživatele do tabulky Uzivatel
       const { error: insertError } = await supabaseClient
         .from("Uzivatel")
@@ -108,10 +104,10 @@ submit.addEventListener("click", async (e) => {
           Email: email.value,
           Jmeno: firstName.value,
           Prijmeni: lastName.value,
-          Telefon: null, // Můžeš přidat input pro telefon
-          AdresaID: null, // Nahraď dynamickou hodnotou nebo vytvoř adresu
-          RoleuzivateluID: 3, // Nahraď dynamickou hodnotou (např. defaultní role)
-          TymID: 3, // Nahraď dynamickou hodnotou (např. výběr týmu)
+          Telefon: null,
+          AdresaID: null,
+          RoleuzivateluID: 3,
+          TymID: teamSelected,
         });
 
       if (insertError) {
@@ -119,9 +115,8 @@ submit.addEventListener("click", async (e) => {
         return;
       }
 
-      alert("Registrace úspěšná! Zkontrolujte svůj email pro potvrzení.");
-      // Po registraci přepni na přihlášení, aby se uživatel mohl přihlásit
-      switcher();
+      alert("Registrace úspěšná!");
+      window.location.href = "../pages/index.html";
     } else {
       // Přihlášení
       const { data, error } = await supabaseClient.auth.signInWithPassword({
@@ -132,10 +127,10 @@ submit.addEventListener("click", async (e) => {
       if (error) {
         alert("Přihlášení selhalo: " + error.message);
         return;
+      } else {
+        alert("Úspěšně přihlášen!");
+        window.location.href = "../pages/index.html";
       }
-
-      alert("Úspěšně přihlášen!");
-      window.location.href = "../pages/index.html";
     }
 
     form.reset();
