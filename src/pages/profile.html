@@ -7,11 +7,12 @@
     <title>Profil</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
-  <body class="bg-slate-600 flex flex-col min-h-screen lg:flex-row">
-    <nav class="flex flex-col w-full lg:h-screen lg:w-48 bg-gray-400 p-4">
-      <!-- Navigační obsah zůstává stejný -->
+  <body class="h-screen flex flex-col lg:flex-row bg-slate-600">
+    <nav
+      class="relative flex flex-col p-4 lg:items-center bg-gray-400 lg:max-w-48 lg:h-screen min-h-[71px]"
+    >
       <a
-        href="../pages/index.html"
+        href="../pages/profile.html"
         class="flex items-center whitespace-nowrap text-2lg font-black"
       >
         <img
@@ -41,51 +42,79 @@
         </svg>
       </label>
       <div
-        class="peer-checked:mt-8 peer-checked:max-h-56 flex max-h-0 w-full flex-col items-center justify-between transition-all lg:hidden"
+        aria-label="Header Navigation"
+        class="absolute top-full left-0 z-10 w-full bg-gray-400 peer-checked:max-h-screen max-h-0 flex flex-col items-center overflow-hidden transition-all duration-300 ease-in-out lg:hidden"
       >
-        <ul class="flex flex-col items-center space-y-2">
-          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-            <a href="index.html">Home</a>
+        <ul class="flex flex-col items-center space-y-2 w-full px-4">
+          <li class="w-full">
+            <a
+              href="index.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Domů</a
+            >
           </li>
-          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-            <a href="#">Pricing</a>
+          <li class="w-full">
+            <a
+              href="teams.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Týmy</a
+            >
           </li>
-          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-            <a href="#">Features</a>
+          <li class="w-full">
+            <a
+              href="players.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Hráči</a
+            >
           </li>
-          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-            <a href="#">Support</a>
-          </li>
-          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-            <a href="profile.html">Profil</a>
+          <li class="w-full">
+            <a
+              href="profile.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Profil
+            </a>
           </li>
         </ul>
+        <br />
       </div>
       <div class="hidden lg:flex lg:w-full lg:mt-8">
-        <ul class="flex flex-col gap-4">
-          <li class="hover:text-blue-600">
-            <a href="index.html">Home</a>
+        <ul class="flex flex-col gap-4 w-full">
+          <li class="w-full">
+            <a
+              href="index.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Domů</a
+            >
           </li>
-          <li class="hover:text-blue-600">
-            <a href="#">Pricing</a>
+          <li class="w-full">
+            <a
+              href="teams.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Týmy</a
+            >
           </li>
-          <li class="hover:text-blue-600">
-            <a href="#">Features</a>
+          <li class="w-full">
+            <a
+              href="players.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Hráči</a
+            >
           </li>
-          <li class="hover:text-blue-600">
-            <a href="#">Support</a>
-          </li>
-          <li class="hover:text-blue-600">
-            <a href="profile.html">Profile</a>
+          <li class="w-full">
+            <a
+              href="profile.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Profil</a
+            >
           </li>
         </ul>
       </div>
     </nav>
 
     <div
-      class="flex flex-col justify-center sm:flex-row items-center gap-4 w-full mx-auto lg:my-6 pt-4 px-4 py-3"
+      class="flex flex-col justify-center sm:flex-row items-center gap-4 w-full lg:my-6 pt-4 px-4 py-3"
     >
-      <form class="bg-white w-full sm:max-w-md px-7 py-8 rounded-lg">
+      <form class="bg-white w-full sm:max-w-md px-7 py-4 rounded-lg">
         <h2 class="text-3xl font-bold text-center pb-3 uppercase">
           Můj Profil
         </h2>
