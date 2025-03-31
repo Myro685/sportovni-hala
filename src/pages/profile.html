@@ -8,8 +8,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
   <body class="bg-slate-600 flex flex-col min-h-screen lg:flex-row">
-    <nav class="flex flex-col w-full lg:h-screen lg:w-48 bg-gray-400 p-4">
-      <!-- Navigační obsah zůstává stejný -->
+    
+    <nav
+      class="relative flex flex-col p-4 bg-gray-400 lg:w-48 lg:h-screen lg:flex-grow-0 lg:flex-shrink-0 min-h-[71px]"
+    >
       <a
         href="../pages/index.html"
         class="flex items-center whitespace-nowrap text-2lg font-black"
@@ -41,42 +43,42 @@
         </svg>
       </label>
       <div
-        class="peer-checked:mt-8 peer-checked:max-h-56 flex max-h-0 w-full flex-col items-center justify-between transition-all lg:hidden"
-      >
-        <ul class="flex flex-col items-center space-y-2">
-          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-            <a href="index.html">Home</a>
-          </li>
-          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-            <a href="#">Pricing</a>
-          </li>
-          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-            <a href="#">Features</a>
-          </li>
-          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-            <a href="#">Support</a>
-          </li>
-          <li class="text-gray-600 lg:mr-12 hover:text-blue-600">
-            <a href="profile.html">Profil</a>
-          </li>
-        </ul>
-      </div>
+    aria-label="Header Navigation"
+    class="absolute top-full left-0 z-10 w-full bg-gray-400 peer-checked:max-h-screen max-h-0 flex flex-col items-center overflow-hidden transition-all duration-300 ease-in-out lg:hidden" >
+    <ul class="flex flex-col items-center space-y-2 w-full px-4"> <li class="w-full">
+        <a href="index.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Home</a>
+      </li>
+      <li class="w-full">
+        <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Pricing</a>
+      </li>
+      <li class="w-full">
+        <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Features</a>
+      </li>
+      <li class="w-full">
+        <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Support</a>
+      </li>
+      <li class="w-full">
+        <a href="profile.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Profile</a>
+      </li>
+    </ul>
+    <br>
+  </div>
       <div class="hidden lg:flex lg:w-full lg:mt-8">
-        <ul class="flex flex-col gap-4">
-          <li class="hover:text-blue-600">
-            <a href="index.html">Home</a>
+        <ul class="flex flex-col gap-4 w-full">
+          <li class="w-full">
+            <a href="index.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Home</a>
           </li>
-          <li class="hover:text-blue-600">
-            <a href="#">Pricing</a>
+          <li class="w-full">
+            <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Pricing</a>
           </li>
-          <li class="hover:text-blue-600">
-            <a href="#">Features</a>
+          <li class="w-full">
+            <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Features</a>
           </li>
-          <li class="hover:text-blue-600">
-            <a href="#">Support</a>
+          <li class="w-full">
+            <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Support</a>
           </li>
-          <li class="hover:text-blue-600">
-            <a href="profile.html">Profile</a>
+          <li class="w-full">
+            <a href="profile.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Profile</a>
           </li>
         </ul>
       </div>
@@ -137,13 +139,7 @@
                 class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
                 disabled
               />
-
-                    <label for="team">Člen týmu:</label>
-                    <input type="text" id="team" class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500">
-                    
-                    <button type="submit" class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800" id="save">Uložit</button>
-                </div>
-            </form> 
+              
               <label for="team" class="font-bold">Člen týmu:</label>
               <input
                 type="text"
@@ -185,7 +181,7 @@
           </div>
           <button
             type="button"
-            class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600"
+            class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800"
             id="openModal"
           >
             Upravit profil
@@ -199,7 +195,7 @@
         class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 z-50 flex items-center justify-center w-full h-full p-4"
       >
         <div
-          class="relative w-full max-w-md bg-white rounded-lg shadow-lg flex flex-col max-h-[90vh]"
+          class="relative w-full max-w-md bg-white rounded-lg shadow-lg flex flex-col max-h-[90vh] "
         >
           <div class="flex justify-between items-center p-4 border-b">
             <span class="uppercase font-bold text-lg">Upravit profil</span>
@@ -272,7 +268,7 @@
             <button
               type="submit"
               id="submit"
-              class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-700 mt-4"
+              class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800 mt-4"
             >
               Upravit
             </button>
