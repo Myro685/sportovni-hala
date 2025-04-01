@@ -5,8 +5,9 @@ const supabaseClient = window.supabase.createClient(
 );
 
 // Globální proměnná pro uchování všech týmů a role uživatele
-let allTeams = [];
+let allPlayers = [];
 let isAdmin = false;
+let isTrainer = false;
 
 document.addEventListener("DOMContentLoaded", async () => {
   // Zjištění role přihlášeného uživatele
@@ -34,7 +35,8 @@ async function checkUserRole() {
       .select("RoleuzivateluID")
       .eq("Email", userEmail)
       .single();
-
+      //console.log(RoleuzivateluID);
+      
     if (userError) {
       alert("Chyba při načítání role uživatele: " + userError.message);
       return;
