@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trénink</title>
     <link rel="stylesheet" href="../output.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-<body class="h-screen flex flex-col lg:flex-row bg-slate-600">
-  <nav
-      class="relative flex flex-col p-4 bg-gray-400 lg:w-48 lg:h-screen min-h-[71px]"
+  </head>
+  <body class="h-screen flex flex-col lg:flex-row bg-slate-600">
+    <nav
+      class="relative flex flex-col p-4 lg:items-center bg-gray-400 lg:max-w-48 lg:h-screen min-h-[71px]"
     >
       <a
-        href="../pages/index.html"
+        href="../pages/profile.html"
         class="flex items-center whitespace-nowrap text-2lg font-black"
       >
         <img
@@ -42,42 +42,84 @@
         </svg>
       </label>
       <div
-    aria-label="Header Navigation"
-    class="absolute top-full left-0 z-10 w-full bg-gray-400 peer-checked:max-h-screen max-h-0 flex flex-col items-center overflow-hidden transition-all duration-300 ease-in-out lg:hidden" >
-    <ul class="flex flex-col items-center space-y-2 w-full px-4"> <li class="w-full">
-        <a href="index.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Home</a>
-      </li>
-      <li class="w-full">
-        <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Pricing</a>
-      </li>
-      <li class="w-full">
-        <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Features</a>
-      </li>
-      <li class="w-full">
-        <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Support</a>
-      </li>
-      <li class="w-full">
-        <a href="profile.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Profile</a>
-      </li>
-    </ul>
-    <br>
-  </div>
+        aria-label="Header Navigation"
+        class="absolute top-full left-0 z-10 w-full bg-gray-400 peer-checked:max-h-screen max-h-0 flex flex-col items-center overflow-hidden transition-all duration-300 ease-in-out lg:hidden"
+      >
+        <ul class="flex flex-col items-center space-y-2 w-full px-4">
+          <li class="w-full">
+            <a
+              href="index.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Domů</a
+            >
+          </li>
+          <li class="w-full">
+            <a
+              href="teams.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Týmy</a
+            >
+          </li>
+          <li class="w-full">
+            <a
+              href="players.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Hráči</a
+            >
+          </li>
+          <li class="w-full">
+            <a
+              href="profile.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Profil
+            </a>
+          </li>
+          <li class="w-full">
+            <a
+              id="logout"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5 cursor-pointer"
+              >Odhlásit
+            </a>
+          </li>
+        </ul>
+        <br />
+      </div>
       <div class="hidden lg:flex lg:w-full lg:mt-8">
         <ul class="flex flex-col gap-4 w-full">
           <li class="w-full">
-            <a href="index.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Home</a>
+            <a
+              href="index.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Domů</a
+            >
           </li>
           <li class="w-full">
-            <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Pricing</a>
+            <a
+              href="teams.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Týmy</a
+            >
           </li>
           <li class="w-full">
-            <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Features</a>
+            <a
+              href="players.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Hráči</a
+            >
           </li>
           <li class="w-full">
-            <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Support</a>
+            <a
+              href="profile.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              >Profil</a
+            >
           </li>
           <li class="w-full">
-            <a href="profile.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Profile</a>
+            <a
+              id="logoutBig"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5 cursor-pointer"
+              >Odhlásit
+            </a>
           </li>
         </ul>
       </div>
@@ -85,27 +127,34 @@
 
     <main class="p-4 w-full">
       <div class="max-w-3xl mx-auto bg-white rounded-lg shadow overflow-hidden">
-      
         <!-- Sekce pro hráče - potvrzení účasti -->
-        <div id="modal-potvrzeni-ucasti" class="flex flex-row justify-center items-center space-x-4"> 
+        <div
+          id="modal-potvrzeni-ucasti"
+          class="flex flex-row justify-center items-center space-x-4"
+        >
           <p class="text-xl font-semibold">Přijdeš?</p>
           <div class="flex space-x-4">
-            <button type="button"  
-              class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors" 
+            <button
+              type="button"
+              class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
               id="bt-ucast-ano"
-              >Ano
+            >
+              Ano
             </button>
-            <button type="button" 
-              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors" 
+            <button
+              type="button"
+              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
               id="bt-ucast-ne"
-              >Ne
+            >
+              Ne
             </button>
           </div>
         </div>
 
         <div id="horni-lista" class="p-4 border-b border-gray-300">
-          <div class="flex flex-col md:flex-row md:justify-between md:items-center">
-
+          <div
+            class="flex flex-col md:flex-row md:justify-between md:items-center"
+          >
             <div class="flex flex-col items-center">
               <h2 id="nazev-tymu" class="text-xl font-bold text-gray-800">
                 Název Týmu
@@ -121,33 +170,27 @@
               </div>
             </div>
 
-            <div class="mt-4 md:mt-0 flex flex-col items-center border rounded-lg px-3 py-2">
+            <div
+              class="mt-4 md:mt-0 flex flex-col items-center border rounded-lg px-3 py-2"
+            >
               <span class="mt-1 text-xl font-bold text-gray-700">
                 17.11.2025
               </span>
               <span class="text-xl font-bold tracking-wide">
                 Začátek: <span class="text-2xl">17:00</span>
               </span>
-              <span class="text-sm text-gray-500">
-                Konec: 19:30
-              </span>
-
+              <span class="text-sm text-gray-500"> Konec: 19:30 </span>
             </div>
           </div>
         </div>
 
         <div id="obsah-treninku" class="p-4">
-          <p class="text-gray-700 font-semibold">
-            Seznam hráčů:
-          </p>
-          <ul id="player-list" class="">
-
-          </ul>
+          <p class="text-gray-700 font-semibold">Seznam hráčů:</p>
+          <ul id="player-list" class=""></ul>
         </div>
       </div>
-
     </main>
-   
-      <script src="/src/scripts/training.js"></script>
-</body>
+    <script src="/src/scripts/training.js"></script>
+    <script src="../scripts/logout.js"></script>
+  </body>
 </html>
