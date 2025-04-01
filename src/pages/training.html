@@ -70,6 +70,7 @@
               href="index.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
               data-lang-key="home">Domů</a
+              >Domů</a
             >
           </li>
           <li class="w-full">
@@ -77,6 +78,7 @@
               href="teams.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
               data-lang-key="teams">Týmy</a
+              >Týmy</a
             >
           </li>
           <li class="w-full">
@@ -84,6 +86,7 @@
               href="players.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
               data-lang-key="players">Hráči</a
+              >Hráči</a
             >
           </li>
           <li class="w-full">
@@ -91,6 +94,14 @@
               href="profile.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
               data-lang-key="profile">Profil
+              >Profil
+            </a>
+          </li>
+          <li class="w-full">
+            <a
+              id="logout"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5 cursor-pointer"
+              >Odhlásit
             </a>
           </li>
         </ul>
@@ -103,6 +114,7 @@
               href="index.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
               data-lang-key="home">Domů</a
+              >Domů</a
             >
           </li>
           <li class="w-full">
@@ -110,6 +122,7 @@
               href="teams.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
               data-lang-key="teams">Týmy</a
+              >Týmy</a
             >
           </li>
           <li class="w-full">
@@ -117,6 +130,7 @@
               href="players.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
               data-lang-key="players">Hráči</a
+              >Hráči</a
             >
           </li>
           <li class="w-full">
@@ -139,6 +153,15 @@
                 <img src="../assets/de.png" alt="German" class="w-6 h-6 rounded-full">
               </button>
             </div>
+              >Profil</a
+            >
+          </li>
+          <li class="w-full">
+            <a
+              id="logoutBig"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5 cursor-pointer"
+              >Odhlásit
+            </a>
           </li>
         </ul>
       </div>
@@ -146,27 +169,38 @@
 
     <main class="p-4 w-full">
       <div class="max-w-3xl mx-auto bg-white rounded-lg shadow overflow-hidden">
-      
         <!-- Sekce pro hráče - potvrzení účasti -->
         <div id="modal-potvrzeni-ucasti" class="flex flex-row justify-center items-center space-x-4"> 
           <p class="text-xl font-semibold"data-lang-key="will_you_come">Přijdeš?</p>
+        <div
+          id="modal-potvrzeni-ucasti"
+          class="flex flex-row justify-center items-center space-x-4"
+        >
+          <p class="text-xl font-semibold">Přijdeš?</p>
           <div class="flex space-x-4">
-            <button type="button"  
-              class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors" 
+            <button
+              type="button"
+              class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
               id="bt-ucast-ano"
               data-lang-key="yes">Ano
+            >
+              Ano
             </button>
-            <button type="button" 
-              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors" 
+            <button
+              type="button"
+              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
               id="bt-ucast-ne"
               data-lang-key="no">Ne
+            >
+              Ne
             </button>
           </div>
         </div>
 
         <div id="horni-lista" class="p-4 border-b border-gray-300">
-          <div class="flex flex-col md:flex-row md:justify-between md:items-center">
-
+          <div
+            class="flex flex-col md:flex-row md:justify-between md:items-center"
+          >
             <div class="flex flex-col items-center">
               <h2 id="nazev-tymu" class="text-xl font-bold text-gray-800">
                 Název Týmu
@@ -182,7 +216,9 @@
               </div>
             </div>
 
-            <div class="mt-4 md:mt-0 flex flex-col items-center border rounded-lg px-3 py-2">
+            <div
+              class="mt-4 md:mt-0 flex flex-col items-center border rounded-lg px-3 py-2"
+            >
               <span class="mt-1 text-xl font-bold text-gray-700">
                 17.11.2025
               </span>
@@ -201,6 +237,7 @@
               </span>
               
 
+              <span class="text-sm text-gray-500"> Konec: 19:30 </span>
             </div>
           </div>
         </div>
@@ -217,5 +254,6 @@
     </main>
       <script src="/src/scripts/training.js"></script>
       <script src="../scripts/language.js"></script>
+    <script src="../scripts/logout.js"></script>
 </body>
 </html>
