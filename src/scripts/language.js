@@ -47,6 +47,8 @@ const translations = {
       new_team_name: "New team name...",
       search_team: "Search for a team...",
       time: "Time:",
+      reserve_system: "Reservation System",
+      training: "Training",
     },
     cs: {
       home: "Domů",
@@ -95,6 +97,8 @@ const translations = {
       new_team_name: "Název nového týmu...",
       search_team: "Vyhledat tým...",
       time: "Čas:",
+      reserve_system: "Rezervační systém",
+      training: "Trénink",
     },
     de: {
       home: "Zuhause",
@@ -143,6 +147,8 @@ const translations = {
       new_team_name: "Neuer Teamname...",
       search_team: "Team suchen...",
       time: "Zeit:",
+      reserve_system: "Reservierungssystem",
+      training: "Training",
     }
   };
   
