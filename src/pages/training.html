@@ -11,8 +11,9 @@
   <nav
       class="relative flex flex-col p-4 bg-gray-400 lg:w-48 lg:h-screen min-h-[71px]"
     >
+    <div class="flex items-center whitespace-nowrap text-2lg font-black">
       <a
-        href="../pages/index.html"
+        href="../pages/profile.html"
         class="flex items-center whitespace-nowrap text-2lg font-black"
       >
         <img
@@ -21,6 +22,24 @@
           class="size-10 object-cover rounded-full lg:size-24"
         />
       </a>
+
+      <div class="flex items-center gap-2 pl-2">
+          <!-- Mobile flags (right of hamburger) -->
+          <div class="flex gap-2 lg:hidden">
+            <button class="language-btn" data-lang="cs">
+              <img src="../assets/cs.png" alt="Czech" class="w-6 h-6 rounded-full">
+            </button>
+            <button class="language-btn" data-lang="en">
+              <img src="../assets/en.png" alt="English" class="w-6 h-6 rounded-full">
+            </button>
+           
+            <button class="language-btn" data-lang="de">
+              <img src="../assets/de.png" alt="German" class="w-6 h-6 rounded-full">
+            </button>
+          </div>
+      </div>
+    </div>
+    
       <input type="checkbox" class="peer hidden" id="navbar-open" />
       <label
         for="navbar-open"
@@ -42,42 +61,84 @@
         </svg>
       </label>
       <div
-    aria-label="Header Navigation"
-    class="absolute top-full left-0 z-10 w-full bg-gray-400 peer-checked:max-h-screen max-h-0 flex flex-col items-center overflow-hidden transition-all duration-300 ease-in-out lg:hidden" >
-    <ul class="flex flex-col items-center space-y-2 w-full px-4"> <li class="w-full">
-        <a href="index.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Home</a>
-      </li>
-      <li class="w-full">
-        <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Pricing</a>
-      </li>
-      <li class="w-full">
-        <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Features</a>
-      </li>
-      <li class="w-full">
-        <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Support</a>
-      </li>
-      <li class="w-full">
-        <a href="profile.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Profile</a>
-      </li>
-    </ul>
-    <br>
-  </div>
+        aria-label="Header Navigation"
+        class="absolute top-full left-0 z-10 w-full bg-gray-400 peer-checked:max-h-screen max-h-0 flex flex-col items-center overflow-hidden transition-all duration-300 ease-in-out lg:hidden"
+      >
+        <ul class="flex flex-col items-center space-y-2 w-full px-4">
+          <li class="w-full">
+            <a
+              href="index.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="home">Domů</a
+            >
+          </li>
+          <li class="w-full">
+            <a
+              href="teams.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="teams">Týmy</a
+            >
+          </li>
+          <li class="w-full">
+            <a
+              href="players.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="players">Hráči</a
+            >
+          </li>
+          <li class="w-full">
+            <a
+              href="profile.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="profile">Profil
+            </a>
+          </li>
+        </ul>
+        <br />
+      </div>
       <div class="hidden lg:flex lg:w-full lg:mt-8">
         <ul class="flex flex-col gap-4 w-full">
           <li class="w-full">
-            <a href="index.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Home</a>
+            <a
+              href="index.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="home">Domů</a
+            >
           </li>
           <li class="w-full">
-            <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Pricing</a>
+            <a
+              href="teams.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="teams">Týmy</a
+            >
           </li>
           <li class="w-full">
-            <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Features</a>
+            <a
+              href="players.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="players">Hráči</a
+            >
           </li>
           <li class="w-full">
-            <a href="#" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Support</a>
+            <a
+              href="profile.html"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="profile">Profil</a
+            >
           </li>
-          <li class="w-full">
-            <a href="profile.html" class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5">Profile</a>
+          <li>
+            <div class="flex justify-center gap-2 mt-4 lg:flex">
+              <button class="language-btn" data-lang="cs">
+                <img src="../assets/cs.png" alt="Czech" class="w-6 h-6 rounded-full">
+              </button>
+              <button class="language-btn" data-lang="en">
+                <img src="../assets/en.png" alt="English" class="w-6 h-6 rounded-full">
+              </button>
+              
+              <button class="language-btn" data-lang="de">
+                <img src="../assets/de.png" alt="German" class="w-6 h-6 rounded-full">
+              </button>
+            </div>
           </li>
         </ul>
       </div>
@@ -88,17 +149,17 @@
       
         <!-- Sekce pro hráče - potvrzení účasti -->
         <div id="modal-potvrzeni-ucasti" class="flex flex-row justify-center items-center space-x-4"> 
-          <p class="text-xl font-semibold">Přijdeš?</p>
+          <p class="text-xl font-semibold"data-lang-key="will_you_come">Přijdeš?</p>
           <div class="flex space-x-4">
             <button type="button"  
               class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors" 
               id="bt-ucast-ano"
-              >Ano
+              data-lang-key="yes">Ano
             </button>
             <button type="button" 
               class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors" 
               id="bt-ucast-ne"
-              >Ne
+              data-lang-key="no">Ne
             </button>
           </div>
         </div>
@@ -125,19 +186,27 @@
               <span class="mt-1 text-xl font-bold text-gray-700">
                 17.11.2025
               </span>
-              <span class="text-xl font-bold tracking-wide">
-                Začátek: <span class="text-2xl">17:00</span>
+              <span>
+                <span class="text-xl font-bold tracking-wide"data-lang-key="start">
+                  Začátek: 
+                </span>
+                <span class="text-2xl">17:00</span>
               </span>
-              <span class="text-sm text-gray-500">
-                Konec: 19:30
+              
+              <span>
+                <span class="text-sm text-gray-500"data-lang-key="end">
+                  Konec: 
+                </span>
+                <span>19:30</span>
               </span>
+              
 
             </div>
           </div>
         </div>
 
         <div id="obsah-treninku" class="p-4">
-          <p class="text-gray-700 font-semibold">
+          <p class="text-gray-700 font-semibold" data-lang-key="player_list">
             Seznam hráčů:
           </p>
           <ul id="player-list" class="">
@@ -145,9 +214,8 @@
           </ul>
         </div>
       </div>
-
     </main>
-   
       <script src="/src/scripts/training.js"></script>
+      <script src="../scripts/language.js"></script>
 </body>
 </html>

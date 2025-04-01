@@ -11,6 +11,7 @@
     <nav
       class="relative flex flex-col p-4 lg:items-center bg-gray-400 lg:max-w-48 lg:h-screen min-h-[71px]"
     >
+    <div class="flex items-center whitespace-nowrap text-2lg font-black">
       <a
         href="../pages/profile.html"
         class="flex items-center whitespace-nowrap text-2lg font-black"
@@ -21,6 +22,24 @@
           class="size-10 object-cover rounded-full lg:size-24"
         />
       </a>
+
+      <div class="flex items-center gap-2 pl-2">
+          <!-- Mobile flags (right of hamburger) -->
+          <div class="flex gap-2 lg:hidden">
+            <button class="language-btn" data-lang="cs">
+              <img src="../assets/cs.png" alt="Czech" class="w-6 h-6 rounded-full">
+            </button>
+            <button class="language-btn" data-lang="en">
+              <img src="../assets/en.png" alt="English" class="w-6 h-6 rounded-full">
+            </button>
+           
+            <button class="language-btn" data-lang="de">
+              <img src="../assets/de.png" alt="German" class="w-6 h-6 rounded-full">
+            </button>
+          </div>
+      </div>
+    </div>
+      
       <input type="checkbox" class="peer hidden" id="navbar-open" />
       <label
         for="navbar-open"
@@ -50,28 +69,28 @@
             <a
               href="index.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Domů</a
+              data-lang-key="home">Domů</a
             >
           </li>
           <li class="w-full">
             <a
               href="teams.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Týmy</a
+              data-lang-key="teams">Týmy</a
             >
           </li>
           <li class="w-full">
             <a
               href="players.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Hráči</a
+              data-lang-key="players">Hráči</a
             >
           </li>
           <li class="w-full">
             <a
               href="profile.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Profil
+              data-lang-key="profile">Profil
             </a>
           </li>
         </ul>
@@ -83,29 +102,43 @@
             <a
               href="index.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Domů</a
+              data-lang-key="home">Domů</a
             >
           </li>
           <li class="w-full">
             <a
               href="teams.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Týmy</a
+              data-lang-key="teams">Týmy</a
             >
           </li>
           <li class="w-full">
             <a
               href="players.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Hráči</a
+              data-lang-key="players">Hráči</a
             >
           </li>
           <li class="w-full">
             <a
               href="profile.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Profil</a
+              data-lang-key="profile">Profil</a
             >
+          </li>
+          <li>
+            <div class="flex justify-center gap-2 mt-4 lg:flex">
+              <button class="language-btn" data-lang="cs">
+                <img src="../assets/cs.png" alt="Czech" class="w-6 h-6 rounded-full">
+              </button>
+              <button class="language-btn" data-lang="en">
+                <img src="../assets/en.png" alt="English" class="w-6 h-6 rounded-full">
+              </button>
+              
+              <button class="language-btn" data-lang="de">
+                <img src="../assets/de.png" alt="German" class="w-6 h-6 rounded-full">
+              </button>
+            </div>
           </li>
         </ul>
       </div>
@@ -117,13 +150,14 @@
           class="bg-white px-7 py-8 rounded-lg border-2 border-gray-200 shadow-lg flex flex-col justify-between w-96 h-72"
         >
           <h2 class="text-xl font-bold">Trénink 1</h2>
-          <p class="text-gray-600">Přijďte mrdky</p>
-          <span class="text-gray-500">Čas: 10:00 - 11:00</span>
+          <p class="text-gray-600">Lorem ipsum dolor sit amet consectetur adipiscing elit. </p>
+          <span class="text-gray-500"><span data-lang-key="time">Čas:</span> 10:00 - 11:00</span>
           <button
             type="submit"
             class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800"
             id="save"
             onclick="window.location.href='training.html'"
+            data-lang-key="details"
           >
             podrobnosti
           </button>
@@ -132,13 +166,14 @@
           class="bg-white px-7 py-8 rounded-lg border-2 border-gray-200 shadow-lg flex flex-col justify-between w-96 h-72"
         >
           <h2 class="text-xl font-bold">Trénink 2</h2>
-          <p class="text-gray-600">Až vás potkám tak vás chytim za držku</p>
-          <span class="text-gray-500">Čas: 12:00 - 13:00</span>
+          <p class="text-gray-600">Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis.</p>
+          <span class="text-gray-500"><span data-lang-key="time">Čas:</span> 12:00 - 13:00</span>
           <button
             type="submit"
             class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800"
             id="save"
             onclick="window.location.href='training.html'"
+            data-lang-key="details"
           >
             podrobnosti
           </button>
@@ -148,15 +183,15 @@
         >
           <h2 class="text-xl font-bold">Trénink 3</h2>
           <p class="text-gray-600">
-            Tohle si dolovat nebudeš jseš proti mě takhle malej ty trpaslíku
-            zkurvenej
+            Ad litora torquent per conubia nostra inceptos himenaeos.
           </p>
-          <span class="text-gray-500">Čas: 14:00 - 15:00</span>
+          <span class="text-gray-500"><span data-lang-key="time">Čas:</span> 14:00 - 15:00</span>
           <button
             type="submit"
             class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800"
             id="save"
             onclick="window.location.href='training.html'"
+            data-lang-key="details"
           >
             podrobnosti
           </button>
@@ -165,18 +200,20 @@
           class="bg-white px-7 py-8 rounded-lg border-2 border-gray-200 shadow-lg flex flex-col justify-between w-96 h-72"
         >
           <h2 class="text-xl font-bold">Trénink 4</h2>
-          <p class="text-gray-600">Som čierný Portoričan</p>
-          <span class="text-gray-500">Čas: 16:00 - 17:00</span>
+          <p class="text-gray-600">Pulvinar vivamus fringilla lacus nec metus bibendum egestas. </p>
+          <span class="text-gray-500"><span data-lang-key="time">Čas:</span> 16:00 - 17:00</span>
           <button
             type="submit"
             class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800"
             id="save"
             onclick="window.location.href='training.html'"
+            data-lang-key="details"
           >
             podrobnosti
           </button>
         </div>
       </div>
     </main>
+    <script src="../scripts/language.js"></script>
   </body>
 </html>
