@@ -5,15 +5,64 @@ const supabaseClient = window.supabase.createClient(
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhweHVydGRrbXVmdWVtYW1hanpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5NTk3MzksImV4cCI6MjA1NzUzNTczOX0.uRPj22s06XSTvuuHGz-7oAqfTRp2LqUFTCKxC8QprMU"
   );
 
-let allPlayers = [];
+  let allPlayers = [];
   let isAdmin = false;
   let isTrainer = false;
+  let tymID = 0;
+  
+
+  const nazevTymu = document.getElementById("nazev-tymu");
+  const trainingDate = document.getElementById("training-date");
+  const trainingStartTime = document.getElementById("training-start-time");
+  const trainingEndTime = document.getElementById("training-end-time");
 
 // Načtení dat
 document.addEventListener("DOMContentLoaded", async () =>{
-  await checkUserRole(),
-  loadPlayers()
+  await checkUserRole();
+  loadPlayers();
+
+
+  const modal = document.getElementById("modal-potvrzeni-ucasti");
+  
+  const btAno = document.getElementById("bt-ucast-ano");
+  const btNe = document.getElementById("bt-ucast-ne");
+
+
+  btAno.addEventListener("click", function() {
+    console.log("Uživatel potvrdil účast");
+    modal.classList.add('hidden');
+    //pořešit v DB
+  });
+
+  btNe.addEventListener("click", function() {
+    console.log("Uživatel potvrdil NEúčast");
+    modal.classList.add('hidden');
+    //pořešit v DB
+  });
 });
+
+
+function editTraining() {
+  const editTraining = document.querySelectorAll('.edit-training');
+
+  editTraining.forEach(edit => {
+    edit.disabled = false;
+  });
+
+  //poslat změněná data do databaze
+
+}
+
+async function setUserData() {
+  const { data: userData, error: userError } = await supabaseClient
+      .from("Tym")
+      .select("Nazevtymu")
+      .eq("TymID", tymID)
+      .single();
+      console.log(userData);
+      
+      nazevTymu.innerHTML = userData.Nazevtymu;
+}
 
 // Funkce pro zjištění role uživatele
 async function checkUserRole() {
@@ -24,14 +73,14 @@ async function checkUserRole() {
     } = await supabaseClient.auth.getSession();
 
     if (sessionError || !session) {
-      //alert("Uživatel není přihlášen!");
-      return;
+      alert("Uživatel není přihlášen!");
+     return;
     } 
 
     const userEmail = session.user.email;
     const { data: userData, error: userError } = await supabaseClient
       .from("Uzivatel")
-      .select("RoleuzivateluID")
+      .select("RoleuzivateluID, TymID")
       .eq("Email", userEmail)
       .single();
 
@@ -40,11 +89,30 @@ async function checkUserRole() {
       return;
     }
 
+    tymID = userData.TymID;
+    console.log(tymID);
+
+    setUserData();
+
+
     isAdmin = userData.RoleuzivateluID === 1; // Nastavení isAdmin na true, pokud je RoleuzivateluID = 1
     isTrainer = userData.RoleuzivateluID === 2;
     
     // zobrazení obsahu podle role
     
+    if (isAdmin) {
+      editTraining();
+      //document.getElementById('modal-potvrzeni-ucasti').classList.remove("hidden");
+
+    }
+    else if (isTrainer) {
+      editTraining();
+
+    } else  {
+      document.getElementById('modal-potvrzeni-ucasti').classList.remove("hidden");
+    }
+    
+
 
    
   } catch (error) {
@@ -65,7 +133,6 @@ async function checkUserRole() {
     const { data: players, error } = await supabaseClient
       .from("Uzivatel")
       .select("UzivatelID, Jmeno, Prijmeni"); //Načtení hráče
-      console.log(players);
       
     if (error) {
       alert("Chyba při načítání hráčů: " + error.message);
@@ -101,7 +168,7 @@ function displayPlayers(players) {
     const playerNameSpan = document.createElement("span");
     playerNameSpan.textContent = player.Jmeno +" "+  player.Prijmeni;
     li.appendChild(playerNameSpan);
-    console.log(playerNameSpan);
+    //console.log(playerNameSpan);
     
 
     

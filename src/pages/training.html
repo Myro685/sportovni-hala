@@ -84,67 +84,90 @@
     </nav>
 
     <main class="p-4 w-full">
-      <div class="max-w-3xl mx-auto bg-white rounded-lg shadow overflow-hidden">
       
-        <!-- Sekce pro hráče - potvrzení účasti -->
-        <div id="modal-potvrzeni-ucasti" class="flex flex-row justify-center items-center space-x-4"> 
-          <p class="text-xl font-semibold">Přijdeš?</p>
-          <div class="flex space-x-4">
-            <button type="button"  
-              class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors" 
-              id="bt-ucast-ano"
-              >Ano
-            </button>
-            <button type="button" 
-              class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors" 
-              id="bt-ucast-ne"
-              >Ne
-            </button>
+        <!-- modal -->
+
+        <div id="modal-trainig-details" class="max-w-3xl mx-auto bg-white rounded-lg shadow overflow-hidden">
+      
+          <!-- Sekce pro hráče - potvrzení účasti -->
+          <div id="modal-potvrzeni-ucasti" class=" hidden flex flex-row justify-center items-center space-x-4"> 
+            <p class="text-xl font-semibold">Přijdeš?</p>
+            <div class="flex space-x-4">
+              <button type="button"  
+                class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors" 
+                id="bt-ucast-ano"
+                >Ano
+              </button>
+              <button type="button" 
+                class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors" 
+                id="bt-ucast-ne"
+                >Ne
+              </button>
+            </div>
           </div>
-        </div>
-
-        <div id="horni-lista" class="p-4 border-b border-gray-300">
-          <div class="flex flex-col md:flex-row md:justify-between md:items-center">
-
-            <div class="flex flex-col items-center">
-              <h2 id="nazev-tymu" class="text-xl font-bold text-gray-800">
-                Název Týmu
-              </h2>
-
-              <div class="mt-1 flex flex-col md:flex-row md:space-x-6">
-                <p class="text-gray-600">
-                  Trenér: <span class="font-medium">Petr Novák</span>
-                </p>
-                <p class="text-gray-600">
-                  Aktivita: <span class="font-medium">trénink</span>
-                </p>
+  
+          <div id="horni-lista" class="p-4 border-b border-gray-300">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center">
+  
+              <div class="flex flex-col items-center">
+                <h2 id="nazev-tymu" class="text-xl font-bold text-gray-800">
+                  
+                </h2>
+  
+                <div class="mt-1 flex flex-col md:flex-row md:space-x-6">
+                  <p class="text-gray-600">
+                    Trenér: <span class="font-medium"></span>
+                  </p>
+                  <p class="text-gray-600">
+                    Aktivita: <span class="font-medium"></span>
+                  </p>
+                </div>
+              </div>
+  
+              <div class="mt-4 md:mt-0 flex flex-col items-center border rounded-lg px-3 py-2">
+                <span class="mt-1 text-xl font-bold text-gray-700">
+                  <input disabled
+                  disabled tabindex="-1"
+                  id="training-date"
+                  class="edit-training" 
+                  type="date"  
+                  value="2025-04-03"
+                  min="">
+                </span>
+                <span class="text-xl font-bold tracking-wide">
+                  Začátek: <span class="text-2xl">
+                    <input disabled
+                    disabled tabindex="-1"
+                    id="training-start-time"
+                    type="time" 
+                    value="17:00"
+                    class="edit-training"
+                  >
+                  </span>
+                </span>
+                <span class="text-sm text-gray-500">
+                  Konec: <input disabled
+                  id="training-end-time"
+                  disabled tabindex="-1"
+                  type="time" 
+                  value="19:00"
+                  class="edit-training"
+                >
+                </span>
+  
               </div>
             </div>
-
-            <div class="mt-4 md:mt-0 flex flex-col items-center border rounded-lg px-3 py-2">
-              <span class="mt-1 text-xl font-bold text-gray-700">
-                17.11.2025
-              </span>
-              <span class="text-xl font-bold tracking-wide">
-                Začátek: <span class="text-2xl">17:00</span>
-              </span>
-              <span class="text-sm text-gray-500">
-                Konec: 19:30
-              </span>
-
-            </div>
+          </div>
+  
+          <div id="obsah-treninku" class="p-4">
+            <p class="text-gray-700 font-semibold">
+              Seznam hráčů:
+            </p>
+            <ul id="player-list" class="">
+  
+            </ul>
           </div>
         </div>
-
-        <div id="obsah-treninku" class="p-4">
-          <p class="text-gray-700 font-semibold">
-            Seznam hráčů:
-          </p>
-          <ul id="player-list" class="">
-
-          </ul>
-        </div>
-      </div>
 
     </main>
    
