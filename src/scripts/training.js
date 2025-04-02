@@ -22,41 +22,57 @@ const supabaseClient = window.supabase.createClient(
 // Načtení dat
 document.addEventListener("DOMContentLoaded", async () =>{
   await checkUserRole();
+  await getAttendacne();
   loadPlayers();
 
+  // fixnout aby se stav dochazky hrace nacetl z db a nebylo tam vsude jen -
 
   const modal = document.getElementById("modal-potvrzeni-ucasti");
   
   const btAno = document.getElementById("bt-ucast-ano");
   const btNe = document.getElementById("bt-ucast-ne");
 
+
+  async function getAttendacne() {
+    const { data, error } = await supabaseClient
+    .from("Seznamprihlasenychrezervacihracu")
+    .select("Stavprihlaseni")
+    .eq("UzivatelID", currentUserId ); 
+
+    if (error) {
+      console.error("Chyba při aktualizaci účasti: ", error);
+    } else {
+      stavPrihlaseni = data[0].Stavprihlaseni;
+    }
+  }
+
+
   //prepnuti stavu dochazky hrace na konkretni trenink
   btAno.addEventListener("click", async function() {
     modal.classList.add('hidden');
-    
+
     const { data, error } = await supabaseClient
     .from("Seznamprihlasenychrezervacihracu")
-    .update({ Stavprihlaseni: true })  
+    .update({Stavprihlaseni: true})
     .select("Stavprihlaseni")
     .eq("UzivatelID", currentUserId ); 
 
-    
-    
     if (error) {
       console.error("Chyba při aktualizaci účasti: ", error);
     } else {
       stavPrihlaseni = data[0].Stavprihlaseni;
-      console.log("Stav přihlášení:", stavPrihlaseni);
       loadPlayers();
     }
+
   });
+
 
   btNe.addEventListener("click", async function() {
     modal.classList.add('hidden');
-    
+
     const { data, error } = await supabaseClient
     .from("Seznamprihlasenychrezervacihracu")
-    .update({ Stavprihlaseni: false })  
+    .update({Stavprihlaseni: false})
     .select("Stavprihlaseni")
     .eq("UzivatelID", currentUserId ); 
 
@@ -64,7 +80,6 @@ document.addEventListener("DOMContentLoaded", async () =>{
       console.error("Chyba při aktualizaci účasti: ", error);
     } else {
       stavPrihlaseni = data[0].Stavprihlaseni;
-      console.log("Stav přihlášení:", stavPrihlaseni);
       loadPlayers();
     }
   });
@@ -146,9 +161,6 @@ async function checkUserRole() {
   }
 }
 
-async function updateAttendacne(userId, willAttend) {
-  
-}
 
 async function loadPlayers() {
   const playerList = document.getElementById("player-list");
