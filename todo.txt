@@ -1,0 +1,46 @@
+2. Požadavky na nově tvořený systém
+
+• Rezervace tréninků: Trenéři budou moci prostřednictvím webového rozhraní
+rezervovat halu na konkrétní datum a čas.
+• Zobrazení dostupnosti: Systém zobrazí aktuálně volné termíny a zabrané sloty, aby se předešlo kolizím.
+• Správa rezervací: Administrátoři budou mít možnost upravovat, rušit a potvrzovat rezervace.
+• Trenéři: Mají právo rezervovat halu, měnit či rušit své rezervace.
+• Hráči: Budou moci potvrzovat svou účast na trénincích, které jsou v systému zaneseny.
+• Administrátoři: Disponují kompletní správou systému – nastavování pravidel pro využití haly, monitorování vytíženosti, úprava rezervací a řešení vzniklých
+problémů.
+3. Sledované údaje a notifikace
+Systém bude evidovat základní informace o rezervaci, jako je datum, čas, jméno trenéra, počet účastníků, status rezervace (čekající, potvrzená, zrušená).
+
+DBS2
+-alespoň tři pohledy. které budou volány z aplikace
+-alespoň tři funkce různého typu s odpovídající složitostí
+-alespoň tři uložené procedury
+-alespoň dva triggery
+-alespoň jedna transakce s ošetřeným chováním při rollbacku
+-použití indexů na neklíčové sloupce
+-použití kompozitních primárních klíčů
+-vyzkoušet si použití datového typu JSON v moderních relačních databázích (rozumné použití včetně filtrace nad těmito sloupci může ovlivnit počet požadovaných databázových tabulek, případně odpuštění jednoho ze zde uvedených požadavků – záleží na domluvě se cvičícím)
+-vhodným způsobem zajistit ukládání obrázků, které budou v aplikaci načteny a zobrazeny
+
+TNPW2
+UŽIVATELSKÝ OBSAH
+Koncový uživatel může v aplikaci spravovat uživatelský obsah resp. data. Profil uživatele není považován za uživatelský obsah resp. data. Správa uživatelského obsahu znamená alespoň CRUD operace.
+PŘÍSTUP K UŽIVATELSKÉMU OBSAHU
+Uživatelský obsah/data lze spravovat pouze po autentizaci a autorizaci (vhodná role, vlastnický vztah).
+ZOBRAZENÍ UŽIVATELSKÉHO OBSAHU
+Uživatelský obsah bude možné zobrazit po jednotlivých položkách.
+Uživatelský obsah bude možné zobrazit i v celku, a to po dávkách (stránkovaně).
+Bude možné zobrazit i souhrnné údaje o uživatelském obsahu (dashboard), např. celkový počet položek, výběr několika položek podle vhodných kritérií (nejnovější, s nastaveným příznakem, a pod).
+GUI aplikace bude obsahovat oblast s podmíněným vykreslováním obsahu (například navigace, závislá na stavu přihlášen/ nepřihlášen, nebo dashboard s obsahem podle role uživatele).
+UKLÁDÁNÍ V PROHLÍŽEČI
+Bude využito ukládání dat v prohlížeči (např. oblíbené, obsah košíku).
+INTERAKCE UŽIVATELŮ
+Uživatelský obsah bude umožňovat interakci uživatelů (ne nutně komunikaci, ne nutně synchronní), například příspěvek - komentář, inzerát - odpověď, termín zkoušky - zápis na termín.
+NÁVRH A IMPLEMENTACE APLIKACE
+Bude použit komponentový přístup.
+ZABEZPEČENÍ APLIKACE
+Veškeré vstupní údaje budou ošetřeny na straně prohlížeče před odesláním na server.
+DALŠÍ POŽADAVKY 
+Dokumentace projektu bude obsahovat požadavky na aplikaci, případy užití, použité endpointy.
+Zdrojový kód bude přehledný, logicky uspořádaný, vhodně organizovaný do podsložek, smysluplně okomentovaný.
+Webová aplikace bude v patičce zřetelně označena jako studentský zápočtový projekt.
