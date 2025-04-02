@@ -5,10 +5,13 @@ const supabaseClient = window.supabase.createClient(
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhweHVydGRrbXVmdWVtYW1hanpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5NTk3MzksImV4cCI6MjA1NzUzNTczOX0.uRPj22s06XSTvuuHGz-7oAqfTRp2LqUFTCKxC8QprMU"
   );
 
+  //globalni promenne
   let allPlayers = [];
   let isAdmin = false;
   let isTrainer = false;
   let tymID = 0;
+  let currentUserId = null;
+  let stavPrihlaseni = null; //prijde/neprijde na trenink
   
 
   const nazevTymu = document.getElementById("nazev-tymu");
@@ -27,17 +30,43 @@ document.addEventListener("DOMContentLoaded", async () =>{
   const btAno = document.getElementById("bt-ucast-ano");
   const btNe = document.getElementById("bt-ucast-ne");
 
-
-  btAno.addEventListener("click", function() {
-    console.log("Uživatel potvrdil účast");
+  //prepnuti stavu dochazky hrace na konkretni trenink
+  btAno.addEventListener("click", async function() {
     modal.classList.add('hidden');
-    //pořešit v DB
+    
+    const { data, error } = await supabaseClient
+    .from("Seznamprihlasenychrezervacihracu")
+    .update({ Stavprihlaseni: true })  
+    .select("Stavprihlaseni")
+    .eq("UzivatelID", currentUserId ); 
+
+    
+    
+    if (error) {
+      console.error("Chyba při aktualizaci účasti: ", error);
+    } else {
+      stavPrihlaseni = data[0].Stavprihlaseni;
+      console.log("Stav přihlášení:", stavPrihlaseni);
+      loadPlayers();
+    }
   });
 
-  btNe.addEventListener("click", function() {
-    console.log("Uživatel potvrdil NEúčast");
+  btNe.addEventListener("click", async function() {
     modal.classList.add('hidden');
-    //pořešit v DB
+    
+    const { data, error } = await supabaseClient
+    .from("Seznamprihlasenychrezervacihracu")
+    .update({ Stavprihlaseni: false })  
+    .select("Stavprihlaseni")
+    .eq("UzivatelID", currentUserId ); 
+
+    if (error) {
+      console.error("Chyba při aktualizaci účasti: ", error);
+    } else {
+      stavPrihlaseni = data[0].Stavprihlaseni;
+      console.log("Stav přihlášení:", stavPrihlaseni);
+      loadPlayers();
+    }
   });
 });
 
@@ -59,7 +88,6 @@ async function setUserData() {
       .select("Nazevtymu")
       .eq("TymID", tymID)
       .single();
-      console.log(userData);
       
       nazevTymu.innerHTML = userData.Nazevtymu;
 }
@@ -80,7 +108,7 @@ async function checkUserRole() {
     const userEmail = session.user.email;
     const { data: userData, error: userError } = await supabaseClient
       .from("Uzivatel")
-      .select("RoleuzivateluID, TymID")
+      .select("RoleuzivateluID, UzivatelID, TymID")
       .eq("Email", userEmail)
       .single();
 
@@ -89,17 +117,18 @@ async function checkUserRole() {
       return;
     }
 
+    currentUserId = userData.UzivatelID;
+    
     tymID = userData.TymID;
-    console.log(tymID);
 
     setUserData();
+      console.log(userData.UzivatelID);
+      
 
-
-    isAdmin = userData.RoleuzivateluID === 1; // Nastavení isAdmin na true, pokud je RoleuzivateluID = 1
+    isAdmin = userData.RoleuzivateluID === 1; 
     isTrainer = userData.RoleuzivateluID === 2;
     
     // zobrazení obsahu podle role
-    
     if (isAdmin) {
       editTraining();
       //document.getElementById('modal-potvrzeni-ucasti').classList.remove("hidden");
@@ -111,16 +140,17 @@ async function checkUserRole() {
     } else  {
       document.getElementById('modal-potvrzeni-ucasti').classList.remove("hidden");
     }
-    
-
-
    
   } catch (error) {
     alert("Chyba: " + error.message);
   }
 }
 
- async function loadPlayers(players) {
+async function updateAttendacne(userId, willAttend) {
+  
+}
+
+async function loadPlayers() {
   const playerList = document.getElementById("player-list");
 
   // Kontrola, zda element existuje
@@ -132,15 +162,17 @@ async function checkUserRole() {
   try {
     const { data: players, error } = await supabaseClient
       .from("Uzivatel")
-      .select("UzivatelID, Jmeno, Prijmeni"); //Načtení hráče
+      .select("UzivatelID, Jmeno, Prijmeni, TymID") //Načtení hráče
+      .eq("TymID", tymID) //vybere uzivatele jenom z tymu, ve kterem je uzivatel prihlaseny
       
     if (error) {
       alert("Chyba při načítání hráčů: " + error.message);
       return;
     }
-
+    
     allPlayers = players;
     displayPlayers(allPlayers);
+
   } catch (error) {
     alert("Chyba: " + error.message);
   }
@@ -149,7 +181,6 @@ async function checkUserRole() {
 
 
 function displayPlayers(players) {
-  //console.log(players);
   const playerList = document.getElementById("player-list");
 
   if (!playerList) {
@@ -157,7 +188,7 @@ function displayPlayers(players) {
     return;
   }
 
-  playerList.innerHTML = ""; // Vymazání stávajícího obsahu
+  playerList.innerHTML = ""; 
 
   players.forEach((player) => {
     const li = document.createElement("li");
@@ -168,20 +199,25 @@ function displayPlayers(players) {
     const playerNameSpan = document.createElement("span");
     playerNameSpan.textContent = player.Jmeno +" "+  player.Prijmeni;
     li.appendChild(playerNameSpan);
-    //console.log(playerNameSpan);
     
+    //znak prijdu/neprijdu pro kazdeho hrace z tymu
 
-    
-
-    // Přidání tlačítka pro změnu docházky, pouze pokud je uživatel admin
-    if (isAdmin) {
-      const changeAttedndaceButton = document.createElement("button");
-      changeAttedndaceButton.innerHTML = "✖"; // Křížek
-      changeAttedndaceButton.className = "text-red-500 hover:text-red-700 ml-2";
-      changeAttedndaceButton.onclick = () => changeAttedndace();
-      li.appendChild(changeAttedndaceButton);
+    const changeAttedndaceIcon = document.createElement("span");
+    if (stavPrihlaseni === true) {
+      changeAttedndaceIcon.innerHTML = "✔️";
+      changeAttedndaceIcon.className = "text-green-500 hover:text-green-700 ml-2";
+      li.appendChild(changeAttedndaceIcon);
+    } else if (stavPrihlaseni === false) {
+      changeAttedndaceIcon.innerHTML = "✖";
+      changeAttedndaceIcon.className = "text-red-500 hover:text-red-700 ml-2";
+      li.appendChild(changeAttedndaceIcon);
+    } else {
+      changeAttedndaceIcon.innerHTML = "–";
+      changeAttedndaceIcon.className = "text-green-500 hover:text-green-700 ml-2";
+      li.appendChild(changeAttedndaceIcon);
     }
-
+    
+    li.appendChild(changeAttedndaceIcon);
     playerList.appendChild(li);
   });
 
@@ -189,7 +225,7 @@ function displayPlayers(players) {
   if (players.length === 0) {
     const li = document.createElement("li");
     li.className = "text-gray-500 p-2";
-    li.textContent = "Dosud žádný hráč účast nepotvrdil.";
+    li.textContent = "V týmu nejsou žádní hráči.";
     playerList.appendChild(li);
   }
 }
