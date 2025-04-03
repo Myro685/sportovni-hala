@@ -1,45 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title data-lang-key="training">Trénink</title>
     <link rel="stylesheet" href="../output.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-<body class="h-screen flex flex-col lg:flex-row bg-slate-600">
-  <nav
+  </head>
+  <body class="h-screen flex flex-col lg:flex-row bg-slate-600">
+    <nav
       class="relative flex flex-col p-4 w-full lg:w-48 lg:items-center bg-gray-400 lg:flex-shrink-0 lg:h-screen min-h-[71px] box-border"
     >
-    <div class="flex items-center whitespace-nowrap text-2lg font-black">
-      <a
-        href="../pages/profile.html"
-        class="flex items-center whitespace-nowrap text-2lg font-black"
-      >
-        <img
-          src="../assets/a32b54fa44fb3f94bdb289b5fd8f01dc.jpg"
-          alt="Profile picture"
-          class="size-10 object-cover rounded-full lg:size-24"
-        />
-      </a>
+      <div class="flex items-center whitespace-nowrap text-2lg font-black">
+        <a
+          href="../pages/profile.html"
+          class="flex items-center whitespace-nowrap text-2lg font-black"
+        >
+          <img
+            src="../assets/a32b54fa44fb3f94bdb289b5fd8f01dc.jpg"
+            alt="Profile picture"
+            class="size-10 object-cover rounded-full lg:size-24"
+          />
+        </a>
 
-      <div class="flex items-center gap-2 pl-2">
+        <div class="flex items-center gap-2 pl-2">
           <!-- Mobile flags (right of hamburger) -->
           <div class="flex gap-2 lg:hidden">
             <button class="language-btn" data-lang="cs">
-              <img src="../assets/cs.png" alt="Czech" class="w-6 h-6 rounded-full">
+              <img
+                src="../assets/cs.png"
+                alt="Czech"
+                class="w-6 h-6 rounded-full"
+              />
             </button>
             <button class="language-btn" data-lang="en">
-              <img src="../assets/en.png" alt="English" class="w-6 h-6 rounded-full">
+              <img
+                src="../assets/en.png"
+                alt="English"
+                class="w-6 h-6 rounded-full"
+              />
             </button>
-           
+
             <button class="language-btn" data-lang="de">
-              <img src="../assets/de.png" alt="German" class="w-6 h-6 rounded-full">
+              <img
+                src="../assets/de.png"
+                alt="German"
+                class="w-6 h-6 rounded-full"
+              />
             </button>
           </div>
+        </div>
       </div>
-    </div>
-    
+
       <input type="checkbox" class="peer hidden" id="navbar-open" />
       <label
         for="navbar-open"
@@ -69,7 +81,7 @@
             <a
               href="index.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="home">Domů</a
+              data-lang-key="home"
               >Domů</a
             >
           </li>
@@ -77,7 +89,7 @@
             <a
               href="teams.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="teams">Týmy</a
+              data-lang-key="teams"
               >Týmy</a
             >
           </li>
@@ -85,7 +97,7 @@
             <a
               href="players.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="players">Hráči</a
+              data-lang-key="players"
               >Hráči</a
             >
           </li>
@@ -93,7 +105,7 @@
             <a
               href="profile.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="profile">Profil
+              data-lang-key="profile"
               >Profil
             </a>
           </li>
@@ -113,7 +125,7 @@
             <a
               href="index.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="home">Domů</a
+              data-lang-key="home"
               >Domů</a
             >
           </li>
@@ -121,7 +133,7 @@
             <a
               href="teams.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="teams">Týmy</a
+              data-lang-key="teams"
               >Týmy</a
             >
           </li>
@@ -129,7 +141,7 @@
             <a
               href="players.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="players">Hráči</a
+              data-lang-key="players"
               >Hráči</a
             >
           </li>
@@ -137,24 +149,35 @@
             <a
               href="profile.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="profile">Profil</a
+              data-lang-key="profile"
+              >Profil</a
             >
           </li>
           <li>
             <div class="flex justify-center gap-2 mt-4 lg:flex">
               <button class="language-btn" data-lang="cs">
-                <img src="../assets/cs.png" alt="Czech" class="w-6 h-6 rounded-full">
+                <img
+                  src="../assets/cs.png"
+                  alt="Czech"
+                  class="w-6 h-6 rounded-full"
+                />
               </button>
               <button class="language-btn" data-lang="en">
-                <img src="../assets/en.png" alt="English" class="w-6 h-6 rounded-full">
+                <img
+                  src="../assets/en.png"
+                  alt="English"
+                  class="w-6 h-6 rounded-full"
+                />
               </button>
-              
+
               <button class="language-btn" data-lang="de">
-                <img src="../assets/de.png" alt="German" class="w-6 h-6 rounded-full">
+                <img
+                  src="../assets/de.png"
+                  alt="German"
+                  class="w-6 h-6 rounded-full"
+                />
               </button>
             </div>
-              >Profil</a
-            >
           </li>
           <li class="w-full">
             <a
@@ -168,13 +191,16 @@
     </nav>
 
     <main class="p-4 w-full">
-      <div class="max-w-3xl mx-auto bg-white rounded-lg shadow overflow-hidden">
+      <!-- modal -->
+
+      <div
+        id="modal-trainig-details"
+        class="max-w-3xl mx-auto bg-white rounded-lg shadow overflow-hidden"
+      >
         <!-- Sekce pro hráče - potvrzení účasti -->
-        <div id="modal-potvrzeni-ucasti" class="flex flex-row justify-center items-center space-x-4"> 
-          <p class="text-xl font-semibold"data-lang-key="will_you_come">Přijdeš?</p>
         <div
           id="modal-potvrzeni-ucasti"
-          class="flex flex-row justify-center items-center space-x-4"
+          class="hidden flex flex-row justify-center items-center space-x-4"
         >
           <p class="text-xl font-semibold">Přijdeš?</p>
           <div class="flex space-x-4">
@@ -182,7 +208,6 @@
               type="button"
               class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
               id="bt-ucast-ano"
-              data-lang-key="yes">Ano
             >
               Ano
             </button>
@@ -190,7 +215,6 @@
               type="button"
               class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
               id="bt-ucast-ne"
-              data-lang-key="no">Ne
             >
               Ne
             </button>
@@ -202,16 +226,14 @@
             class="flex flex-col md:flex-row md:justify-between md:items-center"
           >
             <div class="flex flex-col items-center">
-              <h2 id="nazev-tymu" class="text-xl font-bold text-gray-800">
-                Název Týmu
-              </h2>
+              <h2 id="nazev-tymu" class="text-xl font-bold text-gray-800"></h2>
 
               <div class="mt-1 flex flex-col md:flex-row md:space-x-6">
                 <p class="text-gray-600">
-                  Trenér: <span class="font-medium">Petr Novák</span>
+                  Trenér: <span class="font-medium"></span>
                 </p>
                 <p class="text-gray-600">
-                  Aktivita: <span class="font-medium">trénink</span>
+                  Aktivita: <span class="font-medium"></span>
                 </p>
               </div>
             </div>
@@ -220,40 +242,55 @@
               class="mt-4 md:mt-0 flex flex-col items-center border rounded-lg px-3 py-2"
             >
               <span class="mt-1 text-xl font-bold text-gray-700">
-                17.11.2025
+                <input
+                  disabled
+                  disabled
+                  tabindex="-1"
+                  id="training-date"
+                  class="edit-training"
+                  type="date"
+                  value="2025-04-03"
+                  min=""
+                />
               </span>
-              <span>
-                <span class="text-xl font-bold tracking-wide"data-lang-key="start">
-                  Začátek: 
+              <span class="text-xl font-bold tracking-wide">
+                Začátek:
+                <span class="text-2xl">
+                  <input
+                    disabled
+                    disabled
+                    tabindex="-1"
+                    id="training-start-time"
+                    type="time"
+                    value="17:00"
+                    class="edit-training"
+                  />
                 </span>
-                <span class="text-2xl">17:00</span>
               </span>
-              
-              <span>
-                <span class="text-sm text-gray-500"data-lang-key="end">
-                  Konec: 
-                </span>
-                <span>19:30</span>
+              <span class="text-sm text-gray-500">
+                Konec:
+                <input
+                  disabled
+                  id="training-end-time"
+                  disabled
+                  tabindex="-1"
+                  type="time"
+                  value="19:00"
+                  class="edit-training"
+                />
               </span>
-              
-
-              <span class="text-sm text-gray-500"> Konec: 19:30 </span>
             </div>
           </div>
         </div>
 
         <div id="obsah-treninku" class="p-4">
-          <p class="text-gray-700 font-semibold" data-lang-key="player_list">
-            Seznam hráčů:
-          </p>
-          <ul id="player-list" class="">
-
-          </ul>
+          <p class="text-gray-700 font-semibold">Seznam hráčů:</p>
+          <ul id="player-list" class=""></ul>
         </div>
       </div>
     </main>
-      <script src="/src/scripts/training.js"></script>
-      <script src="../scripts/language.js"></script>
+    <script src="/src/scripts/training.js"></script>
+    <script src="../scripts/language.js"></script>
     <script src="../scripts/logout.js"></script>
-</body>
+  </body>
 </html>
