@@ -1207,10 +1207,6 @@ body {
     height: 100vh;
   }
 
-  .lg\:w-48 {
-    width: 12rem;
-  }
-
   .lg\:w-full {
     width: 100%;
   }
