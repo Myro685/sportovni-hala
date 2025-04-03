@@ -11,13 +11,16 @@ let isAdmin = false;
 let isTrainer = false;
 let tymID = 0;
 let currentUserId = null;
-let currentUserStavPrihlaseni = null; //prijde/neprijde na trenink
+let isEditing = false; 
 
 
 const nazevTymu = document.getElementById("nazev-tymu");
-const trainingDate = document.getElementById("training-date");
-const trainingStartTime = document.getElementById("training-start-time");
-const trainingEndTime = document.getElementById("training-end-time");
+//const trainingDate = document.getElementById("training-date");
+//const trainingStartTime = document.getElementById("training-start-time");
+//const trainingEndTime = document.getElementById("training-end-time");
+const btEditTraining = document.getElementById('bt-edit-training');
+const titleMyAttendance = document.getElementById('title-my-attendace');
+const spanCurrentUserAttendace = document.getElementById('span-current-user-attendance');
 
 // Načtení dat
 document.addEventListener("DOMContentLoaded", async () =>{
@@ -30,8 +33,6 @@ const modal = document.getElementById("modal-potvrzeni-ucasti");
 
 const btAno = document.getElementById("bt-ucast-ano");
 const btNe = document.getElementById("bt-ucast-ne");
-
-
 
 
 //prepnuti stavu dochazky hrace na konkretni trenink
@@ -53,7 +54,6 @@ btAno.addEventListener("click", async function() {
 
 });
 
-
 btNe.addEventListener("click", async function() {
   modal.classList.add('hidden');
 
@@ -72,7 +72,7 @@ btNe.addEventListener("click", async function() {
 });
 });
 
-
+  // tahá data z DB a vraci stavPrihlasení uživatele na trénink 
 async function getAttendance(userId) {
   const { data, error } = await supabaseClient
   .from("Seznamprihlasenychrezervacihracu")
@@ -88,15 +88,33 @@ async function getAttendance(userId) {
 }
 
 
-function editTraining() {
-const editTraining = document.querySelectorAll('.edit-training');
+//ulozi hodnoty z inputu do DB
+async function saveChanges() {
+  const trainingDateInput = document.getElementById("training-date");
+  const trainingStartTimeInput = document.getElementById("training-start-time");
+  const trainingEndTimeInput = document.getElementById("training-end-time");
+  const rezervaceHalyId = 2; // dodelat aby to bylo dynamicky
 
-editTraining.forEach(edit => {
-  edit.disabled = false;
-});
+  const trainingDate = trainingDateInput.value; 
+  const trainingStartTime = trainingStartTimeInput.value;
+  const trainingEndTime = trainingEndTimeInput.value;
+  
+  const { error } = await supabaseClient
+    .from("Rezervacehaly")
+    .update({
+      Datumrezervace: trainingDate,
+      Zacatekrezervace: trainingStartTime,
+      Konecrezervace: trainingEndTime
+    })
+    .eq("RezervacehalyID", rezervaceHalyId);
 
-//poslat změněná data do databaze
-
+  if (error) {
+    console.error("Chyba při aktualizaci rezervace haly:", error);
+    return error;
+  } else {
+    console.log("Trénink byl upraven");
+    return null;
+  }
 }
 
 async function setUserData() {
@@ -139,7 +157,6 @@ try {
   tymID = userData.TymID;
 
   setUserData();
-    console.log(userData.UzivatelID);
     
 
   isAdmin = userData.RoleuzivateluID === 1; 
@@ -147,15 +164,19 @@ try {
   
   // zobrazení obsahu podle role
   if (isAdmin) {
-    editTraining();
-    //document.getElementById('modal-potvrzeni-ucasti').classList.remove("hidden");
-
+    btEditTraining.classList.remove('hidden');
   }
   else if (isTrainer) {
-    editTraining();
-
+    btEditTraining.classList.remove('hidden');
   } else  {
-    document.getElementById('modal-potvrzeni-ucasti').classList.remove("hidden");
+    //modal se zobrazi pouze pokud uzivatel zadnou reakci nema
+    //pridat tlacitko pro zmenu reakce
+    if (getAttendance(currentUserId) === null) {
+      document.getElementById('modal-potvrzeni-ucasti').classList.remove("hidden");
+    } else {
+      titleMyAttendance.classList.remove('hidden');
+      spanCurrentUserAttendace.classList.remove('hidden');
+    }
   }
  
   } catch (error) {
@@ -216,22 +237,23 @@ async function displayPlayers(players) {
     li.appendChild(playerNameSpan);
     
 
-    const changeAttedndaceIcon = document.createElement("span");
+    let changeAttedndaceIcon = document.createElement("span");
 
-
+    // u kazdeho hrace zjistime jeho stav prihlaseni pomoci getAttendace
     const stavPrihlaseni = await getAttendance(player.UzivatelID);
-    
+
     
 
     if (stavPrihlaseni === true) {
-      changeAttedndaceIcon.innerHTML = "✔️";
-      changeAttedndaceIcon.className = "text-green-500 hover:text-green-700 ml-2";
+      changeAttedndaceIcon.innerHTML = "ANO";
+      changeAttedndaceIcon.className = "font-bold text-green-500 ml-2";
+      
     } else if (stavPrihlaseni === false) {
-      changeAttedndaceIcon.innerHTML = "✖";
-      changeAttedndaceIcon.className = "text-red-500 hover:text-red-700 ml-2";
+      changeAttedndaceIcon.innerHTML = "NE";
+      changeAttedndaceIcon.className = "font-bold text-red-500 ml-2";
     } else {
       changeAttedndaceIcon.innerHTML = "–";
-      changeAttedndaceIcon.className = "text-green-500 hover:text-green-700 ml-2";
+      changeAttedndaceIcon.className = "font-bold text-gray-500 ml-2";
     }
     
     li.appendChild(changeAttedndaceIcon);
@@ -246,3 +268,28 @@ async function displayPlayers(players) {
     playerList.appendChild(li);
   }
 }
+
+btEditTraining.addEventListener('click', async function() {
+  if (!isEditing) {
+    isEditing = true;
+
+    document.querySelectorAll('.edit-training').forEach(input => input.disabled = false);
+
+    btEditTraining.textContent = "Uložit změny";
+    btEditTraining.classList.remove("bg-cyan-500", "hover:bg-cyan-600");
+    btEditTraining.classList.add("bg-red-500", "hover:bg-red-600");
+
+  } else {
+    const error = await saveChanges();
+    if (!error) {
+      document.querySelectorAll('.edit-training').forEach(input => input.disabled = true);
+      btEditTraining.textContent = "✏️ Upravit trénink";
+
+      btEditTraining.classList.remove("bg-red-500", "hover:bg-red-600");
+      btEditTraining.classList.add("bg-cyan-500", "hover:bg-cyan-600");
+      isEditing = false;
+    } else {
+      console.error("Chyba při ukládání změn");
+    }
+  }
+});
