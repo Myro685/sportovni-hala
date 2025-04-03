@@ -12,7 +12,6 @@ problémů.
 Systém bude evidovat základní informace o rezervaci, jako je datum, čas, jméno trenéra, počet účastníků, status rezervace (čekající, potvrzená, zrušená).
 
 DBS2
--alespoň tři pohledy. které budou volány z aplikace
 -alespoň tři funkce různého typu s odpovídající složitostí
 -alespoň tři uložené procedury
 -alespoň dva triggery
@@ -38,8 +37,6 @@ INTERAKCE UŽIVATELŮ
 Uživatelský obsah bude umožňovat interakci uživatelů (ne nutně komunikaci, ne nutně synchronní), například příspěvek - komentář, inzerát - odpověď, termín zkoušky - zápis na termín.
 NÁVRH A IMPLEMENTACE APLIKACE
 Bude použit komponentový přístup.
-ZABEZPEČENÍ APLIKACE
-Veškeré vstupní údaje budou ošetřeny na straně prohlížeče před odesláním na server.
 DALŠÍ POŽADAVKY 
 Dokumentace projektu bude obsahovat požadavky na aplikaci, případy užití, použité endpointy.
 Zdrojový kód bude přehledný, logicky uspořádaný, vhodně organizovaný do podsložek, smysluplně okomentovaný.

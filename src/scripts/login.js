@@ -17,6 +17,32 @@ const teamLabel = document.getElementById("team-label");
 const team = document.getElementById("team-select");
 let isRegister = true;
 
+// Funkce pro validaci hesla
+function validatePassword(password) {
+  // Minimální délka
+  if (password.length < 8) {
+    return "Heslo musí mít alespoň 8 znaků.";
+  }
+
+  // Kontrola kombinace znaků
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasLowerCase = /[a-z]/.test(password);
+  const hasNumbers = /\d/.test(password);
+  const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+  if (!(hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChar)) {
+    return "Heslo musí obsahovat velké písmeno, malé písmeno, číslici a speciální znak.";
+  }
+
+  // Žádné běžné vzorce
+  const commonPasswords = ["password123", "12345678", "qwerty"];
+  if (commonPasswords.includes(password.toLowerCase())) {
+    return "Toto heslo je příliš běžné, zvolte jiné.";
+  }
+
+  return null; // Heslo je v pořádku
+}
+
 async function fetchTeams() {
   const { data, error } = await supabaseClient.from("Tym").select("*");
 
@@ -24,16 +50,15 @@ async function fetchTeams() {
     return;
   }
 
-  // Zachování placeholderu a přidání týmů
   data.forEach((tym) => {
     const option = document.createElement("option");
-    option.value = tym.TymID; // Nastavení hodnoty na TymID
+    option.value = tym.TymID;
     option.textContent = `${tym.Nazevtymu}`;
     team.appendChild(option);
   });
 }
 
-// ✅ Spuštění funkce po načtení stránky
+// Spuštění funkce po načtení stránky
 document.addEventListener("DOMContentLoaded", fetchTeams);
 
 // Kontrola, zda je uživatel už přihlášen
@@ -42,8 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     data: { session },
   } = await supabaseClient.auth.getSession();
   if (session) {
-    // Pokud je už přihlášen, přesměruj na index.html
-    //window.location.href = "../pages/index.html";
+    window.location.href = "../pages/index.html";
   }
 });
 
@@ -78,6 +102,13 @@ submit.addEventListener("click", async (e) => {
 
   try {
     if (isRegister) {
+      // Kontrola hesla při registraci
+      const passwordError = validatePassword(password.value);
+      if (passwordError) {
+        alert(passwordError);
+        return;
+      }
+
       // Registrace
       const { data, error } = await supabaseClient.auth.signUp({
         email: email.value,
@@ -118,7 +149,7 @@ submit.addEventListener("click", async (e) => {
       alert("Registrace úspěšná!");
       window.location.href = "../pages/index.html";
     } else {
-      // Přihlášení
+      // Přihlášení (bez kontroly hesla, protože to řeší Supabase)
       const { data, error } = await supabaseClient.auth.signInWithPassword({
         email: email.value,
         password: password.value,
