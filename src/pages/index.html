@@ -9,62 +9,70 @@
   </head>
   <body class="h-screen flex flex-col lg:flex-row bg-slate-600">
     <nav
-      class="relative flex flex-col p-4 w-full lg:w-48 lg:items-center bg-gray-400 lg:flex-shrink-0 lg:h-screen min-h-[71px] box-border"
+      class="relative flex flex-col p-4 lg:w-48 lg:items-center bg-gray-400 lg:flex-shrink-0 lg:h-screen min-h-[71px] box-border"
     >
-    <div class="flex items-center whitespace-nowrap text-2lg font-black">
-      <a
-        href="../pages/profile.html"
-        class="flex items-center whitespace-nowrap text-2lg font-black"
-      >
-        <img
-          src="../assets/a32b54fa44fb3f94bdb289b5fd8f01dc.jpg"
-          alt="Profile picture"
-          class="size-10 object-cover rounded-full lg:size-24"
-        />
-      </a>
+      <div class="flex items-center whitespace-nowrap text-2lg font-black">
+        <a
+          href="../pages/profile.html"
+          class="flex items-center whitespace-nowrap text-2lg font-black"
+        >
+          <img
+            src="../assets/a32b54fa44fb3f94bdb289b5fd8f01dc.jpg"
+            alt="Profile picture"
+            class="size-10 object-cover rounded-full lg:size-24"
+          />
+        </a>
 
-      <div class="flex items-center gap-2 pl-2">
+        <div class="flex items-center gap-2 pl-2">
           <!-- Mobile flags (right of hamburger) -->
           <div class="flex gap-2 lg:hidden">
             <button class="language-btn" data-lang="cs">
-              <img src="../assets/cs.png" alt="Czech" class="w-6 h-6 rounded-full">
+              <img
+                src="../assets/cs.png"
+                alt="Czech"
+                class="w-6 h-6 rounded-full"
+              />
             </button>
             <button class="language-btn" data-lang="en">
-              <img src="../assets/en.png" alt="English" class="w-6 h-6 rounded-full">
+              <img
+                src="../assets/en.png"
+                alt="English"
+                class="w-6 h-6 rounded-full"
+              />
             </button>
-           
+
             <button class="language-btn" data-lang="de">
-              <img src="../assets/de.png" alt="German" class="w-6 h-6 rounded-full">
+              <img
+                src="../assets/de.png"
+                alt="German"
+                class="w-6 h-6 rounded-full"
+              />
             </button>
           </div>
+        </div>
       </div>
-    </div>
 
-     
-
-        <input type="checkbox" class="peer hidden" id="navbar-open" />
-        <label
-          for="navbar-open"
-          class="absolute top-6 right-7 cursor-pointer lg:hidden"
+      <input type="checkbox" class="peer hidden" id="navbar-open" />
+      <label
+        for="navbar-open"
+        class="absolute top-6 right-7 cursor-pointer lg:hidden"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </label>
-        
-          
-        
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
+        </svg>
+      </label>
+
       <div
         aria-label="Header Navigation"
         class="absolute top-full left-0 z-10 w-full bg-gray-400 peer-checked:max-h-screen max-h-0 flex flex-col items-center overflow-hidden transition-all duration-300 ease-in-out lg:hidden"
@@ -73,28 +81,32 @@
           <li class="w-full">
             <a
               href="index.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5" data-lang-key="home"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="home"
               >Domů</a
             >
           </li>
           <li class="w-full">
             <a
               href="teams.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5" data-lang-key="teams"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="teams"
               >Týmy</a
             >
           </li>
           <li class="w-full">
             <a
               href="players.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5" data-lang-key="players"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="players"
               >Hráči</a
             >
           </li>
           <li class="w-full">
             <a
               href="profile.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5" data-lang-key="profile"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="profile"
               >Profil
             </a>
           </li>
@@ -113,44 +125,62 @@
           <li class="w-full">
             <a
               href="index.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5" data-lang-key="home"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="home"
               >Domů</a
             >
           </li>
           <li class="w-full">
             <a
               href="teams.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5" data-lang-key="teams"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="teams"
               >Týmy</a
             >
           </li>
           <li class="w-full">
             <a
               href="players.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5" data-lang-key="players"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="players"
               >Hráči</a
             >
           </li>
           <li class="w-full">
             <a
               href="profile.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5" data-lang-key="profile"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              data-lang-key="profile"
               >Profil</a
             >
           </li>
           <li>
             <div class="flex justify-center gap-2 mt-4 lg:flex">
               <button class="language-btn" data-lang="cs">
-                <img src="../assets/cs.png" alt="Czech" class="w-6 h-6 rounded-full">
+                <img
+                  src="../assets/cs.png"
+                  alt="Czech"
+                  class="w-6 h-6 rounded-full"
+                />
               </button>
               <button class="language-btn" data-lang="en">
-                <img src="../assets/en.png" alt="English" class="w-6 h-6 rounded-full">
+                <img
+                  src="../assets/en.png"
+                  alt="English"
+                  class="w-6 h-6 rounded-full"
+                />
               </button>
-              
+
               <button class="language-btn" data-lang="de">
-                <img src="../assets/de.png" alt="German" class="w-6 h-6 rounded-full">
+                <img
+                  src="../assets/de.png"
+                  alt="German"
+                  class="w-6 h-6 rounded-full"
+                />
               </button>
             </div>
+          </li>
+
           <li class="w-full">
             <a
               id="logoutBig"
@@ -159,7 +189,6 @@
             </a>
           </li>
         </ul>
-        
       </div>
     </nav>
 
@@ -168,9 +197,15 @@
         <div
           class="bg-white px-7 py-8 rounded-lg border-2 border-gray-200 shadow-lg flex flex-col justify-between w-96 h-72"
         >
-        <h2 class="text-xl font-bold"><span data-lang-key="training">Trénink</span> 1</h2>
-          <p class="text-gray-600">Lorem ipsum dolor sit amet consectetur adipiscing elit. </p>
-          <span class="text-gray-500"><span data-lang-key="time">Čas:</span> 10:00 - 11:00</span>
+          <h2 class="text-xl font-bold">
+            <span data-lang-key="training">Trénink</span> 1
+          </h2>
+          <p class="text-gray-600">
+            Lorem ipsum dolor sit amet consectetur adipiscing elit.
+          </p>
+          <span class="text-gray-500"
+            ><span data-lang-key="time">Čas:</span> 10:00 - 11:00</span
+          >
           <button
             type="submit"
             class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800"
@@ -184,9 +219,16 @@
         <div
           class="bg-white px-7 py-8 rounded-lg border-2 border-gray-200 shadow-lg flex flex-col justify-between w-96 h-72"
         >
-          <h2 class="text-xl font-bold"><span data-lang-key="training">Trénink</span> 2</h2>
-          <p class="text-gray-600">Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis.</p>
-          <span class="text-gray-500"><span data-lang-key="time">Čas:</span> 12:00 - 13:00</span>
+          <h2 class="text-xl font-bold">
+            <span data-lang-key="training">Trénink</span> 2
+          </h2>
+          <p class="text-gray-600">
+            Quisque faucibus ex sapien vitae pellentesque sem placerat. In id
+            cursus mi pretium tellus duis convallis.
+          </p>
+          <span class="text-gray-500"
+            ><span data-lang-key="time">Čas:</span> 12:00 - 13:00</span
+          >
           <button
             type="submit"
             class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800"
@@ -200,11 +242,15 @@
         <div
           class="bg-white px-7 py-8 rounded-lg border-2 border-gray-200 shadow-lg flex flex-col justify-between w-96 h-72"
         >
-        <h2 class="text-xl font-bold"><span data-lang-key="training">Trénink</span> 3</h2>
+          <h2 class="text-xl font-bold">
+            <span data-lang-key="training">Trénink</span> 3
+          </h2>
           <p class="text-gray-600">
             Ad litora torquent per conubia nostra inceptos himenaeos.
           </p>
-          <span class="text-gray-500"><span data-lang-key="time">Čas:</span> 14:00 - 15:00</span>
+          <span class="text-gray-500"
+            ><span data-lang-key="time">Čas:</span> 14:00 - 15:00</span
+          >
           <button
             type="submit"
             class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800"
@@ -218,9 +264,15 @@
         <div
           class="bg-white px-7 py-8 rounded-lg border-2 border-gray-200 shadow-lg flex flex-col justify-between w-96 h-72"
         >
-        <h2 class="text-xl font-bold"><span data-lang-key="training">Trénink</span> 4</h2>
-          <p class="text-gray-600">Pulvinar vivamus fringilla lacus nec metus bibendum egestas. </p>
-          <span class="text-gray-500"><span data-lang-key="time">Čas:</span> 16:00 - 17:00</span>
+          <h2 class="text-xl font-bold">
+            <span data-lang-key="training">Trénink</span> 4
+          </h2>
+          <p class="text-gray-600">
+            Pulvinar vivamus fringilla lacus nec metus bibendum egestas.
+          </p>
+          <span class="text-gray-500"
+            ><span data-lang-key="time">Čas:</span> 16:00 - 17:00</span
+          >
           <button
             type="submit"
             class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800"
@@ -231,10 +283,9 @@
             podrobnosti
           </button>
         </div>
-
       </div>
     </main>
-     <script src="../scripts/language.js"></script>
+    <script src="../scripts/language.js"></script>
     <script src="../scripts/logout.js"></script>
     <script src="../scripts/index.js"></script>
   </body>

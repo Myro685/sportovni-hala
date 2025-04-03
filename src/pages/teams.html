@@ -9,37 +9,49 @@
   </head>
   <body class="h-screen flex flex-col lg:flex-row bg-slate-600">
     <nav
-      class="relative flex flex-col p-4 w-full lg:w-48 lg:items-center bg-gray-400 lg:flex-shrink-0 lg:h-screen min-h-[71px] box-border"
+      class="relative flex flex-col p-4 lg:w-48 lg:items-center bg-gray-400 lg:flex-shrink-0 lg:h-screen min-h-[71px] box-border"
     >
-    <div class="flex items-center whitespace-nowrap text-2lg font-black">
-      <a
-        href="../pages/profile.html"
-        class="flex items-center whitespace-nowrap text-2lg font-black"
-      >
-        <img
-          src="../assets/a32b54fa44fb3f94bdb289b5fd8f01dc.jpg"
-          alt="Profile picture"
-          class="size-10 object-cover rounded-full lg:size-24"
-        />
-      </a>
+      <div class="flex items-center whitespace-nowrap text-2lg font-black">
+        <a
+          href="../pages/profile.html"
+          class="flex items-center whitespace-nowrap text-2lg font-black"
+        >
+          <img
+            src="../assets/a32b54fa44fb3f94bdb289b5fd8f01dc.jpg"
+            alt="Profile picture"
+            class="size-10 object-cover rounded-full lg:size-24"
+          />
+        </a>
 
-      <div class="flex items-center gap-2 pl-2">
+        <div class="flex items-center gap-2 pl-2">
           <!-- Mobile flags (right of hamburger) -->
           <div class="flex gap-2 lg:hidden">
             <button class="language-btn" data-lang="cs">
-              <img src="../assets/cs.png" alt="Czech" class="w-6 h-6 rounded-full">
+              <img
+                src="../assets/cs.png"
+                alt="Czech"
+                class="w-6 h-6 rounded-full"
+              />
             </button>
             <button class="language-btn" data-lang="en">
-              <img src="../assets/en.png" alt="English" class="w-6 h-6 rounded-full">
+              <img
+                src="../assets/en.png"
+                alt="English"
+                class="w-6 h-6 rounded-full"
+              />
             </button>
-           
+
             <button class="language-btn" data-lang="de">
-              <img src="../assets/de.png" alt="German" class="w-6 h-6 rounded-full">
+              <img
+                src="../assets/de.png"
+                alt="German"
+                class="w-6 h-6 rounded-full"
+              />
             </button>
           </div>
+        </div>
       </div>
-    </div>
-    
+
       <input type="checkbox" class="peer hidden" id="navbar-open" />
       <label
         for="navbar-open"
@@ -69,28 +81,32 @@
             <a
               href="index.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="home">Domů</a
+              data-lang-key="home"
+              >Domů</a
             >
           </li>
           <li class="w-full">
             <a
               href="teams.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="teams">Týmy</a
+              data-lang-key="teams"
+              >Týmy</a
             >
           </li>
           <li class="w-full">
             <a
               href="players.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="players">Hráči</a
+              data-lang-key="players"
+              >Hráči</a
             >
           </li>
           <li class="w-full">
             <a
               href="profile.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="profile">Profil
+              data-lang-key="profile"
+              >Profil
             </a>
           </li>
           <li class="w-full">
@@ -109,43 +125,61 @@
             <a
               href="index.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="home">Domů</a
+              data-lang-key="home"
+              >Domů</a
             >
           </li>
           <li class="w-full">
             <a
               href="teams.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="teams">Týmy</a
+              data-lang-key="teams"
+              >Týmy</a
             >
           </li>
           <li class="w-full">
             <a
               href="players.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="players">Hráči</a
+              data-lang-key="players"
+              >Hráči</a
             >
           </li>
           <li class="w-full">
             <a
               href="profile.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              data-lang-key="profile">Profil</a
+              data-lang-key="profile"
+              >Profil</a
             >
           </li>
           <li>
             <div class="flex justify-center gap-2 mt-4 lg:flex">
               <button class="language-btn" data-lang="cs">
-                <img src="../assets/cs.png" alt="Czech" class="w-6 h-6 rounded-full">
+                <img
+                  src="../assets/cs.png"
+                  alt="Czech"
+                  class="w-6 h-6 rounded-full"
+                />
               </button>
               <button class="language-btn" data-lang="en">
-                <img src="../assets/en.png" alt="English" class="w-6 h-6 rounded-full">
+                <img
+                  src="../assets/en.png"
+                  alt="English"
+                  class="w-6 h-6 rounded-full"
+                />
               </button>
-              
+
               <button class="language-btn" data-lang="de">
-                <img src="../assets/de.png" alt="German" class="w-6 h-6 rounded-full">
+                <img
+                  src="../assets/de.png"
+                  alt="German"
+                  class="w-6 h-6 rounded-full"
+                />
               </button>
             </div>
+          </li>
+
           <li class="w-full">
             <a
               id="logoutBig"
@@ -171,12 +205,16 @@
             <button
               type="submit"
               class="bg-cyan-500 text-white px-4 py-2 rounded-lg hover:bg-cyan-600"
-              data-lang-key="add_team">
+              data-lang-key="add_team"
+            >
               Přidat tým
             </button>
           </div>
         </form>
-        <h1 class="text-3xl font-bold text-black mb-4 text-center"data-lang-key="team_list">
+        <h1
+          class="text-3xl font-bold text-black mb-4 text-center"
+          data-lang-key="team_list"
+        >
           Seznam týmů
         </h1>
         <input
@@ -186,7 +224,10 @@
           data-lang-key="search_team"
           class="w-full h-10 p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
         />
-        <ul id="teamList" class="bg-white rounded-lg p-4 space-y-2"></ul>
+        <ul
+          id="teamList"
+          class="bg-white rounded-lg p-4 space-y-2 max-h-96 overflow-y-auto"
+        ></ul>
       </div>
     </div>
     <script src="../scripts/teams.js"></script>

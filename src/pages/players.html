@@ -9,7 +9,7 @@
   </head>
   <body class="h-screen flex flex-col lg:flex-row bg-slate-600">
     <nav
-      class="relative flex flex-col p-4 w-full lg:w-48 lg:items-center bg-gray-400 lg:flex-shrink-0 lg:h-screen min-h-[71px] box-border"
+      class="relative flex flex-col p-4 lg:w-48 lg:items-center bg-gray-400 lg:flex-shrink-0 lg:h-screen min-h-[71px] box-border"
     >
     <div class="flex items-center whitespace-nowrap text-2lg font-black">
       <a
@@ -173,7 +173,7 @@
         data-lang-key="search_players"
         class="w-full h-10 p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
       />
-      <ul id="playersList" class="bg-white rounded-lg p-4 space-y-2"></ul>
+      <ul id="playersList" class="bg-white rounded-lg p-4 space-y-2 max-h-96 overflow-y-auto"></ul>
     </div>
     <script src="../scripts/players.js"></script>
     <script src="../scripts/language.js"></script>
