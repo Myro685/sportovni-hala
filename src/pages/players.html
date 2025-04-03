@@ -4,13 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../output.css" />
-    <title>Rezervační systém</title>
+    <title data-lang-key="reserve_system">Rezervační systém</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
   <body class="h-screen flex flex-col lg:flex-row bg-slate-600">
     <nav
-      class="relative flex flex-col p-4 lg:items-center bg-gray-400 lg:max-w-48 lg:h-screen min-h-[71px]"
+      class="relative flex flex-col p-4 w-full lg:w-48 lg:items-center bg-gray-400 lg:flex-shrink-0 lg:h-screen min-h-[71px] box-border"
     >
+    <div class="flex items-center whitespace-nowrap text-2lg font-black">
       <a
         href="../pages/profile.html"
         class="flex items-center whitespace-nowrap text-2lg font-black"
@@ -20,6 +21,25 @@
           alt="Profile picture"
           class="size-10 object-cover rounded-full lg:size-24"
         />
+      </a>
+
+      <div class="flex items-center gap-2 pl-2">
+          <!-- Mobile flags (right of hamburger) -->
+          <div class="flex gap-2 lg:hidden">
+            <button class="language-btn" data-lang="cs">
+              <img src="../assets/cs.png" alt="Czech" class="w-6 h-6 rounded-full">
+            </button>
+            <button class="language-btn" data-lang="en">
+              <img src="../assets/en.png" alt="English" class="w-6 h-6 rounded-full">
+            </button>
+           
+            <button class="language-btn" data-lang="de">
+              <img src="../assets/de.png" alt="German" class="w-6 h-6 rounded-full">
+            </button>
+          </div>
+      </div>
+    </div>
+
       </a>
       <input type="checkbox" class="peer hidden" id="navbar-open" />
       <label
@@ -50,28 +70,28 @@
             <a
               href="index.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Domů</a
+              data-lang-key="home">Domů</a
             >
           </li>
           <li class="w-full">
             <a
               href="teams.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Týmy</a
+              data-lang-key="teams">Týmy</a
             >
           </li>
           <li class="w-full">
             <a
               href="players.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Hráči</a
+              data-lang-key="players">Hráči</a
             >
           </li>
           <li class="w-full">
             <a
               href="profile.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Profil
+              data-lang-key="profile">Profil
             </a>
           </li>
           <li class="w-full">
@@ -90,30 +110,43 @@
             <a
               href="index.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Domů</a
+              data-lang-key="home">Domů</a
             >
           </li>
           <li class="w-full">
             <a
               href="teams.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Týmy</a
+              data-lang-key="teams">Týmy</a
             >
           </li>
           <li class="w-full">
             <a
               href="players.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Hráči</a
+              data-lang-key="players">Hráči</a
             >
           </li>
           <li class="w-full">
             <a
               href="profile.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
-              >Profil</a
+              data-lang-key="profile">Profil</a
             >
           </li>
+          <li>
+            <div class="flex justify-center gap-2 mt-4 lg:flex">
+              <button class="language-btn" data-lang="cs">
+                <img src="../assets/cs.png" alt="Czech" class="w-6 h-6 rounded-full">
+              </button>
+              <button class="language-btn" data-lang="en">
+                <img src="../assets/en.png" alt="English" class="w-6 h-6 rounded-full">
+              </button>
+              
+              <button class="language-btn" data-lang="de">
+                <img src="../assets/de.png" alt="German" class="w-6 h-6 rounded-full">
+              </button>
+            </div>
           <li class="w-full">
             <a
               id="logoutBig"
@@ -128,7 +161,8 @@
       class="flex flex-col justify-center items-center gap-4 w-full mx-auto lg:my-6 pt-4 px-4 py-3"
     >
       <div class="w-full sm:max-w-md">
-        <h1 class="text-3xl font-bold text-black mb-4 text-center">
+        <h1 class="text-3xl font-bold text-black mb-4 text-center" 
+        data-lang-key="player_list">
           Seznam hráčů
         </h1>
         
@@ -136,11 +170,13 @@
         type="text"
         id="playersSearch"
         placeholder="Vyhledat hráče nebo tým..."
+        data-lang-key="search_players"
         class="w-full h-10 p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
       />
       <ul id="playersList" class="bg-white rounded-lg p-4 space-y-2"></ul>
     </div>
     <script src="../scripts/players.js"></script>
+    <script src="../scripts/language.js"></script>
     <script src="../scripts/logout.js"></script>
   </body>
 </html>
