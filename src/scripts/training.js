@@ -12,6 +12,7 @@ let isTrainer = false;
 let tymID = 0;
 let currentUserId = null;
 let isEditing = false; 
+const rezervaceHalyId = 2; // dodelat aby to bylo dynamicky
 
 
 const nazevTymu = document.getElementById("nazev-tymu");
@@ -21,12 +22,14 @@ const nazevTymu = document.getElementById("nazev-tymu");
 const btEditTraining = document.getElementById('bt-edit-training');
 const titleMyAttendance = document.getElementById('title-my-attendace');
 const spanCurrentUserAttendace = document.getElementById('span-current-user-attendance');
+const spanTrainigDataTrainer = document.getElementById('training-data-trainer');
 
 // Načtení dat
 document.addEventListener("DOMContentLoaded", async () =>{
 await checkUserRole();
 await getAttendance(currentUserId); //currentUserId nastavuju v checkUserRole()
-loadPlayers();
+await setTrainingData; 
+loadPlayers(); //opravit load players
 
 
 const modal = document.getElementById("modal-potvrzeni-ucasti");
@@ -87,13 +90,58 @@ async function getAttendance(userId) {
   }
 }
 
+//nacte data uzivatele podle jeho id
+async function getUserData(userId) {
+
+  const { data: userData, erro: error} = await supabaseClient
+    .from("Uzivatel")
+    .select("UzivatelID, Jmeno, Prijmeni, TymID") 
+    .eq("UzivatelID", userId)
+      .single();
+
+  if (error) {
+    console.error("Chyba při načítání hráče:", error);
+    return;
+  }
+  return userData;
+}
+
+async function getTeamData(teamId) {
+   // Dotaz na tabulku "Tym"
+   const { data: teamData, error: teamError } = await supabaseClient
+   .from("Tym")
+   .select("Nazevtymu")
+   .eq("TymID", teamId)
+   .single();
+
+   if (teamError) {
+    console.error("Chyba při načítání týmu:", teamError);
+    return;
+  }
+   return teamData;
+}
+
+async function getHallReservationData(hallId) {
+    // Dotaz na tabulku "Rezervacehaly"
+  const { data: RezervacehalyData, error: RezervacehalyError } = await supabaseClient
+    .from("Rezervacehaly")
+    .select("UzivatelID, Datumrezervace, Konecrezervace, Zacatekrezervace")
+    .eq("RezervacehalyID", hallId)
+    .single();
+
+  if (RezervacehalyError) {
+    console.error("Chyba při načítání týmu:", RezervacehalyError);
+    return;
+  }
+  return RezervacehalyData;
+}
+
 
 //ulozi hodnoty z inputu do DB
 async function saveChanges() {
   const trainingDateInput = document.getElementById("training-date");
   const trainingStartTimeInput = document.getElementById("training-start-time");
   const trainingEndTimeInput = document.getElementById("training-end-time");
-  const rezervaceHalyId = 2; // dodelat aby to bylo dynamicky
 
   const trainingDate = trainingDateInput.value; 
   const trainingStartTime = trainingStartTimeInput.value;
@@ -117,14 +165,22 @@ async function saveChanges() {
   }
 }
 
-async function setUserData() {
-const { data: userData, error: userError } = await supabaseClient
-    .from("Tym")
-    .select("Nazevtymu")
-    .eq("TymID", tymID)
-    .single();
-    
-    nazevTymu.innerHTML = userData.Nazevtymu;
+async function setTrainingData() {
+  const teamData = await getTeamData(tymID);
+  nazevTymu.innerHTML = teamData.Nazevtymu;
+
+  const hallRezervationData = await getHallReservationData(rezervaceHalyId);
+  const trainer = await getUserData(hallRezervationData.UzivatelID);
+
+  spanTrainigDataTrainer.textContent = trainer.Jmeno + " " + trainer.Prijmeni;
+  
+  const trainingDateInput = document.getElementById("training-date");
+  const trainingStartTimeInput = document.getElementById("training-start-time");
+  const trainingEndTimeInput = document.getElementById("training-end-time");
+  
+  trainingDateInput.value = hallRezervationData.Datumrezervace;
+  trainingStartTimeInput.value = hallRezervationData.Zacatekrezervace;
+  trainingEndTimeInput.value = hallRezervationData.Konecrezervace;
 }
 
 // Funkce pro zjištění role uživatele
@@ -156,7 +212,7 @@ try {
   
   tymID = userData.TymID;
 
-  setUserData();
+  setTrainingData();
     
 
   isAdmin = userData.RoleuzivateluID === 1; 
@@ -193,13 +249,14 @@ async function loadPlayers() {
     console.error("Element s ID 'player-list' nebyl nalezen v HTML.");
     return;
   }
-
+    
   try {
    
      const { data: players, error } = await supabaseClient
-    .from("Uzivatel")
-    .select("UzivatelID, Jmeno, Prijmeni, TymID") //Načtení hráče
-    .eq("TymID", tymID) //vybere uzivatele jenom z tymu, ve kterem je uzivatel prihlaseny
+      .from("Uzivatel")
+      .select("UzivatelID, Jmeno, Prijmeni, TymID") 
+      .eq("TymID", tymID)
+      .eq("RoleuzivateluID", 3) //seznam ucasti na treninku vypise pouze hrace (role = 3)
     
     if (error) {
       alert("Chyba při načítání hráčů: " + error.message);
@@ -207,11 +264,13 @@ async function loadPlayers() {
     }
     
     allPlayers = players;
+    
     displayPlayers(allPlayers);
 
   } catch (error) {
     alert("Chyba: " + error.message);
   }
+    
 
 }
 
