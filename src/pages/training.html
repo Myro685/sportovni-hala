@@ -226,7 +226,8 @@
             class="flex flex-col md:flex-row md:justify-between md:items-center"
           >
             <div class="flex flex-col items-center">
-              <h2 id="nazev-tymu" class="text-xl font-bold text-gray-800"></h2>
+              <h2 id="nazev-tymu" class="text-xl font-bold text-gray-800">
+              </h2>
 
               <div class="mt-1 flex flex-col md:flex-row md:space-x-6">
                 <p class="text-gray-600">
@@ -283,11 +284,16 @@
                 ✏️ Upravit trénink
             </button>
             <div class="flex flex-row">
-              <h3 id="title-my-attendace" class="text-xl font-bold hidden">
+              <h3 id="title-my-attendance" class="text-xl font-bold hidden">
                 Moje účast: 
               </h3>
               <span id="span-current-user-attendance" class="hidden">fsdf</span>
             </div>
+            <button
+            id="bt-change-attendance"
+             class="hidden w-28 mt-1 text-center bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-300">
+              ✏️ Změnit účast
+            </button>
             <button
             id="bt-edit-attendance"
             class="hidden mt-1 text-center bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-300"

@@ -13,6 +13,7 @@ let tymID = 0;
 let currentUserId = null;
 let isEditing = false; 
 const rezervaceHalyId = 2; // dodelat aby to bylo dynamicky
+let currentUserAttendance;
 
 
 const nazevTymu = document.getElementById("nazev-tymu");
@@ -20,63 +21,94 @@ const nazevTymu = document.getElementById("nazev-tymu");
 //const trainingStartTime = document.getElementById("training-start-time");
 //const trainingEndTime = document.getElementById("training-end-time");
 const btEditTraining = document.getElementById('bt-edit-training');
-const titleMyAttendance = document.getElementById('title-my-attendace');
-const spanCurrentUserAttendace = document.getElementById('span-current-user-attendance');
+const titleMyAttendance = document.getElementById('title-my-attendance');
+const spanCurrentUserAttendance = document.getElementById('span-current-user-attendance');
 const spanTrainigDataTrainer = document.getElementById('training-data-trainer');
+const btChangeAttendance = document.getElementById('bt-change-attendance');
 
-// Načtení dat
-document.addEventListener("DOMContentLoaded", async () =>{
-await checkUserRole();
-await getAttendance(currentUserId); //currentUserId nastavuju v checkUserRole()
-await setTrainingData; 
-loadPlayers(); //opravit load players
-
-
-const modal = document.getElementById("modal-potvrzeni-ucasti");
-
+const modalPotvrzeniUcasti = document.getElementById("modal-potvrzeni-ucasti");
 const btAno = document.getElementById("bt-ucast-ano");
 const btNe = document.getElementById("bt-ucast-ne");
 
 
-//prepnuti stavu dochazky hrace na konkretni trenink
-btAno.addEventListener("click", async function() {
-  modal.classList.add('hidden');
+// Načtení dat
+document.addEventListener("DOMContentLoaded", async () =>{
+  await checkUserRole();
+  
+  currentUserAttendance = await getAttendance(currentUserId); //currentUserId nastavuju v checkUserRole()
+  
+  if (currentUserAttendance === null) {
+    modalPotvrzeniUcasti.classList.remove('hidden');
+    btChangeAttendance.classList.add('hidden');
 
+  } else {
+  btChangeAttendance.classList.remove('hidden');
+  modalPotvrzeniUcasti.classList.add('hidden');
+  }
+  await changeMyAttendance(currentUserAttendance);
+  await setTrainingData(); 
+  await loadPlayers(); //opravit load players
+  
+});
+
+
+
+async function changeMyAttendance(attendance) {
+  // prepne se mi to v db, ale nezmizi modal
+  
   const { data, error } = await supabaseClient
   .from("Seznamprihlasenychrezervacihracu")
-  .update({Stavprihlaseni: true})
+  .update({Stavprihlaseni: attendance})
   .select("Stavprihlaseni")
   .eq("UzivatelID", currentUserId ); 
 
+  
   if (error) {
     console.error("Chyba při aktualizaci účasti: ", error);
   } else {
-    stavPrihlaseni = data[0].Stavprihlaseni;
-    loadPlayers();
+    if (attendance === true) {
+      spanCurrentUserAttendance.innerHTML = "ANO";
+      spanCurrentUserAttendance.className = "font-bold text-green-500 ml-2";
+      modalPotvrzeniUcasti.classList.add('hidden');
+      btChangeAttendance.classList.remove('hidden');
+      
+    } else if (attendance === false) {
+      spanCurrentUserAttendance.innerHTML = "NE";
+      spanCurrentUserAttendance.className = "font-bold text-red-500 ml-2";
+      modalPotvrzeniUcasti.classList.add('hidden');
+      btChangeAttendance.classList.remove('hidden');
+    }
+    else {
+      spanCurrentUserAttendance.innerHTML = "-";
+      spanCurrentUserAttendance.className = "font-bold text-gray-500 ml-2";
+    }
   }
+}
 
-});
 
-btNe.addEventListener("click", async function() {
-  modal.classList.add('hidden');
+async function rejectAttendance() {
+  changeMyAttendance(false);
 
-  const { data, error } = await supabaseClient
-  .from("Seznamprihlasenychrezervacihracu")
-  .update({Stavprihlaseni: false})
-  .select("Stavprihlaseni")
-  .eq("UzivatelID", currentUserId ); 
+    modalPotvrzeniUcasti.classList.add('hidden');
+    modalPotvrzeniUcasti.classList.add('hidden');
+    btChangeAttendance.classList.remove('hidden');
 
-  if (error) {
-    console.error("Chyba při aktualizaci účasti: ", error);
-  } else {
-    stavPrihlaseni = data[0].Stavprihlaseni;
-    loadPlayers();
-  }
-});
-});
+
+}
+
+async function acceptAttendance() {
+    changeMyAttendance(true);
+     
+      modalPotvrzeniUcasti.classList.add('hidden');
+      stavPrihlaseni = data[0].Stavprihlaseni;
+      btChangeAttendance.classList.remove('hidden');
+      //loadPlayers(); 
+    
+}
 
   // tahá data z DB a vraci stavPrihlasení uživatele na trénink 
 async function getAttendance(userId) {
+  
   const { data, error } = await supabaseClient
   .from("Seznamprihlasenychrezervacihracu")
   .select("Stavprihlaseni")
@@ -93,7 +125,7 @@ async function getAttendance(userId) {
 //nacte data uzivatele podle jeho id
 async function getUserData(userId) {
 
-  const { data: userData, erro: error} = await supabaseClient
+  const { data: userData, error: error} = await supabaseClient
     .from("Uzivatel")
     .select("UzivatelID, Jmeno, Prijmeni, TymID") 
     .eq("UzivatelID", userId)
@@ -106,6 +138,7 @@ async function getUserData(userId) {
   return userData;
 }
 
+//nacte data o tymu
 async function getTeamData(teamId) {
    // Dotaz na tabulku "Tym"
    const { data: teamData, error: teamError } = await supabaseClient
@@ -121,6 +154,7 @@ async function getTeamData(teamId) {
    return teamData;
 }
 
+//nacte data o rezervai haly (eventu co se v hale kona)
 async function getHallReservationData(hallId) {
     // Dotaz na tabulku "Rezervacehaly"
   const { data: RezervacehalyData, error: RezervacehalyError } = await supabaseClient
@@ -136,9 +170,8 @@ async function getHallReservationData(hallId) {
   return RezervacehalyData;
 }
 
-
 //ulozi hodnoty z inputu do DB
-async function saveChanges() {
+async function saveTrainingChanges() {
   const trainingDateInput = document.getElementById("training-date");
   const trainingStartTimeInput = document.getElementById("training-start-time");
   const trainingEndTimeInput = document.getElementById("training-end-time");
@@ -231,7 +264,7 @@ try {
       document.getElementById('modal-potvrzeni-ucasti').classList.remove("hidden");
     } else {
       titleMyAttendance.classList.remove('hidden');
-      spanCurrentUserAttendace.classList.remove('hidden');
+      spanCurrentUserAttendance.classList.remove('hidden');
     }
   }
  
@@ -240,7 +273,7 @@ try {
   }
 }
 
-
+//nacte z db seznam hracu, jejich tymID je stejny jako id prihlaseneho uzivatele, vypise pouze uzivatele s idRole 3 (hrac)
 async function loadPlayers() {
   const playerList = document.getElementById("player-list");
 
@@ -264,69 +297,101 @@ async function loadPlayers() {
     }
     
     allPlayers = players;
+    //odstrani currentUserID z allPlayers, protoze ho zobrazuji v Moje ucast
     
     displayPlayers(allPlayers);
 
   } catch (error) {
     alert("Chyba: " + error.message);
   }
-    
 
 }
 
 
 async function displayPlayers(players) {
   const playerList = document.getElementById("player-list");
+  players = players.filter(player => player.UzivatelID !== currentUserId);
 
   if (!playerList) {
     console.error("Element s ID 'player-list' nebyl nalezen v HTML.");
     return;
   }
 
-  playerList.innerHTML = ""; 
+  playerList.innerHTML = "";
 
+  const playersWithAttendance = [];
+
+  // Získání stavu přihlášení pro každého hráče
   for (const player of players) {
+    const stavPrihlaseni = await getAttendance(player.UzivatelID);
+    playersWithAttendance.push({
+      ...player,
+      stavPrihlaseni: stavPrihlaseni,
+    });
+  }
+
+  // Seřazení hráčů: true → false → null
+  playersWithAttendance.sort((a, b) => {
+    const getOrder = (stav) => {
+      if (stav === true) return 0;
+      if (stav === false) return 1;
+      return 2;
+    };
+    return getOrder(a.stavPrihlaseni) - getOrder(b.stavPrihlaseni);
+  });
+
+  // Zobrazení hráčů
+  for (const player of playersWithAttendance) {
     const li = document.createElement("li");
     li.className =
       "text-gray-700 p-2 border-b border-gray-200 flex justify-between items-center";
 
-    // Zobrazení
     const playerNameSpan = document.createElement("span");
-    playerNameSpan.textContent = player.Jmeno +" "+  player.Prijmeni;
+    playerNameSpan.textContent = player.Jmeno + " " + player.Prijmeni;
     li.appendChild(playerNameSpan);
-    
 
-    let changeAttedndaceIcon = document.createElement("span");
+    const attendanceSpan = document.createElement("span");
 
-    // u kazdeho hrace zjistime jeho stav prihlaseni pomoci getAttendace
-    const stavPrihlaseni = await getAttendance(player.UzivatelID);
-
-    
-
-    if (stavPrihlaseni === true) {
-      changeAttedndaceIcon.innerHTML = "ANO";
-      changeAttedndaceIcon.className = "font-bold text-green-500 ml-2";
-      
-    } else if (stavPrihlaseni === false) {
-      changeAttedndaceIcon.innerHTML = "NE";
-      changeAttedndaceIcon.className = "font-bold text-red-500 ml-2";
+    if (player.stavPrihlaseni === true) {
+      attendanceSpan.textContent = "ANO";
+      attendanceSpan.className = "font-bold text-green-500 ml-2";
+    } else if (player.stavPrihlaseni === false) {
+      attendanceSpan.textContent = "NE";
+      attendanceSpan.className = "font-bold text-red-500 ml-2";
     } else {
-      changeAttedndaceIcon.innerHTML = "–";
-      changeAttedndaceIcon.className = "font-bold text-gray-500 ml-2";
+      attendanceSpan.textContent = "–";
+      attendanceSpan.className = "font-bold text-gray-500 ml-2";
     }
-    
-    li.appendChild(changeAttedndaceIcon);
-    playerList.appendChild(li);
-  };
 
-  // Pokud nejsou žádní hráči 
-  if (players.length === 0) {
+    li.appendChild(attendanceSpan);
+    playerList.appendChild(li);
+  }
+
+  if (playersWithAttendance.length === 0) {
     const li = document.createElement("li");
     li.className = "text-gray-500 p-2";
     li.textContent = "V týmu nejsou žádní hráči.";
     playerList.appendChild(li);
   }
 }
+
+// anonymni funcke pro změnu docházky po kliknutí na tlačítko
+btChangeAttendance.addEventListener('click', async () => {
+  const novyStav = !currentUserAttendance;
+
+  const potvrzeni = confirm(
+    `Opravdu chcete změnit svoji docházku na trénink na: ${novyStav ? "ANO" : "NE"}?`
+  );
+
+  if (potvrzeni) {
+    currentUserAttendance = novyStav;
+    await changeMyAttendance(currentUserAttendance);
+  }
+});
+
+
+btAno.addEventListener('click', () => changeMyAttendance(true));
+btNe.addEventListener('click', () => changeMyAttendance(false));
 
 btEditTraining.addEventListener('click', async function() {
   if (!isEditing) {
@@ -339,7 +404,7 @@ btEditTraining.addEventListener('click', async function() {
     btEditTraining.classList.add("bg-red-500", "hover:bg-red-600");
 
   } else {
-    const error = await saveChanges();
+    const error = await saveTrainingChanges();
     if (!error) {
       document.querySelectorAll('.edit-training').forEach(input => input.disabled = true);
       btEditTraining.textContent = "✏️ Upravit trénink";
