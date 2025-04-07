@@ -26,6 +26,7 @@ async function checkUserRole() {
     } = await supabaseClient.auth.getSession();
     if (sessionError || !session) {
       alert("Uživatel není přihlášen!");
+      window.location.href = "../pages/login.html";
       return;
     }
 
@@ -35,8 +36,8 @@ async function checkUserRole() {
       .select("RoleuzivateluID")
       .eq("Email", userEmail)
       .single();
-      //console.log(RoleuzivateluID);
-      
+    //console.log(RoleuzivateluID);
+
     if (userError) {
       alert("Chyba při načítání role uživatele: " + userError.message);
       return;

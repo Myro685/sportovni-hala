@@ -15,6 +15,17 @@ document.addEventListener("DOMContentLoaded", () => {
 // Načtení hráčů z databáze
 async function loadPlayers() {
   try {
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabaseClient.auth.getSession();
+
+    if (sessionError || !session) {
+      alert("Uživatel není přihlášen!");
+      window.location.href = "../pages/login.html";
+      return;
+    }
+
     const { data: players, error } = await supabaseClient
       .from("Uzivatel")
       .select("Jmeno, Prijmeni") // Načítáme pouze Jmeno a Prijmeni

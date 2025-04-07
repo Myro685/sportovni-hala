@@ -33,6 +33,7 @@ async function loadData() {
 
     if (sessionError || !session) {
       alert("Uživatel není přihlášen!");
+      window.location.href = "../pages/login.html";
       return;
     }
 

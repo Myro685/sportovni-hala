@@ -24,15 +24,11 @@ DBS2
 TNPW2
 UŽIVATELSKÝ OBSAH
 Koncový uživatel může v aplikaci spravovat uživatelský obsah resp. data. Profil uživatele není považován za uživatelský obsah resp. data. Správa uživatelského obsahu znamená alespoň CRUD operace.
-PŘÍSTUP K UŽIVATELSKÉMU OBSAHU
-Uživatelský obsah/data lze spravovat pouze po autentizaci a autorizaci (vhodná role, vlastnický vztah).
 ZOBRAZENÍ UŽIVATELSKÉHO OBSAHU
 Uživatelský obsah bude možné zobrazit po jednotlivých položkách.
 Uživatelský obsah bude možné zobrazit i v celku, a to po dávkách (stránkovaně).
 Bude možné zobrazit i souhrnné údaje o uživatelském obsahu (dashboard), např. celkový počet položek, výběr několika položek podle vhodných kritérií (nejnovější, s nastaveným příznakem, a pod).
 GUI aplikace bude obsahovat oblast s podmíněným vykreslováním obsahu (například navigace, závislá na stavu přihlášen/ nepřihlášen, nebo dashboard s obsahem podle role uživatele).
-UKLÁDÁNÍ V PROHLÍŽEČI
-Bude využito ukládání dat v prohlížeči (např. oblíbené, obsah košíku).
 INTERAKCE UŽIVATELŮ
 Uživatelský obsah bude umožňovat interakci uživatelů (ne nutně komunikaci, ne nutně synchronní), například příspěvek - komentář, inzerát - odpověď, termín zkoušky - zápis na termín.
 NÁVRH A IMPLEMENTACE APLIKACE
