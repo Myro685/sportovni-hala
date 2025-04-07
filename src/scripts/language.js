@@ -174,7 +174,7 @@ function changeLanguage(lang) {
   localStorage.setItem("preferredLanguage", lang); // Save preference to localStorage
 }
 
-// Initialization on DOM load
+// Initialization on  load
 document.addEventListener("DOMContentLoaded", () => {
   // Adding event listeners to language buttons
   document.querySelectorAll(".language-btn").forEach((button) => {

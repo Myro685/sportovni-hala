@@ -14,12 +14,8 @@
       method="POST"
       class="bg-white w-full sm:max-w-md px-8 py-12 rounded-lg flex justify-center items-center flex-col gap-4"
     >
-    
-   
-
-      <h1 class="text-3xl font-bold"data-lang-key="hall">HALA</h1>
+      <h1 class="text-3xl font-bold" data-lang-key="hall">HALA</h1>
       <div class="w-full flex justify-center items-center flex-col gap-2">
-        
         <input
           placeholder="Jméno"
           type="text"
@@ -56,36 +52,57 @@
           required
           data-lang-key="password"
         />
-        <label for="team-select" id="team-label"data-lang-key="select_team">Vyberte tým</label>
+        <label for="team-select" id="team-label" data-lang-key="select_team"
+          >Vyberte tým</label
+        >
         <select name="team-select" id="team-select"></select>
       </div>
       <button
         type="button"
         class="text-white font-bold uppercase w-full h-10 rounded-lg bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500"
         id="submit"
-        data-lang-key="register">
+        data-lang-key="register"
+      >
         Registrovat
       </button>
       <p class="text-center text-gray-700">
         <span id="acc" data-lang-key="have_account">Už máte účet?</span><br />
-        <button type="button" class="text-black" id="change" data-lang-key="login">
+        <button
+          type="button"
+          class="text-black"
+          id="change"
+          data-lang-key="login"
+        >
           Přihlásit se
         </button>
       </p>
       <div class="flex flex-row gap-2">
         <button class="language-btn" data-lang="cs">
-          <img src="../assets/cs.png" alt="Czech" class="w-6 h-6 rounded-full">
+          <img
+            src="../assets/cs.png"
+            alt="Czech"
+            class="w-6 h-6 rounded-full"
+          />
         </button>
         <button class="language-btn" data-lang="en">
-          <img src="../assets/en.png" alt="English" class="w-6 h-6 rounded-full">
+          <img
+            src="../assets/en.png"
+            alt="English"
+            class="w-6 h-6 rounded-full"
+          />
         </button>
-       
+
         <button class="language-btn" data-lang="de">
-          <img src="../assets/de.png" alt="German" class="w-6 h-6 rounded-full">
+          <img
+            src="../assets/de.png"
+            alt="German"
+            class="w-6 h-6 rounded-full"
+          />
         </button>
       </div>
     </form>
     <script src="../scripts/login.js"></script>
     <script src="../scripts/language.js"></script>
+    <script src="../scripts/light-dark.js"></script>
   </body>
 </html>
