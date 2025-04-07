@@ -2,22 +2,21 @@
 const supabaseClient = window.supabase.createClient('https://xpxurtdkmufuemamajzl.supabase.co',
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhweHVydGRrbXVmdWVtYW1hanpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5NTk3MzksImV4cCI6MjA1NzUzNTczOX0.uRPj22s06XSTvuuHGz-7oAqfTRp2LqUFTCKxC8QprMU' );
 
-let currentUserId = null;
-let currentUserData = null; 
-let currentTymID = null;
-
 async function getUserData(userId) {
     const { data: userData, error: userError } = await supabaseClient
     .from("Uzivatel")
     .select("RoleuzivateluID, UzivatelID, TymID, Email")
     .eq("UzivatelID", userId)
     .single();
+
     if (userError) {
-    alert("Chyba při načítání role uživatele: " + userError.message);
-    return;
+        alert("Chyba při načítání role uživatele: " + userError.message);
+        return;
     }
     return userData;        
 }
+
+
 
 async function updateAttendance(currentUserId, attendance) {
     
@@ -34,6 +33,21 @@ async function updateAttendance(currentUserId, attendance) {
     return;
 }
 
+//nacte data o eventech pro aktualni tym
+async function getTeamEventsData(tymID) {
+
+    const { data: RezervacehalyData, error: RezervacehalyError } = await supabaseClient
+    .from("Rezervacehaly")
+    .select("UzivatelID, Datumrezervace, Konecrezervace, Zacatekrezervace, RezervacehalyID, Nazevakce, Popisakce")
+    .eq("TymID", tymID);
+
+  if (RezervacehalyError) {
+    console.error("Chyba při načítání týmu:", RezervacehalyError);
+    return;
+  }
+  return RezervacehalyData;
+}
+
 async function checkUserRole() {
     try {
         const {
@@ -48,26 +62,20 @@ async function checkUserRole() {
     
         const userEmail = session.user.email;
         
-        //getUserData(currentUserId);
         const { data: userData, error: userError } = await supabaseClient
         .from("Uzivatel")
         .select("RoleuzivateluID, UzivatelID, TymID")
         .eq("Email", userEmail)
         .single();
     
-        
-    
-        currentUserData = userData;
-        currentUserId = userData.UzivatelID;
-        
-        
-        currentTymID = userData.TymID;
-    
-        
+        const currentUserData = userData;
+
+        return { currentUserData};
         } catch (error) {
         alert("Chyba: " + error.message);
+        return;
         }
         
     }
 
-export {updateAttendance, supabaseClient, checkUserRole};
+export {updateAttendance, supabaseClient, checkUserRole, getUserData, getTeamEventsData};

@@ -1,20 +1,25 @@
 
-import { updateAttendance, supabaseClient, checkUserRole } from "./db.js";
+// Inicializace Supabase
+const supabaseClient = window.supabase.createClient(
+  "https://xpxurtdkmufuemamajzl.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhweHVydGRrbXVmdWVtYW1hanpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5NTk3MzksImV4cCI6MjA1NzUzNTczOX0.uRPj22s06XSTvuuHGz-7oAqfTRp2LqUFTCKxC8QprMU"
+);
 
-
-// globalni promenne
+//globalni promenne
 let allPlayers = [];
 let isAdmin = false;
 let isTrainer = false;
-let currentTymID = 0;
+let tymID = 0;
 let currentUserId = null;
 let isEditing = false; 
-const rezervaceHalyId = 2; //dodelat na dynamicke
+const rezervaceHalyId = 2; // dodelat aby to bylo dynamicky
 let currentUserAttendance;
 
 
 const nazevTymu = document.getElementById("nazev-tymu");
-
+//const trainingDate = document.getElementById("training-date");
+//const trainingStartTime = document.getElementById("training-start-time");
+//const trainingEndTime = document.getElementById("training-end-time");
 const btEditTraining = document.getElementById('bt-edit-training');
 const titleMyAttendance = document.getElementById('title-my-attendance');
 const spanCurrentUserAttendance = document.getElementById('span-current-user-attendance');
@@ -43,32 +48,41 @@ document.addEventListener("DOMContentLoaded", async () =>{
   await changeMyAttendance(currentUserAttendance);
   await setTrainingData(); 
   await loadPlayers(); //opravit load players
-
+  
 });
 
 
 
 async function changeMyAttendance(attendance) {
+  // prepne se mi to v db, ale nezmizi modal
+  
+  const { data, error } = await supabaseClient
+  .from("Seznamprihlasenychrezervacihracu")
+  .update({Stavprihlaseni: attendance})
+  .select("Stavprihlaseni")
+  .eq("UzivatelID", currentUserId ); 
 
-  await updateAttendance(currentUserId, attendance);
   
-  if (attendance === true) {
-    spanCurrentUserAttendance.innerHTML = "ANO";
-    spanCurrentUserAttendance.className = "font-bold text-green-500 ml-2";
-    modalPotvrzeniUcasti.classList.add('hidden');
-    btChangeAttendance.classList.remove('hidden');
-    
-  } else if (attendance === false) {
-    spanCurrentUserAttendance.innerHTML = "NE";
-    spanCurrentUserAttendance.className = "font-bold text-red-500 ml-2";
-    modalPotvrzeniUcasti.classList.add('hidden');
-    btChangeAttendance.classList.remove('hidden');
+  if (error) {
+    console.error("Chyba při aktualizaci účasti: ", error);
+  } else {
+    if (attendance === true) {
+      spanCurrentUserAttendance.innerHTML = "ANO";
+      spanCurrentUserAttendance.className = "font-bold text-green-500 ml-2";
+      modalPotvrzeniUcasti.classList.add('hidden');
+      btChangeAttendance.classList.remove('hidden');
+      
+    } else if (attendance === false) {
+      spanCurrentUserAttendance.innerHTML = "NE";
+      spanCurrentUserAttendance.className = "font-bold text-red-500 ml-2";
+      modalPotvrzeniUcasti.classList.add('hidden');
+      btChangeAttendance.classList.remove('hidden');
+    }
+    else {
+      spanCurrentUserAttendance.innerHTML = "-";
+      spanCurrentUserAttendance.className = "font-bold text-gray-500 ml-2";
+    }
   }
-  else {
-    spanCurrentUserAttendance.innerHTML = "-";
-    spanCurrentUserAttendance.className = "font-bold text-gray-500 ml-2";
-  }
-  
 }
 
 
@@ -185,7 +199,7 @@ async function saveTrainingChanges() {
 }
 
 async function setTrainingData() {
-  const teamData = await getTeamData(currentTymID);
+  const teamData = await getTeamData(tymID);
   nazevTymu.innerHTML = teamData.Nazevtymu;
 
   const hallRezervationData = await getHallReservationData(rezervaceHalyId);
@@ -203,7 +217,61 @@ async function setTrainingData() {
 }
 
 // Funkce pro zjištění role uživatele
+async function checkUserRole() {
+try {
+  const {
+    data: { session },
+    error: sessionError,
+  } = await supabaseClient.auth.getSession();
 
+  if (sessionError || !session) {
+    alert("Uživatel není přihlášen!");
+   return;
+  } 
+
+  const userEmail = session.user.email;
+  const { data: userData, error: userError } = await supabaseClient
+    .from("Uzivatel")
+    .select("RoleuzivateluID, UzivatelID, TymID")
+    .eq("Email", userEmail)
+    .single();
+
+  if (userError) {
+    alert("Chyba při načítání role uživatele: " + userError.message);
+    return;
+  }
+
+  currentUserId = userData.UzivatelID;
+  
+  tymID = userData.TymID;
+
+  setTrainingData();
+    
+
+  isAdmin = userData.RoleuzivateluID === 1; 
+  isTrainer = userData.RoleuzivateluID === 2;
+  
+  // zobrazení obsahu podle role
+  if (isAdmin) {
+    btEditTraining.classList.remove('hidden');
+  }
+  else if (isTrainer) {
+    btEditTraining.classList.remove('hidden');
+  } else  {
+    //modal se zobrazi pouze pokud uzivatel zadnou reakci nema
+    //pridat tlacitko pro zmenu reakce
+    if (getAttendance(currentUserId) === null) {
+      document.getElementById('modal-potvrzeni-ucasti').classList.remove("hidden");
+    } else {
+      titleMyAttendance.classList.remove('hidden');
+      spanCurrentUserAttendance.classList.remove('hidden');
+    }
+  }
+ 
+  } catch (error) {
+    alert("Chyba: " + error.message);
+  }
+}
 
 //nacte z db seznam hracu, jejich tymID je stejny jako id prihlaseneho uzivatele, vypise pouze uzivatele s idRole 3 (hrac)
 async function loadPlayers() {
@@ -220,7 +288,7 @@ async function loadPlayers() {
      const { data: players, error } = await supabaseClient
       .from("Uzivatel")
       .select("UzivatelID, Jmeno, Prijmeni, TymID") 
-      .eq("TymID", currentTymID)
+      .eq("TymID", tymID)
       .eq("RoleuzivateluID", 3) //seznam ucasti na treninku vypise pouze hrace (role = 3)
     
     if (error) {
