@@ -27,8 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   currentTeam = roleData.currentUserData.TymID;
   currentUserRole = roleData.currentUserData.RoleuzivateluID;
   const currentTeamEventsData = await getTeamEventsData(currentTeam);
-  
-  displayEvents(currentTeamEventsData);
+  await displayEvents(currentTeamEventsData);
 });
 
 
@@ -52,12 +51,12 @@ form.addEventListener("submit", async (e) => {
   const eventDescription = document.getElementById("event-description").value
   const eventTitle = document.getElementById("event-title").value
 
-  const { error } = await supabaseClient
+  const { data, error } = await supabaseClient
     .from("Rezervacehaly")
     .insert([
       {
         HalaID: 1,
-        UzivatelID: 27,
+        UzivatelID: 27, //zmenit na aktualniho uzivatele, podminka jestli je admin nebo trener
         Nazevakce: eventTitle,
         Popisakce: eventDescription,
         TymID: currentTeam,
@@ -65,22 +64,58 @@ form.addEventListener("submit", async (e) => {
         Zacatekrezervace: startTime,
         Konecrezervace: endTime,
       }
-    ]);
+    ])
+    .select();
 
   if (error) {
     alert("Chyba při vytváření tréninku: " + error.message);
   } else {
+    await pushUsersIntoTable(data[0]?.RezervacehalyID); //vlozit argument id treninku (eventu)
     alert("Trénink byl úspěšně vytvořen.");
     modal.classList.add("hidden");
     form.reset();
   }
 });
 
+// vytahne vsechny hrace s id tym prihlaseneho uzivatele
+async function getPlayersFromTeam() {
+  const { data: players, error } = await supabaseClient
+      .from("Uzivatel")
+      .select("UzivatelID, Jmeno, Prijmeni, TymID")
+      .eq("TymID", currentTeam)
+      .eq("RoleuzivateluID", 3);
+
+      if (error) {
+        alert("Chyba při načítání hráčů: " + error.message);
+        return;
+      }
+      
+      return players;
+}
+
+async function pushUsersIntoTable(eventId) {
+// projedu pole s hracema a pro kazdyho hrace vykonam pridani do db
+const players = await getPlayersFromTeam();
+  for(const player of players) {
+    const { error } = await supabaseClient
+    .from("Seznamprihlasenychrezervacihracu")
+    .insert([
+      {
+        Stavprihlaseni: null,
+        RezervacehalyID: eventId,
+        UzivatelID: player.UzivatelID,
+      }
+    ]);
+    if (error) {
+      console.error("Chyba: " + error.message);
+      return;
+    }
+  }
+}
+
+// nastavit popis akce jako volitelny input
 
 
-
-//jako argument posleme data o treninku, na zaklade kterych dynamicky
-//zobrazime data o konkretnim treninku
 
 //treninky budou razeny podle datumu
 //jakmile bude aktualni cas == konci treninku tak se trenink smaze
