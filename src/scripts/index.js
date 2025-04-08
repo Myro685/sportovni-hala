@@ -1,7 +1,6 @@
 
 import { supabaseClient, checkUserRole, updateAttendance, getTeamEventsData } from './db.js';
 
-let hallEvents = [];
 let currentTeam = null;
 let currentUserRole = null;
 
@@ -12,12 +11,6 @@ const cancelBtn = document.getElementById("cancel-create-training");
 const modal = document.getElementById("modal-create-training");
 const form = document.getElementById("create-training-form");
 
-
-function addEvent() {
-  //po kliknuti na tlacitko
-  //zobrazi se modal - form (cas atd)
-  //musi byt prihlaseny jako trener
-}
 
 
 
@@ -69,8 +62,11 @@ form.addEventListener("submit", async (e) => {
 
   if (error) {
     alert("Chyba při vytváření tréninku: " + error.message);
-  } else {
-    await pushUsersIntoTable(data[0]?.RezervacehalyID); //vlozit argument id treninku (eventu)
+  } 
+  else {
+    await pushUsersIntoTable(data[0]?.RezervacehalyID);
+    //await getTeamEventsData(currentTeam);
+    await displayEvents( await getTeamEventsData(currentTeam));
     alert("Trénink byl úspěšně vytvořen.");
     modal.classList.add("hidden");
     form.reset();
@@ -177,13 +173,22 @@ async function displayEvents(events) {
       if (!confirmDelete) return;
 
       const { error } = await supabaseClient
+      .from("Seznamprihlasenychrezervacihracu")
+      .delete()
+      .eq("RezervacehalyID", event.RezervacehalyID);
+
+      const { errorRezervacehaly } = await supabaseClient
         .from("Rezervacehaly")
         .delete()
         .eq("RezervacehalyID", event.RezervacehalyID);
 
+
       if (error) {
         alert("Chyba při mazání: " + error.message);
-      } else {
+      } else if (errorRezervacehaly) {
+        alert("Chyba při mazání: " + errorRezervacehaly.message);
+      } 
+      else {
         card.remove();
         alert("Trénink byl úspěšně smazán.");
       }
