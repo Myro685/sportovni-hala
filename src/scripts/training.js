@@ -17,9 +17,6 @@ let reservationId = null;
 
 
 const nazevTymu = document.getElementById("nazev-tymu");
-//const trainingDate = document.getElementById("training-date");
-//const trainingStartTime = document.getElementById("training-start-time");
-//const trainingEndTime = document.getElementById("training-end-time");
 const btEditTraining = document.getElementById("bt-edit-training");
 const titleMyAttendance = document.getElementById("title-my-attendance");
 const spanCurrentUserAttendance = document.getElementById(
@@ -100,13 +97,12 @@ async function acceptAttendance() {
 
 // tahá data z DB a vraci stavPrihlasení uživatele na trénink
 async function getAttendance(userId, reservationId) {
-  console.log("rezervace haly: "+ reservationId);
 
   const { data, error } = await supabaseClient
     .from("Seznamprihlasenychrezervacihracu")
     .select("Stavprihlaseni")
     .eq("RezervacehalyID", reservationId)
-    console.log("fsdfdsfsdn "+ data);
+    .eq("UzivatelID", userId)
     
   if (error || !data || data.length === 0) {
     console.error("Chyba při aktualizaci účasti: ", error);
@@ -160,8 +156,7 @@ async function getHallReservationData(reservationId) {
     console.error("Chyba při načítání týmu:", RezervacehalyError);
     return;
   }
-  console.log(RezervacehalyData);
-  
+
   return RezervacehalyData;
   
 }
