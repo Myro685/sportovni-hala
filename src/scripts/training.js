@@ -53,9 +53,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function changeMyAttendance(attendance) {
-  // prepne se mi to v db, ale nezmizi modal
-
-  const { data, error } = await supabaseClient
+  const {  error } = await supabaseClient
     .from("Seznamprihlasenychrezervacihracu")
     .update({ Stavprihlaseni: attendance })
     .select("Stavprihlaseni")
@@ -310,7 +308,6 @@ async function displayPlayers(players) {
   // Získání stavu přihlášení pro každého hráče
   for (const player of players) {
     const stavPrihlaseni = await getAttendance(player.UzivatelID, reservationId);
-    console.log(stavPrihlaseni);
     
     playersWithAttendance.push({
       ...player,
