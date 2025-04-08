@@ -11,8 +11,10 @@ let isTrainer = false;
 let tymID = 0;
 let currentUserId = null;
 let isEditing = false;
-const rezervaceHalyId = 2; // dodelat aby to bylo dynamicky
 let currentUserAttendance;
+let reservationId = null;
+
+
 
 const nazevTymu = document.getElementById("nazev-tymu");
 //const trainingDate = document.getElementById("training-date");
@@ -32,9 +34,13 @@ const btNe = document.getElementById("bt-ucast-ne");
 
 // Načtení dat
 document.addEventListener("DOMContentLoaded", async () => {
-  await checkUserRole();
+  const params = new URLSearchParams(window.location.search);
+  const trainingId = params.get("id");
+  reservationId = trainingId;
 
-  currentUserAttendance = await getAttendance(currentUserId); //currentUserId nastavuju v checkUserRole()
+  await checkUserRole();
+  
+  currentUserAttendance = await getAttendance(currentUserId, reservationId); //currentUserId nastavuju v checkUserRole()
 
   if (currentUserAttendance === null) {
     modalPotvrzeniUcasti.classList.remove("hidden");
@@ -43,8 +49,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     btChangeAttendance.classList.remove("hidden");
     modalPotvrzeniUcasti.classList.add("hidden");
   }
+
   await changeMyAttendance(currentUserAttendance);
-  await setTrainingData();
+  await setTrainingData(reservationId);
   await loadPlayers(); //opravit load players
 });
 
@@ -81,7 +88,6 @@ async function rejectAttendance() {
   changeMyAttendance(false);
 
   modalPotvrzeniUcasti.classList.add("hidden");
-  modalPotvrzeniUcasti.classList.add("hidden");
   btChangeAttendance.classList.remove("hidden");
 }
 
@@ -89,24 +95,24 @@ async function acceptAttendance() {
   changeMyAttendance(true);
 
   modalPotvrzeniUcasti.classList.add("hidden");
-  stavPrihlaseni = data[0].Stavprihlaseni;
   btChangeAttendance.classList.remove("hidden");
-  //loadPlayers();
 }
 
 // tahá data z DB a vraci stavPrihlasení uživatele na trénink
-async function getAttendance(userId) {
+async function getAttendance(userId, reservationId) {
+  console.log("rezervace haly: "+ reservationId);
+
   const { data, error } = await supabaseClient
     .from("Seznamprihlasenychrezervacihracu")
     .select("Stavprihlaseni")
-    .eq("UzivatelID", userId);
-
-  if (error) {
+    .eq("RezervacehalyID", reservationId)
+    console.log("fsdfdsfsdn "+ data);
+    
+  if (error || !data || data.length === 0) {
     console.error("Chyba při aktualizaci účasti: ", error);
-  } else {
-    const stavPrihlaseni = data[0].Stavprihlaseni;
-    return stavPrihlaseni;
-  }
+    return null;
+  } 
+  return data[0].Stavprihlaseni;
 }
 
 //nacte data uzivatele podle jeho id
@@ -141,20 +147,23 @@ async function getTeamData(teamId) {
 }
 
 //nacte data o rezervai haly (eventu co se v hale kona)
-async function getHallReservationData(hallId) {
+async function getHallReservationData(reservationId) {
   // Dotaz na tabulku "Rezervacehaly"
   const { data: RezervacehalyData, error: RezervacehalyError } =
     await supabaseClient
       .from("Rezervacehaly")
-      .select("UzivatelID, Datumrezervace, Konecrezervace, Zacatekrezervace")
-      .eq("RezervacehalyID", hallId)
+      .select("UzivatelID, RezervacehalyID, Datumrezervace, Konecrezervace, Zacatekrezervace")
+      .eq("RezervacehalyID", reservationId)
       .single();
 
   if (RezervacehalyError) {
     console.error("Chyba při načítání týmu:", RezervacehalyError);
     return;
   }
+  console.log(RezervacehalyData);
+  
   return RezervacehalyData;
+  
 }
 
 //ulozi hodnoty z inputu do DB
@@ -174,7 +183,7 @@ async function saveTrainingChanges() {
       Zacatekrezervace: trainingStartTime,
       Konecrezervace: trainingEndTime,
     })
-    .eq("RezervacehalyID", rezervaceHalyId);
+    .eq("RezervacehalyID", reservationId);
 
   if (error) {
     console.error("Chyba při aktualizaci rezervace haly:", error);
@@ -185,11 +194,11 @@ async function saveTrainingChanges() {
   }
 }
 
-async function setTrainingData() {
+async function setTrainingData(reservationId) {
   const teamData = await getTeamData(tymID);
   nazevTymu.innerHTML = teamData.Nazevtymu;
 
-  const hallRezervationData = await getHallReservationData(rezervaceHalyId);
+  const hallRezervationData = await getHallReservationData(reservationId);
   const trainer = await getUserData(hallRezervationData.UzivatelID);
 
   spanTrainigDataTrainer.textContent = trainer.Jmeno + " " + trainer.Prijmeni;
@@ -233,7 +242,6 @@ async function checkUserRole() {
 
     tymID = userData.TymID;
 
-    setTrainingData();
 
     isAdmin = userData.RoleuzivateluID === 1;
     isTrainer = userData.RoleuzivateluID === 2;
@@ -246,7 +254,7 @@ async function checkUserRole() {
     } else {
       //modal se zobrazi pouze pokud uzivatel zadnou reakci nema
       //pridat tlacitko pro zmenu reakce
-      if (getAttendance(currentUserId) === null) {
+      if (await getAttendance(currentUserId, reservationId) === null) {
         document
           .getElementById("modal-potvrzeni-ucasti")
           .classList.remove("hidden");
@@ -276,7 +284,7 @@ async function loadPlayers() {
       .select("UzivatelID, Jmeno, Prijmeni, TymID")
       .eq("TymID", tymID)
       .eq("RoleuzivateluID", 3); //seznam ucasti na treninku vypise pouze hrace (role = 3)
-
+            
     if (error) {
       alert("Chyba při načítání hráčů: " + error.message);
       return;
@@ -306,7 +314,9 @@ async function displayPlayers(players) {
 
   // Získání stavu přihlášení pro každého hráče
   for (const player of players) {
-    const stavPrihlaseni = await getAttendance(player.UzivatelID);
+    const stavPrihlaseni = await getAttendance(player.UzivatelID, reservationId);
+    console.log(stavPrihlaseni);
+    
     playersWithAttendance.push({
       ...player,
       stavPrihlaseni: stavPrihlaseni,

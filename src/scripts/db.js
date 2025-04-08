@@ -3,6 +3,7 @@ const supabaseClient = window.supabase.createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhweHVydGRrbXVmdWVtYW1hanpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5NTk3MzksImV4cCI6MjA1NzUzNTczOX0.uRPj22s06XSTvuuHGz-7oAqfTRp2LqUFTCKxC8QprMU"
 );
 
+//nacte informace o uzivateli
 async function getUserData(userId) {
   const { data: userData, error: userError } = await supabaseClient
     .from("Uzivatel")
@@ -31,7 +32,7 @@ async function updateAttendance(currentUserId, attendance) {
   return;
 }
 
-//nacte data o eventech pro aktualni tym
+//nacte data o eventech pro aktualni tym (vsechny treninky)
 async function getTeamEventsData(tymID) {
   const { data: RezervacehalyData, error: RezervacehalyError } =
     await supabaseClient
@@ -79,8 +80,8 @@ async function checkUserRole() {
 }
 
 export {
-  updateAttendance,
   supabaseClient,
+  updateAttendance,
   checkUserRole,
   getUserData,
   getTeamEventsData,

@@ -89,7 +89,7 @@ async function displayEvents(events) {
   for (const event of events) {
     const eventStart = event.Zacatekrezervace?.slice(0, 5);
     const eventEnd = event.Konecrezervace?.slice(0, 5);
-
+    
       // Vytvoření kontejneru náhledu (kartu)
     const card = document.createElement("div");
     card.className =
@@ -128,7 +128,8 @@ async function displayEvents(events) {
     detailsButton.setAttribute("data-lang-key", "details");
     detailsButton.textContent = "podrobnosti";
     detailsButton.onclick = function () {
-      window.location.href = "training.html";
+      //localStorage.setItem("selectedTrainingId", event.RezervacehalyID);
+      window.location.href = `training.html?id=${event.RezervacehalyID}`;
     };
     
 
