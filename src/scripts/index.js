@@ -1,24 +1,25 @@
-
-import { supabaseClient, checkUserRole, getTeamEventsData, insertDataIntoRezervacehaly } from './db.js';
+import {
+  supabaseClient,
+  checkUserRole,
+  getTeamEventsData,
+  insertDataIntoRezervacehaly,
+} from "./db.js";
 
 let currentTeam = null;
 let currentUserRole = null;
-
-
 
 const openBtn = document.getElementById("open-create-training");
 const cancelBtn = document.getElementById("cancel-create-training");
 const modal = document.getElementById("modal-create-training");
 const form = document.getElementById("create-training-form");
 
-
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const roleData = await checkUserRole();
 
   currentTeam = roleData.currentUserData.TymID;
   currentUserRole = roleData.currentUserData.RoleuzivateluID;
   const currentTeamEventsData = await getTeamEventsData(currentTeam);
-  
+
   displayEvents(currentTeamEventsData);
 });
 
@@ -29,7 +30,6 @@ openBtn.addEventListener("click", () => {
 cancelBtn.addEventListener("click", () => {
   modal.classList.add("hidden");
 });
-
 
 //funkce pro vytvoreni noveho treninku
 form.addEventListener("submit", async (e) => {
@@ -49,7 +49,7 @@ form.addEventListener("submit", async (e) => {
       popisAkce,
       datum,
       zacatek,
-      konec
+      konec,
     });
 
     await pushUsersIntoTable(newEvent.RezervacehalyID);
@@ -66,33 +66,33 @@ form.addEventListener("submit", async (e) => {
 // vytahne vsechny hrace s id tym prihlaseneho uzivatele
 async function getPlayersFromTeam() {
   const { data: players, error } = await supabaseClient
-      .from("Uzivatel")
-      .select("UzivatelID, Jmeno, Prijmeni, TymID")
-      .eq("TymID", currentTeam)
-      .eq("RoleuzivateluID", 3);
+    .from("Uzivatel")
+    .select("UzivatelID, Jmeno, Prijmeni, TymID")
+    .eq("TymID", currentTeam)
+    .eq("RoleuzivateluID", 3);
 
-      if (error) {
-        alert("Chyba při načítání hráčů: " + error.message);
-        return;
-      }
-      
-      return players;
+  if (error) {
+    alert("Chyba při načítání hráčů: " + error.message);
+    return;
+  }
+
+  return players;
 }
 
 // vlozeni dat do tabulky Seznamrezervaciprihlasenihracu
 async function pushUsersIntoTable(eventId) {
-// projedu pole s hracema a pro kazdyho hrace vykonam pridani do db
-const players = await getPlayersFromTeam();
-  for(const player of players) {
+  // projedu pole s hracema a pro kazdyho hrace vykonam pridani do db
+  const players = await getPlayersFromTeam();
+  for (const player of players) {
     const { error } = await supabaseClient
-    .from("Seznamprihlasenychrezervacihracu")
-    .insert([
-      {
-        Stavprihlaseni: null,
-        RezervacehalyID: eventId,
-        UzivatelID: player.UzivatelID,
-      }
-    ]);
+      .from("Seznamprihlasenychrezervacihracu")
+      .insert([
+        {
+          Stavprihlaseni: null,
+          RezervacehalyID: eventId,
+          UzivatelID: player.UzivatelID,
+        },
+      ]);
     if (error) {
       console.error("Chyba: " + error.message);
       return;
@@ -101,8 +101,6 @@ const players = await getPlayersFromTeam();
 }
 
 // nastavit popis akce jako volitelny input
-
-
 
 //treninky budou razeny podle datumu
 //jakmile bude aktualni cas == konci treninku tak se trenink smaze
@@ -210,5 +208,3 @@ function createDeleteButton(event, cardElement) {
 
   return deleteBtn;
 }
-
-
