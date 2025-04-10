@@ -24,6 +24,7 @@ async function loadData() {
   const editPsc = document.getElementById("editPsc");
   const editStreet = document.getElementById("editStreet");
   const editCp = document.getElementById("editCp");
+  const profilePicture = document.querySelectorAll(".profile-picture");
 
   try {
     const {
@@ -41,7 +42,9 @@ async function loadData() {
 
     const { data: userData, error: userError } = await supabaseClient
       .from("Uzivatel")
-      .select("Jmeno, Prijmeni, Email, Telefon, TymID, AdresaID")
+      .select(
+        "UzivatelID, Jmeno, Prijmeni, Email, Telefon, TymID, AdresaID, profile_picture_url"
+      )
       .eq("Email", userEmail)
       .single();
 
@@ -80,7 +83,6 @@ async function loadData() {
       addressData = data;
     }
 
-    // Naplnění HTML elementů daty
     firstName.value = userData.Jmeno || "Není zadáno";
     lastName.value = userData.Prijmeni || "Není zadáno";
     email.value = userData.Email || "Není zadáno";
@@ -91,7 +93,17 @@ async function loadData() {
     street.value = addressData.Ulice || "Není zadáno";
     cp.value = addressData.Cp || "Není zadáno";
 
-    // Naplnění polí v modálu
+    const defaultImage = "../assets/a32b54fa44fb3f94bdb289b5fd8f01dc.jpg";
+    let profilePictureUrl = userData.profile_picture_url || defaultImage;
+    if (userData.profile_picture_url) {
+      const timestamp = new Date().getTime();
+      profilePictureUrl = `${userData.profile_picture_url}?t=${timestamp}`;
+    }
+    console.log("Nastavovaná URL pro obrázek:", profilePictureUrl);
+    profilePicture.forEach((img) => {
+      img.src = profilePictureUrl;
+    });
+
     editFirstName.value = userData.Jmeno || "";
     editLastName.value = userData.Prijmeni || "";
     editNumber.value = userData.Telefon || "";
@@ -120,7 +132,6 @@ closeButton.addEventListener("click", () => {
   document.body.classList.remove("overflow-hidden");
 });
 
-// Úprava dat
 editForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
@@ -138,7 +149,9 @@ editForm.addEventListener("submit", async (e) => {
   const editPsc = document.getElementById("editPsc");
   const editStreet = document.getElementById("editStreet");
   const editCp = document.getElementById("editCp");
+  const editProfilePicture = document.getElementById("editProfilePicture");
   const modalForm = document.getElementById("modalForm");
+  const profilePicture = document.querySelectorAll(".profile-picture");
 
   try {
     const {
@@ -146,16 +159,44 @@ editForm.addEventListener("submit", async (e) => {
     } = await supabaseClient.auth.getSession();
     const userEmail = session.user.email;
 
-    // Načtení AdresaID pro aktualizaci adresy
     const { data: userData, error: fetchError } = await supabaseClient
       .from("Uzivatel")
-      .select("AdresaID")
+      .select("UzivatelID, AdresaID")
       .eq("Email", userEmail)
       .single();
 
     if (fetchError) {
       alert("Chyba při načítání dat uživatele: " + fetchError.message);
       return;
+    }
+
+    // Nahrávání nového obrázku, pokud byl vybrán
+    let profilePictureUrl = null;
+    if (editProfilePicture.files && editProfilePicture.files[0]) {
+      profilePictureUrl = await uploadProfilePicture(
+        editProfilePicture.files[0],
+        userData.UzivatelID
+      );
+      if (profilePictureUrl) {
+        const success = await updateUserProfilePicture(
+          userData.UzivatelID,
+          profilePictureUrl
+        );
+        if (success) {
+          // Aktualizace zobrazení obrázku na stránce
+          const timestamp = new Date().getTime();
+          const cacheBustedUrl = `${profilePictureUrl}?t=${timestamp}`;
+          profilePicture.forEach((img) => {
+            img.src = cacheBustedUrl;
+          });
+        } else {
+          alert("Nepodařilo se aktualizovat URL obrázku v databázi.");
+          return;
+        }
+      } else {
+        alert("Nepodařilo se nahrát obrázek.");
+        return;
+      }
     }
 
     // Aktualizace tabulky Uzivatel
@@ -207,3 +248,77 @@ editForm.addEventListener("submit", async (e) => {
     alert("Chyba: " + error.message);
   }
 });
+
+// Funkce pro nahrávání obrázku
+async function uploadProfilePicture(file, userId) {
+  const allowedTypes = ["image/jpeg", "image/png"];
+  const maxSizeInBytes = 5 * 1024 * 1024; // 5 MB
+
+  if (!allowedTypes.includes(file.type)) {
+    alert("Prosím nahrajte obrázek ve formátu JPEG nebo PNG.");
+    return null;
+  }
+
+  if (file.size > maxSizeInBytes) {
+    alert("Obrázek je příliš velký. Maximální velikost je 5 MB.");
+    return null;
+  }
+
+  // Přidáme časovou značku do názvu souboru, aby byl jedinečný
+  const timestamp = new Date().getTime();
+  const fileName = `${userId}-profile-picture-${timestamp}.jpg`;
+
+  // Najdeme a smažeme všechny staré obrázky pro daného uživatele
+  const { data: existingFiles, error: listError } = await supabaseClient.storage
+    .from("profile-pictures")
+    .list("", { search: `${userId}-profile-picture` });
+
+  if (listError) {
+    console.error("Chyba při vyhledávání starých obrázků:", listError);
+  } else if (existingFiles && existingFiles.length > 0) {
+    const filesToRemove = existingFiles.map((file) => file.name);
+    const { error: removeError } = await supabaseClient.storage
+      .from("profile-pictures")
+      .remove(filesToRemove);
+
+    if (removeError) {
+      console.error("Chyba při odstraňování starých obrázků:", removeError);
+    } else {
+      console.log("Staré obrázky úspěšně odstraněny:", filesToRemove);
+    }
+  }
+
+  // Nahrajeme nový obrázek
+  const { data, error } = await supabaseClient.storage
+    .from("profile-pictures")
+    .upload(fileName, file, {
+      upsert: true,
+    });
+
+  if (error) {
+    console.error("Chyba při nahrávání obrázku:", error);
+    return null;
+  }
+
+  const { publicUrl } = supabaseClient.storage
+    .from("profile-pictures")
+    .getPublicUrl(fileName).data;
+
+  console.log("Veřejná URL nového obrázku:", publicUrl);
+  return publicUrl;
+}
+
+// Funkce pro aktualizaci URL obrázku v databázi
+async function updateUserProfilePicture(userId, pictureUrl) {
+  const { data, error } = await supabaseClient
+    .from("Uzivatel")
+    .update({ profile_picture_url: pictureUrl })
+    .eq("UzivatelID", userId);
+
+  if (error) {
+    console.error("Chyba při aktualizaci URL obrázku:", error);
+    return false;
+  }
+  console.log("URL úspěšně aktualizována v databázi:", pictureUrl);
+  return true;
+}

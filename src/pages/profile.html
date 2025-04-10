@@ -19,7 +19,7 @@
           <img
             src="../assets/a32b54fa44fb3f94bdb289b5fd8f01dc.jpg"
             alt="Profile picture"
-            class="size-10 object-cover rounded-full lg:size-24"
+            class="profile-picture size-10 object-cover rounded-full lg:size-24"
           />
         </a>
 
@@ -311,7 +311,7 @@
         >
           <img
             src="../assets/a32b54fa44fb3f94bdb289b5fd8f01dc.jpg"
-            class="size-32 rounded-full object-cover shadow-lg"
+            class="profile-picture size-32 rounded-full object-cover shadow-lg"
             alt="Profilová fotka"
           />
         </div>
@@ -457,6 +457,20 @@
             class="flex-1 overflow-y-auto p-4 flex flex-col gap-3"
             id="modalForm"
           >
+            <label
+              for="editProfilePicture"
+              class="font-bold"
+              data-lang-key="profile_picture"
+            >
+              Profilový obrázek:
+            </label>
+            <input
+              type="file"
+              id="editProfilePicture"
+              name="editProfilePicture"
+              accept="image/*"
+              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+            />
             <label
               for="editFirstName"
               class="font-bold"
