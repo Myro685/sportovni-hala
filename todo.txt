@@ -13,7 +13,7 @@ Systém bude evidovat základní informace o rezervaci, jako je datum, čas, jm�
 
 DBS2
 -alespoň tři funkce různého typu s odpovídající složitostí
--alespoň tři uložené procedury
+-alespoň dvě uložené procedury
 -alespoň jedna transakce s ošetřeným chováním při rollbacku
 -vyzkoušet si použití datového typu JSON v moderních relačních databázích (rozumné použití včetně filtrace nad těmito sloupci může ovlivnit počet požadovaných databázových tabulek, případně odpuštění jednoho ze zde uvedených požadavků – záleží na domluvě se cvičícím)
 
@@ -25,8 +25,6 @@ Uživatelský obsah bude možné zobrazit po jednotlivých položkách.
 Uživatelský obsah bude možné zobrazit i v celku, a to po dávkách (stránkovaně).
 Bude možné zobrazit i souhrnné údaje o uživatelském obsahu (dashboard), např. celkový počet položek, výběr několika položek podle vhodných kritérií (nejnovější, s nastaveným příznakem, a pod).
 GUI aplikace bude obsahovat oblast s podmíněným vykreslováním obsahu (například navigace, závislá na stavu přihlášen/ nepřihlášen, nebo dashboard s obsahem podle role uživatele).
-INTERAKCE UŽIVATELŮ
-Uživatelský obsah bude umožňovat interakci uživatelů (ne nutně komunikaci, ne nutně synchronní), například příspěvek - komentář, inzerát - odpověď, termín zkoušky - zápis na termín.
 NÁVRH A IMPLEMENTACE APLIKACE
 Bude použit komponentový přístup.
 DALŠÍ POŽADAVKY 

@@ -4,7 +4,7 @@ const supabaseClient = window.supabase.createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhweHVydGRrbXVmdWVtYW1hanpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5NTk3MzksImV4cCI6MjA1NzUzNTczOX0.uRPj22s06XSTvuuHGz-7oAqfTRp2LqUFTCKxC8QprMU"
 );
 
-//globalni promenne
+// Globální proměnné
 let allPlayers = [];
 let isAdmin = false;
 let isTrainer = false;
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await checkUserRole();
 
-  currentUserAttendance = await getAttendance(currentUserId, reservationId); //currentUserId nastavuju v checkUserRole()
+  currentUserAttendance = await getAttendance(currentUserId, reservationId); // currentUserId nastavuju v checkUserRole()
 
   if (currentUserAttendance === null) {
     modalPotvrzeniUcasti.classList.remove("hidden");
@@ -47,9 +47,101 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await changeMyAttendance(currentUserAttendance);
   await setTrainingData(reservationId);
-  await loadPlayers(); //opravit load players
+  await loadPlayers();
   loadPicture();
+  await loadComments(reservationId); // Přidáváme načítání komentářů
 });
+
+// Funkce pro načtení komentářů k dané rezervaci
+async function loadComments(rezervaceId) {
+  // Načteme komentáře bez relace
+  const { data: comments, error: commentError } = await supabaseClient
+    .from("Komentare")
+    .select("Text, UzivatelID")
+    .eq("RezervacehalyID", rezervaceId);
+
+  if (commentError) {
+    console.error("Chyba při načítání komentářů:", commentError);
+    alert("Nepodařilo se načíst komentáře: " + commentError.message);
+    return;
+  }
+
+  const commentList = document.getElementById("comment-list");
+  commentList.innerHTML = ""; // Vyčistíme seznam
+
+  if (comments.length === 0) {
+    const li = document.createElement("li");
+    li.className = "text-gray-500 p-2";
+    li.textContent = "Zatím žádné komentáře.";
+    commentList.appendChild(li);
+  } else {
+    // Načteme jména uživatelů
+    const userIds = comments.map((comment) => comment.UzivatelID);
+    const { data: users, error: userError } = await supabaseClient
+      .from("Uzivatel")
+      .select("UzivatelID, Jmeno")
+      .in("UzivatelID", userIds);
+
+    if (userError) {
+      console.error("Chyba při načítání uživatelů:", userError);
+      alert("Nepodařilo se načíst jména uživatelů: " + userError.message);
+      return;
+    }
+
+    // Vytvoříme mapu UživatelID -> Jmeno
+    const userMap = {};
+    users.forEach((user) => {
+      userMap[user.UzivatelID] = user.Jmeno;
+    });
+
+    // Zobrazíme komentáře
+    comments.forEach((comment) => {
+      const jmeno = userMap[comment.UzivatelID] || "Není známo";
+      const li = document.createElement("li");
+      li.className = "p-2 border-b border-gray-200";
+      li.innerHTML = `<strong>${jmeno}:</strong> ${comment.Text}`;
+      commentList.appendChild(li);
+    });
+  }
+}
+
+// Funkce pro přidání nového komentáře
+async function addComment(rezervaceId, uzivatelId, text) {
+  const { data, error } = await supabaseClient.from("Komentare").insert({
+    RezervacehalyID: rezervaceId,
+    UzivatelID: uzivatelId,
+    Text: text,
+  });
+
+  if (error) {
+    console.error("Chyba při přidávání komentáře:", error);
+    alert("Nepodařilo se přidat komentář: " + error.message);
+    return false; // Vracíme false, pokud došlo k chybě
+  }
+
+  // Po přidání komentáře znovu načteme seznam
+  await loadComments(rezervaceId);
+  return true; // Vracíme true, pokud bylo přidání úspěšné
+}
+
+// Přidání event listeneru na tlačítko pro přidání komentáře
+document
+  .getElementById("bt-add-comment")
+  .addEventListener("click", async () => {
+    const commentText = document
+      .getElementById("new-comment-text")
+      .value.trim();
+
+    if (!commentText) {
+      alert("Prosím, napište komentář.");
+      return;
+    }
+
+    const success = await addComment(reservationId, currentUserId, commentText);
+    if (success) {
+      document.getElementById("new-comment-text").value = ""; // Vyčistíme textové pole pouze při úspěchu
+    }
+  });
 
 async function changeMyAttendance(attendance) {
   const { error } = await supabaseClient
@@ -92,7 +184,7 @@ async function acceptAttendance() {
   btChangeAttendance.classList.remove("hidden");
 }
 
-// tahá data z DB a vraci stavPrihlasení uživatele na trénink
+// Tahá data z DB a vrací stavPrihlasení uživatele na trénink
 async function getAttendance(userId, reservationId) {
   const { data, error } = await supabaseClient
     .from("Seznamprihlasenychrezervacihracu")
@@ -107,7 +199,7 @@ async function getAttendance(userId, reservationId) {
   return data[0].Stavprihlaseni;
 }
 
-//nacte data uzivatele podle jeho id
+// Načte data uživatele podle jeho id
 async function getUserData(userId) {
   const { data: userData, error: error } = await supabaseClient
     .from("Uzivatel")
@@ -122,9 +214,8 @@ async function getUserData(userId) {
   return userData;
 }
 
-//nacte data o tymu
+// Načte data o týmu
 async function getTeamData(teamId) {
-  // Dotaz na tabulku "Tym"
   const { data: teamData, error: teamError } = await supabaseClient
     .from("Tym")
     .select("Nazevtymu")
@@ -138,9 +229,8 @@ async function getTeamData(teamId) {
   return teamData;
 }
 
-//nacte data o rezervai haly (eventu co se v hale kona)
+// Načte data o rezervaci haly (eventu, co se v hale koná)
 async function getHallReservationData(reservationId) {
-  // Dotaz na tabulku "Rezervacehaly"
   const { data: RezervacehalyData, error: RezervacehalyError } =
     await supabaseClient
       .from("Rezervacehaly")
@@ -158,7 +248,7 @@ async function getHallReservationData(reservationId) {
   return RezervacehalyData;
 }
 
-//ulozi hodnoty z inputu do DB
+// Uloží hodnoty z inputu do DB
 async function saveTrainingChanges() {
   const trainingDateInput = document.getElementById("training-date");
   const trainingStartTimeInput = document.getElementById("training-start-time");
@@ -231,20 +321,17 @@ async function checkUserRole() {
     }
 
     currentUserId = userData.UzivatelID;
-
     tymID = userData.TymID;
 
     isAdmin = userData.RoleuzivateluID === 1;
     isTrainer = userData.RoleuzivateluID === 2;
 
-    // zobrazení obsahu podle role
+    // Zobrazení obsahu podle role
     if (isAdmin) {
       btEditTraining.classList.remove("hidden");
     } else if (isTrainer) {
       btEditTraining.classList.remove("hidden");
     } else {
-      //modal se zobrazi pouze pokud uzivatel zadnou reakci nema
-      //pridat tlacitko pro zmenu reakce
       if ((await getAttendance(currentUserId, reservationId)) === null) {
         document
           .getElementById("modal-potvrzeni-ucasti")
@@ -259,11 +346,10 @@ async function checkUserRole() {
   }
 }
 
-//nacte z db seznam hracu, jejich tymID je stejny jako id prihlaseneho uzivatele, vypise pouze uzivatele s idRole 3 (hrac)
+// Načte z DB seznam hráčů, jejich TymID je stejný jako ID přihlášeného uživatele, vypíše pouze uživatele s idRole 3 (hráč)
 async function loadPlayers() {
   const playerList = document.getElementById("player-list");
 
-  // Kontrola, zda element existuje
   if (!playerList) {
     console.error("Element s ID 'player-list' nebyl nalezen v HTML.");
     return;
@@ -274,7 +360,7 @@ async function loadPlayers() {
       .from("Uzivatel")
       .select("UzivatelID, Jmeno, Prijmeni, TymID")
       .eq("TymID", tymID)
-      .eq("RoleuzivateluID", 3); //seznam ucasti na treninku vypise pouze hrace (role = 3)
+      .eq("RoleuzivateluID", 3);
 
     if (error) {
       alert("Chyba při načítání hráčů: " + error.message);
@@ -282,8 +368,6 @@ async function loadPlayers() {
     }
 
     allPlayers = players;
-    //odstrani currentUserID z allPlayers, protoze ho zobrazuji v Moje ucast
-
     displayPlayers(allPlayers);
   } catch (error) {
     alert("Chyba: " + error.message);
@@ -303,7 +387,6 @@ async function displayPlayers(players) {
 
   const playersWithAttendance = [];
 
-  // Získání stavu přihlášení pro každého hráče
   for (const player of players) {
     const stavPrihlaseni = await getAttendance(
       player.UzivatelID,
@@ -316,7 +399,6 @@ async function displayPlayers(players) {
     });
   }
 
-  // Seřazení hráčů: true → false → null
   playersWithAttendance.sort((a, b) => {
     const getOrder = (stav) => {
       if (stav === true) return 0;
@@ -326,7 +408,6 @@ async function displayPlayers(players) {
     return getOrder(a.stavPrihlaseni) - getOrder(b.stavPrihlaseni);
   });
 
-  // Zobrazení hráčů
   for (const player of playersWithAttendance) {
     const li = document.createElement("li");
     li.className =
@@ -361,7 +442,6 @@ async function displayPlayers(players) {
   }
 }
 
-// anonymni funcke pro změnu docházky po kliknutí na tlačítko
 btChangeAttendance.addEventListener("click", async () => {
   const novyStav = !currentUserAttendance;
 
