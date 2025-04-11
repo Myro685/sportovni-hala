@@ -14,8 +14,6 @@ let isEditing = false;
 let currentUserAttendance;
 let reservationId = null;
 
-
-
 const nazevTymu = document.getElementById("nazev-tymu");
 const btEditTraining = document.getElementById("bt-edit-training");
 const titleMyAttendance = document.getElementById("title-my-attendance");
@@ -36,7 +34,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   reservationId = trainingId;
 
   await checkUserRole();
-  
+
   currentUserAttendance = await getAttendance(currentUserId, reservationId); //currentUserId nastavuju v checkUserRole()
 
   if (currentUserAttendance === null) {
@@ -50,10 +48,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   await changeMyAttendance(currentUserAttendance);
   await setTrainingData(reservationId);
   await loadPlayers(); //opravit load players
+  loadPicture();
 });
 
 async function changeMyAttendance(attendance) {
-  const {  error } = await supabaseClient
+  const { error } = await supabaseClient
     .from("Seznamprihlasenychrezervacihracu")
     .update({ Stavprihlaseni: attendance })
     .select("Stavprihlaseni")
@@ -95,17 +94,16 @@ async function acceptAttendance() {
 
 // tahá data z DB a vraci stavPrihlasení uživatele na trénink
 async function getAttendance(userId, reservationId) {
-
   const { data, error } = await supabaseClient
     .from("Seznamprihlasenychrezervacihracu")
     .select("Stavprihlaseni")
     .eq("RezervacehalyID", reservationId)
-    .eq("UzivatelID", userId)
-    
+    .eq("UzivatelID", userId);
+
   if (error || !data || data.length === 0) {
     console.error("Chyba při aktualizaci účasti: ", error);
     return null;
-  } 
+  }
   return data[0].Stavprihlaseni;
 }
 
@@ -146,7 +144,9 @@ async function getHallReservationData(reservationId) {
   const { data: RezervacehalyData, error: RezervacehalyError } =
     await supabaseClient
       .from("Rezervacehaly")
-      .select("UzivatelID, RezervacehalyID, Datumrezervace, Konecrezervace, Zacatekrezervace")
+      .select(
+        "UzivatelID, RezervacehalyID, Datumrezervace, Konecrezervace, Zacatekrezervace"
+      )
       .eq("RezervacehalyID", reservationId)
       .single();
 
@@ -156,7 +156,6 @@ async function getHallReservationData(reservationId) {
   }
 
   return RezervacehalyData;
-  
 }
 
 //ulozi hodnoty z inputu do DB
@@ -235,7 +234,6 @@ async function checkUserRole() {
 
     tymID = userData.TymID;
 
-
     isAdmin = userData.RoleuzivateluID === 1;
     isTrainer = userData.RoleuzivateluID === 2;
 
@@ -247,7 +245,7 @@ async function checkUserRole() {
     } else {
       //modal se zobrazi pouze pokud uzivatel zadnou reakci nema
       //pridat tlacitko pro zmenu reakce
-      if (await getAttendance(currentUserId, reservationId) === null) {
+      if ((await getAttendance(currentUserId, reservationId)) === null) {
         document
           .getElementById("modal-potvrzeni-ucasti")
           .classList.remove("hidden");
@@ -277,7 +275,7 @@ async function loadPlayers() {
       .select("UzivatelID, Jmeno, Prijmeni, TymID")
       .eq("TymID", tymID)
       .eq("RoleuzivateluID", 3); //seznam ucasti na treninku vypise pouze hrace (role = 3)
-            
+
     if (error) {
       alert("Chyba při načítání hráčů: " + error.message);
       return;
@@ -307,8 +305,11 @@ async function displayPlayers(players) {
 
   // Získání stavu přihlášení pro každého hráče
   for (const player of players) {
-    const stavPrihlaseni = await getAttendance(player.UzivatelID, reservationId);
-    
+    const stavPrihlaseni = await getAttendance(
+      player.UzivatelID,
+      reservationId
+    );
+
     playersWithAttendance.push({
       ...player,
       stavPrihlaseni: stavPrihlaseni,
@@ -406,3 +407,48 @@ btEditTraining.addEventListener("click", async function () {
     }
   }
 });
+
+async function loadPicture() {
+  const profilePicture = document.querySelectorAll(".profile-picture");
+
+  try {
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabaseClient.auth.getSession();
+
+    if (sessionError || !session) {
+      alert("Uživatel není přihlášen!");
+      window.location.href = "../pages/login.html";
+      return;
+    }
+
+    const userEmail = session.user.email;
+
+    const { data: userData, error: userError } = await supabaseClient
+      .from("Uzivatel")
+      .select(
+        "UzivatelID, Jmeno, Prijmeni, Email, Telefon, TymID, AdresaID, profile_picture_url"
+      )
+      .eq("Email", userEmail)
+      .single();
+
+    if (userError) {
+      alert("Chyba při načítání uživatelských dat: " + userError.message);
+      return;
+    }
+
+    const defaultImage = "../assets/basic-profile.png";
+    let profilePictureUrl = userData.profile_picture_url || defaultImage;
+    if (userData.profile_picture_url) {
+      const timestamp = new Date().getTime();
+      profilePictureUrl = `${userData.profile_picture_url}?t=${timestamp}`;
+    }
+    console.log("Nastavovaná URL pro obrázek:", profilePictureUrl);
+    profilePicture.forEach((img) => {
+      img.src = profilePictureUrl;
+    });
+  } catch (error) {
+    alert("Chyba: " + error.message);
+  }
+}

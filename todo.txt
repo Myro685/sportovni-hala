@@ -15,10 +15,7 @@ DBS2
 -alespoň tři funkce různého typu s odpovídající složitostí
 -alespoň tři uložené procedury
 -alespoň jedna transakce s ošetřeným chováním při rollbacku
--použití indexů na neklíčové sloupce
--použití kompozitních primárních klíčů
 -vyzkoušet si použití datového typu JSON v moderních relačních databázích (rozumné použití včetně filtrace nad těmito sloupci může ovlivnit počet požadovaných databázových tabulek, případně odpuštění jednoho ze zde uvedených požadavků – záleží na domluvě se cvičícím)
--vhodným způsobem zajistit ukládání obrázků, které budou v aplikaci načteny a zobrazeny
 
 TNPW2
 UŽIVATELSKÝ OBSAH

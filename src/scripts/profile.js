@@ -93,7 +93,7 @@ async function loadData() {
     street.value = addressData.Ulice || "Není zadáno";
     cp.value = addressData.Cp || "Není zadáno";
 
-    const defaultImage = "../assets/a32b54fa44fb3f94bdb289b5fd8f01dc.jpg";
+    const defaultImage = "../assets/basic-profile.png";
     let profilePictureUrl = userData.profile_picture_url || defaultImage;
     if (userData.profile_picture_url) {
       const timestamp = new Date().getTime();

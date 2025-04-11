@@ -10,6 +10,7 @@ let allPlayers = [];
 document.addEventListener("DOMContentLoaded", () => {
   loadPlayers();
   setupSearch();
+  loadPicture();
 });
 
 // Načtení hráčů z databáze
@@ -38,6 +39,51 @@ async function loadPlayers() {
 
     allPlayers = players; // Uložení hráčů do globální proměnné
     displayPlayers(allPlayers);
+  } catch (error) {
+    alert("Chyba: " + error.message);
+  }
+}
+
+async function loadPicture() {
+  const profilePicture = document.querySelectorAll(".profile-picture");
+
+  try {
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabaseClient.auth.getSession();
+
+    if (sessionError || !session) {
+      alert("Uživatel není přihlášen!");
+      window.location.href = "../pages/login.html";
+      return;
+    }
+
+    const userEmail = session.user.email;
+
+    const { data: userData, error: userError } = await supabaseClient
+      .from("Uzivatel")
+      .select(
+        "UzivatelID, Jmeno, Prijmeni, Email, Telefon, TymID, AdresaID, profile_picture_url"
+      )
+      .eq("Email", userEmail)
+      .single();
+
+    if (userError) {
+      alert("Chyba při načítání uživatelských dat: " + userError.message);
+      return;
+    }
+
+    const defaultImage = "../assets/basic-profile.png";
+    let profilePictureUrl = userData.profile_picture_url || defaultImage;
+    if (userData.profile_picture_url) {
+      const timestamp = new Date().getTime();
+      profilePictureUrl = `${userData.profile_picture_url}?t=${timestamp}`;
+    }
+    console.log("Nastavovaná URL pro obrázek:", profilePictureUrl);
+    profilePicture.forEach((img) => {
+      img.src = profilePictureUrl;
+    });
   } catch (error) {
     alert("Chyba: " + error.message);
   }
