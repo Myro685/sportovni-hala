@@ -14,7 +14,6 @@ Systém bude evidovat základní informace o rezervaci, jako je datum, čas, jm�
 DBS2
 -alespoň tři funkce různého typu s odpovídající složitostí
 -alespoň tři uložené procedury
--alespoň dva triggery
 -alespoň jedna transakce s ošetřeným chováním při rollbacku
 -použití indexů na neklíčové sloupce
 -použití kompozitních primárních klíčů
