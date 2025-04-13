@@ -97,6 +97,7 @@ function switcher() {
 }
 
 // Logika odeslání formuláře
+// Logika odeslání formuláře
 submit.addEventListener("click", async (e) => {
   e.preventDefault();
 
@@ -109,7 +110,22 @@ submit.addEventListener("click", async (e) => {
         return;
       }
 
-      // Registrace
+      const teamSelected = team.value;
+
+      // 1. Nejprve provedeme databázovou operaci (transakci)
+      const { error: dbError } = await supabaseClient.rpc("register_user", {
+        p_email: email.value,
+        p_jmeno: firstName.value,
+        p_prijmeni: lastName.value,
+        p_tym_id: parseInt(teamSelected),
+      });
+
+      if (dbError) {
+        alert("Chyba při ukládání dat do databáze: " + dbError.message);
+        return;
+      }
+
+      // 2. Pokud databázová operace proběhla úspěšně, provedeme registraci v Supabase Auth
       const { data, error } = await supabaseClient.auth.signUp({
         email: email.value,
         password: password.value,
@@ -122,41 +138,31 @@ submit.addEventListener("click", async (e) => {
       });
 
       if (error) {
+        // Pokud selže registrace v Auth, musíme smazat záznam z tabulky Uzivatel (rollback)
+        const { error: deleteError } = await supabaseClient
+          .from("Uzivatel")
+          .delete()
+          .eq("Email", email.value);
+
+        if (deleteError) {
+          alert("Chyba při rušení registrace: " + deleteError.message);
+        }
+
         alert("Registrace selhala: " + error.message);
-        return;
-      }
-
-      const teamSelected = team.value;
-
-      // Vložení uživatele do tabulky Uzivatel
-      const { error: insertError } = await supabaseClient
-        .from("Uzivatel")
-        .insert({
-          Email: email.value,
-          Jmeno: firstName.value,
-          Prijmeni: lastName.value,
-          Telefon: null,
-          AdresaID: null,
-          RoleuzivateluID: 3,
-          TymID: teamSelected,
-        });
-
-      if (insertError) {
-        alert("Chyba při ukládání dat: " + insertError.message);
         return;
       }
 
       alert("Registrace úspěšná!");
       window.location.href = "../pages/index.html";
     } else {
-      // Přihlášení (bez kontroly hesla, protože to řeší Supabase)
+      // Přihlášení (bez změn)
       const { data, error } = await supabaseClient.auth.signInWithPassword({
         email: email.value,
         password: password.value,
       });
 
       if (error) {
-        alert("Přihlášení selhalo: " + error.message);
+        alert("Přihlášení selhala: " + error.message);
         return;
       } else {
         alert("Úspěšně přihlášen!");
