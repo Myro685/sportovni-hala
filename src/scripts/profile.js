@@ -40,77 +40,47 @@ async function loadData() {
 
     const userEmail = session.user.email;
 
-    const { data: userData, error: userError } = await supabaseClient
-      .from("Uzivatel")
-      .select(
-        "UzivatelID, Jmeno, Prijmeni, Email, Telefon, TymID, AdresaID, profile_picture_url"
-      )
-      .eq("Email", userEmail)
-      .single();
+    // Načtení dat uživatele pomocí funkce get_user_profile
+    const { data: userData, error: userError } = await supabaseClient.rpc(
+      "get_user_profile",
+      { p_email: userEmail }
+    );
 
     if (userError) {
       alert("Chyba při načítání uživatelských dat: " + userError.message);
       return;
     }
 
-    let teamName = "Není zadáno";
-    if (userData.TymID) {
-      const { data: teamData, error: teamError } = await supabaseClient
-        .from("Tym")
-        .select("Nazevtymu")
-        .eq("TymID", userData.TymID)
-        .single();
+    const profile = userData[0]; // Funkce vrací tabulku, vezmeme první řádek
 
-      if (teamError) {
-        alert("Chyba při načítání týmu: " + teamError.message);
-        return;
-      }
-      teamName = teamData.Nazevtymu;
-    }
-
-    let addressData = {};
-    if (userData.AdresaID) {
-      const { data, error: addressError } = await supabaseClient
-        .from("Adresa")
-        .select("Cp, Nazevmesta, Psc, Ulice")
-        .eq("AdresaID", userData.AdresaID)
-        .single();
-
-      if (addressError) {
-        alert("Chyba při načítání adresy: " + addressError.message);
-        return;
-      }
-      addressData = data;
-    }
-
-    firstName.value = userData.Jmeno || "Není zadáno";
-    lastName.value = userData.Prijmeni || "Není zadáno";
-    email.value = userData.Email || "Není zadáno";
-    number.value = userData.Telefon || "Není zadáno";
-    team.value = teamName;
-    city.value = addressData.Nazevmesta || "Není zadáno";
-    psc.value = addressData.Psc || "Není zadáno";
-    street.value = addressData.Ulice || "Není zadáno";
-    cp.value = addressData.Cp || "Není zadáno";
+    firstName.value = profile.jmeno || "Není zadáno";
+    lastName.value = profile.prijmeni || "Není zadáno";
+    email.value = profile.email || "Není zadáno";
+    number.value = profile.telefon || "Není zadáno";
+    team.value = profile.tym_nazev;
+    city.value = profile.nazevmesta;
+    psc.value = profile.psc;
+    street.value = profile.ulice;
+    cp.value = profile.cp;
 
     const defaultImage = "../assets/basic-profile.png";
-    let profilePictureUrl = userData.profile_picture_url || defaultImage;
-    if (userData.profile_picture_url) {
+    let profilePictureUrl = profile.profile_picture_url || defaultImage;
+    if (profile.profile_picture_url) {
       const timestamp = new Date().getTime();
-      profilePictureUrl = `${userData.profile_picture_url}?t=${timestamp}`;
+      profilePictureUrl = `${profile.profile_picture_url}?t=${timestamp}`;
     }
     console.log("Nastavovaná URL pro obrázek:", profilePictureUrl);
     profilePicture.forEach((img) => {
       img.src = profilePictureUrl;
     });
 
-    editFirstName.value = userData.Jmeno || "";
-    editLastName.value = userData.Prijmeni || "";
-    editNumber.value = userData.Telefon || "";
-    editCity.value = addressData.Nazevmesta || "";
-    editPsc.value = addressData.Psc || "";
-    editStreet.value = addressData.Ulice || "";
-    editCp.value = addressData.Cp || "";
+    editFirstName.value = profile.jmeno || "";
+    editLastName.value = profile.prijmeni || "";
+    editNumber.value = profile.telefon || "";
+    editCity.value = profile.nazevmesta || "";
+    editPsc.value = profile.psc || "";
+    editStreet.value = profile.ulice || "";
+    editCp.value = profile.cp || "";
   } catch (error) {
     alert("Chyba: " + error.message);
   }
@@ -161,7 +131,7 @@ editForm.addEventListener("submit", async (e) => {
 
     const { data: userData, error: fetchError } = await supabaseClient
       .from("Uzivatel")
-      .select("UzivatelID, AdresaID")
+      .select("UzivatelID")
       .eq("Email", userEmail)
       .single();
 
@@ -183,7 +153,6 @@ editForm.addEventListener("submit", async (e) => {
           profilePictureUrl
         );
         if (success) {
-          // Aktualizace zobrazení obrázku na stránce
           const timestamp = new Date().getTime();
           const cacheBustedUrl = `${profilePictureUrl}?t=${timestamp}`;
           profilePicture.forEach((img) => {
@@ -199,37 +168,38 @@ editForm.addEventListener("submit", async (e) => {
       }
     }
 
-    // Aktualizace tabulky Uzivatel
-    const { error: userError } = await supabaseClient
-      .from("Uzivatel")
-      .update({
-        Jmeno: editFirstName.value,
-        Prijmeni: editLastName.value,
-        Telefon: editNumber.value,
-      })
-      .eq("Email", userEmail);
+    // Převod hodnot PSC a CP na integer, nebo NULL pokud jsou prázdné
+    const pscValue = editPsc.value ? parseInt(editPsc.value) : null;
+    const cpValue = editCp.value ? parseInt(editCp.value) : null;
 
-    if (userError) {
-      alert("Chyba při aktualizaci uživatele: " + userError.message);
+    // Kontrola, zda jsou hodnoty platné
+    if (editPsc.value && (isNaN(pscValue) || pscValue < 0)) {
+      alert("PSČ musí být platné číslo!");
+      return;
+    }
+    if (editCp.value && (isNaN(cpValue) || cpValue < 0)) {
+      alert("Číslo popisné musí být platné číslo!");
       return;
     }
 
-    // Aktualizace tabulky Adresa, pokud AdresaID existuje
-    if (userData.AdresaID) {
-      const { error: addressError } = await supabaseClient
-        .from("Adresa")
-        .update({
-          Nazevmesta: editCity.value,
-          Psc: editPsc.value,
-          Ulice: editStreet.value,
-          Cp: editCp.value,
-        })
-        .eq("AdresaID", userData.AdresaID);
-
-      if (addressError) {
-        alert("Chyba při aktualizaci adresy: " + addressError.message);
-        return;
+    // Aktualizace profilu pomocí funkce update_user_profile
+    const { error: updateError } = await supabaseClient.rpc(
+      "update_user_profile",
+      {
+        p_email: userEmail,
+        p_jmeno: editFirstName.value,
+        p_prijmeni: editLastName.value,
+        p_telefon: editNumber.value,
+        p_nazevmesta: editCity.value,
+        p_psc: pscValue, // Nyní integer nebo null
+        p_ulice: editStreet.value,
+        p_cp: cpValue, // Nyní integer nebo null
       }
+    );
+
+    if (updateError) {
+      alert("Chyba při aktualizaci profilu: " + updateError.message);
+      return;
     }
 
     // Aktualizace zobrazených hodnot
@@ -264,11 +234,9 @@ async function uploadProfilePicture(file, userId) {
     return null;
   }
 
-  // Přidáme časovou značku do názvu souboru, aby byl jedinečný
   const timestamp = new Date().getTime();
   const fileName = `${userId}-profile-picture-${timestamp}.jpg`;
 
-  // Najdeme a smažeme všechny staré obrázky pro daného uživatele
   const { data: existingFiles, error: listError } = await supabaseClient.storage
     .from("profile-pictures")
     .list("", { search: `${userId}-profile-picture` });
@@ -288,7 +256,6 @@ async function uploadProfilePicture(file, userId) {
     }
   }
 
-  // Nahrajeme nový obrázek
   const { data, error } = await supabaseClient.storage
     .from("profile-pictures")
     .upload(fileName, file, {
