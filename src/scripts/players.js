@@ -29,7 +29,7 @@ async function loadPlayers() {
 
     const { data: players, error } = await supabaseClient
       .from("Uzivatel")
-      .select("Jmeno, Prijmeni") // Načítáme pouze Jmeno a Prijmeni
+      .select("Jmeno, Prijmeni, Email") // Přidáme Email
       .eq("RoleuzivateluID", 3); // Filtrování hráčů s RoleUzivateleID = 3
 
     if (error) {
@@ -37,7 +37,7 @@ async function loadPlayers() {
       return;
     }
 
-    allPlayers = players; // Uložení hráčů do globální proměnné
+    allPlayers = players;
     displayPlayers(allPlayers);
   } catch (error) {
     alert("Chyba: " + error.message);
@@ -93,23 +93,23 @@ async function loadPicture() {
 function displayPlayers(players) {
   const playersList = document.getElementById("playersList");
 
-  // Kontrola, zda element existuje
   if (!playersList) {
     console.error("Element s ID 'playersList' nebyl nalezen v HTML.");
     return;
   }
 
-  playersList.innerHTML = ""; // Vymazání stávajícího obsahu
+  playersList.innerHTML = "";
 
   players.forEach((player) => {
     const li = document.createElement("li");
     li.className = "text-gray-700 p-2 border-b border-gray-200";
-    // Zobrazení jména a příjmení
-    li.textContent = `${player.Jmeno} ${player.Prijmeni}`;
+    // Zobrazení jména, příjmení a e-mailu
+    li.textContent = `${player.Jmeno} ${player.Prijmeni} (${
+      player.Email || "Není uveden e-mail"
+    })`;
     playersList.appendChild(li);
   });
 
-  // Pokud nejsou žádní hráči
   if (players.length === 0) {
     const li = document.createElement("li");
     li.className = "text-gray-500 p-2";
@@ -122,7 +122,6 @@ function displayPlayers(players) {
 function setupSearch() {
   const searchInput = document.getElementById("playersSearch");
 
-  // Kontrola, zda element existuje
   if (!searchInput) {
     console.error("Element s ID 'playersSearch' nebyl nalezen v HTML.");
     return;
@@ -131,8 +130,9 @@ function setupSearch() {
   searchInput.addEventListener("input", () => {
     const searchTerm = searchInput.value.trim().toLowerCase();
     const filteredPlayers = allPlayers.filter((player) => {
-      const fullName = `${player.Jmeno} ${player.Prijmeni}`.toLowerCase(); // Kombinace Jmeno a Prijmeni
-      return fullName.includes(searchTerm);
+      const fullName = `${player.Jmeno} ${player.Prijmeni}`.toLowerCase();
+      const email = player.Email?.toLowerCase() || "";
+      return fullName.includes(searchTerm) || email.includes(searchTerm);
     });
     displayPlayers(filteredPlayers);
   });
