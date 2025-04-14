@@ -7,14 +7,14 @@
     <title data-lang-key="profile">Profil</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
-  <body class="h-screen flex flex-col lg:flex-row bg-slate-600">
+  <body class="h-screen flex flex-col lg:flex-row dark:bg-primaryDark">
     <nav
-      class="relative flex flex-col p-4 lg:w-48 lg:items-center bg-gray-400 lg:flex-shrink-0 lg:h-screen min-h-[71px] box-border"
+      class="relative flex flex-col p-4 lg:w-48 lg:items-cente dark:bg-thirdDark lg:flex-shrink-0 lg:h-screen min-h-[71px] box-border"
     >
       <div class="flex items-center whitespace-nowrap text-2lg font-black">
         <a
           href="../pages/profile.html"
-          class="flex items-center whitespace-nowrap text-2lg font-black"
+          class="flex items-center whitespace-nowrap justify-center lg:w-full text-2lg font-black"
         >
           <img
             src="../assets/basic-profile.png"
@@ -72,7 +72,7 @@
                 xmlns:xlink="http://www.w3.org/1999/xlink"
                 viewBox="0 0 493.665 493.665"
                 xml:space="preserve"
-                fill="#000000"
+                fill="#ffffff"
               >
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g
@@ -84,15 +84,12 @@
                   <g>
                     <g>
                       <path
-                        style="fill: #010002"
                         d="M186.364,371.744c-28.084,0-55.039-6.292-80.099-18.704l-43.13-21.354l21.354,43.13 c36.286,73.312,109.589,118.848,191.298,118.848c117.653,0,213.375-95.722,213.375-213.375 c0-81.708-45.536-155.012-118.848-191.298l-43.138-21.354l21.354,43.138c12.404,25.069,18.696,52.015,18.696,80.107 C367.225,290.605,286.093,371.744,186.364,371.744z M383.482,190.883c0-31.36-7.356-60.989-20.386-87.317 c65.053,32.205,109.801,99.226,109.801,176.731c0,108.866-88.252,197.118-197.118,197.118 c-77.506,0-144.526-44.748-176.731-109.801c26.32,13.03,55.957,20.386,87.317,20.386 C295.23,388.001,383.482,299.749,383.482,190.883z"
                       ></path>
                       <path
-                        style="fill: #010002"
                         d="M43.724,318.656l63.46-46.097l63.46,46.105l-24.239-74.596l63.46-46.105h-78.449l-24.239-74.596 l-24.239,74.596H4.503l63.452,46.105L43.724,318.656z M54.535,214.22h40.212l12.429-38.245l12.429,38.245h40.212l-32.539,23.638 l12.429,38.237l-32.531-23.63l-32.539,23.638l12.429-38.245L54.535,214.22z"
                       ></path>
                       <path
-                        style="fill: #010002"
                         d="M165.14,171.651l55.77-40.529l55.77,40.521l-21.297-65.565l55.77-40.513h-68.938L220.91,0 l-21.305,65.565h-68.938l55.77,40.521L165.14,171.651z M180.706,81.822h30.718l9.486-29.206l9.486,29.206h30.718l-24.849,18.054 l9.494,29.206l-24.849-18.045l-24.849,18.054l9.494-29.206L180.706,81.822z"
                       ></path>
                     </g>
@@ -107,33 +104,32 @@
       <input type="checkbox" class="peer hidden" id="navbar-open" />
       <label
         for="navbar-open"
-        class="absolute top-6 right-7 cursor-pointer lg:hidden"
+        class="absolute top-4 right-7 cursor-pointer lg:hidden"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
+          x="0px"
+          y="0px"
+          width="40"
+          height="40"
+          viewBox="0 0 50 50"
+          fill="#ffffff"
         >
           <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M4 6h16M4 12h16M4 18h16"
-          />
+            d="M 0 9 L 0 11 L 50 11 L 50 9 Z M 0 24 L 0 26 L 50 26 L 50 24 Z M 0 39 L 0 41 L 50 41 L 50 39 Z"
+          ></path>
         </svg>
       </label>
 
       <div
         aria-label="Header Navigation"
-        class="absolute top-full left-0 z-10 w-full bg-gray-400 peer-checked:max-h-screen max-h-0 flex flex-col items-center overflow-hidden transition-all duration-300 ease-in-out lg:hidden"
+        class="absolute top-full left-0 z-10 w-full dark:bg-thirdDark peer-checked:max-h-screen max-h-0 flex flex-col items-center overflow-hidden transition-all duration-300 ease-in-out lg:hidden"
       >
         <ul class="flex flex-col items-center space-y-2 w-full px-4">
           <li class="w-full">
             <a
               href="index.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="home"
               >Domů</a
             >
@@ -141,7 +137,7 @@
           <li class="w-full">
             <a
               href="teams.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="teams"
               >Týmy</a
             >
@@ -149,7 +145,7 @@
           <li class="w-full">
             <a
               href="players.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="players"
               >Hráči</a
             >
@@ -157,7 +153,7 @@
           <li class="w-full">
             <a
               href="profile.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="profile"
               >Profil
             </a>
@@ -165,7 +161,7 @@
           <li class="w-full">
             <a
               id="logout"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5 cursor-pointer"
+              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:bg-secondaryDark flex items-center justify-center p-5"
               >Odhlásit
             </a>
           </li>
@@ -177,7 +173,7 @@
           <li class="w-full">
             <a
               href="index.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:hover:bg-hoverDark dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="home"
               >Domů</a
             >
@@ -185,7 +181,7 @@
           <li class="w-full">
             <a
               href="teams.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:hover:bg-hoverDark dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="teams"
               >Týmy</a
             >
@@ -193,7 +189,7 @@
           <li class="w-full">
             <a
               href="players.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:hover:bg-hoverDark dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="players"
               >Hráči</a
             >
@@ -201,7 +197,7 @@
           <li class="w-full">
             <a
               href="profile.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5"
+              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:hover:bg-hoverDark dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="profile"
               >Profil</a
             >
@@ -254,7 +250,7 @@
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                   viewBox="0 0 493.665 493.665"
                   xml:space="preserve"
-                  fill="#000000"
+                  fill="#ffffff"
                 >
                   <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                   <g
@@ -266,15 +262,12 @@
                     <g>
                       <g>
                         <path
-                          style="fill: #010002"
                           d="M186.364,371.744c-28.084,0-55.039-6.292-80.099-18.704l-43.13-21.354l21.354,43.13 c36.286,73.312,109.589,118.848,191.298,118.848c117.653,0,213.375-95.722,213.375-213.375 c0-81.708-45.536-155.012-118.848-191.298l-43.138-21.354l21.354,43.138c12.404,25.069,18.696,52.015,18.696,80.107 C367.225,290.605,286.093,371.744,186.364,371.744z M383.482,190.883c0-31.36-7.356-60.989-20.386-87.317 c65.053,32.205,109.801,99.226,109.801,176.731c0,108.866-88.252,197.118-197.118,197.118 c-77.506,0-144.526-44.748-176.731-109.801c26.32,13.03,55.957,20.386,87.317,20.386 C295.23,388.001,383.482,299.749,383.482,190.883z"
                         ></path>
                         <path
-                          style="fill: #010002"
                           d="M43.724,318.656l63.46-46.097l63.46,46.105l-24.239-74.596l63.46-46.105h-78.449l-24.239-74.596 l-24.239,74.596H4.503l63.452,46.105L43.724,318.656z M54.535,214.22h40.212l12.429-38.245l12.429,38.245h40.212l-32.539,23.638 l12.429,38.237l-32.531-23.63l-32.539,23.638l12.429-38.245L54.535,214.22z"
                         ></path>
                         <path
-                          style="fill: #010002"
                           d="M165.14,171.651l55.77-40.529l55.77,40.521l-21.297-65.565l55.77-40.513h-68.938L220.91,0 l-21.305,65.565h-68.938l55.77,40.521L165.14,171.651z M180.706,81.822h30.718l9.486-29.206l9.486,29.206h30.718l-24.849,18.054 l9.494,29.206l-24.849-18.045l-24.849,18.054l9.494-29.206L180.706,81.822z"
                         ></path>
                       </g>
@@ -288,7 +281,7 @@
           <li class="w-full">
             <a
               id="logoutBig"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-slate-600 hover:bg-slate-800 flex items-center justify-center p-5 cursor-pointer"
+              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:hover:bg-hoverDark dark:bg-secondaryDark flex items-center justify-center p-5"
               >Odhlásit
             </a>
           </li>
@@ -299,9 +292,9 @@
     <div
       class="flex flex-col justify-center sm:flex-row items-center gap-4 w-full lg:my-6 pt-4 px-4 py-3"
     >
-      <form class="bg-white w-full sm:max-w-md px-7 py-4 rounded-lg">
+      <form class="dark:bg-thirdDark w-full sm:max-w-md px-7 py-4 rounded-lg">
         <h2
-          class="text-3xl font-bold text-center uppercase"
+          class="text-3xl font-bold text-center uppercase dark:text-white"
           data-lang-key="my_profile"
         >
           Můj Profil
@@ -311,7 +304,7 @@
         >
           <img
             src="../assets/basic-profile.png"
-            class="profile-picture size-32 rounded-full object-cover shadow-lg"
+            class="profile-picture size-32 rounded-full object-cover shadow-lg border-2 dark:border-secondaryDark"
             alt="Profilová fotka"
           />
         </div>
@@ -321,7 +314,7 @@
             <div class="flex justify-start items-start flex-col gap-3">
               <label
                 for="firstName"
-                class="font-bold"
+                class="font-bold dark:text-white"
                 data-lang-key="first_name"
                 >Jméno:</label
               >
@@ -329,95 +322,119 @@
                 type="text"
                 id="firstName"
                 name="firstName"
-                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                class="w-full h-10 p-2 dark:bg-primaryDark dark:text-white rounded-lg"
                 disabled
               />
 
-              <label for="lastName" class="font-bold" data-lang-key="last_name"
+              <label
+                for="lastName"
+                class="font-bold dark:text-white"
+                data-lang-key="last_name"
                 >Příjmení:</label
               >
               <input
                 type="text"
                 id="lastName"
                 name="lastName"
-                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                class="w-full h-10 p-2 dark:bg-primaryDark dark:text-white rounded-lg"
                 disabled
               />
 
-              <label for="email" class="font-bold" data-lang-key="email"
+              <label
+                for="email"
+                class="font-bold dark:text-white"
+                data-lang-key="email"
                 >E-mail:</label
               >
               <input
                 type="email"
                 id="email"
                 name="email"
-                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                class="w-full h-10 p-2 dark:bg-primaryDark dark:text-white rounded-lg"
                 disabled
               />
 
-              <label for="number" class="font-bold" data-lang-key="phone"
+              <label
+                for="number"
+                class="font-bold dark:text-white"
+                data-lang-key="phone"
                 >Telefon:</label
               >
               <input
                 type="tel"
                 id="number"
                 name="number"
-                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                class="w-full h-10 p-2 dark:bg-primaryDark dark:text-white rounded-lg"
                 disabled
               />
 
-              <label for="team" class="font-bold" data-lang-key="team_member"
+              <label
+                for="team"
+                class="font-bold dark:text-white"
+                data-lang-key="team_member"
                 >Člen týmu:</label
               >
               <input
                 type="text"
                 id="team"
-                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                class="w-full h-10 p-2 dark:bg-primaryDark dark:text-white rounded-lg"
                 disabled
               />
             </div>
             <div class="flex justify-start items-start flex-col gap-3">
-              <label for="city" class="font-bold" data-lang-key="city"
+              <label
+                for="city"
+                class="font-bold dark:text-white"
+                data-lang-key="city"
                 >Město:</label
               >
               <input
                 type="text"
                 id="city"
-                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                class="w-full h-10 p-2 dark:bg-primaryDark dark:text-white rounded-lg"
                 disabled
               />
-              <label for="psc" class="font-bold" data-lang-key="zip"
+              <label
+                for="psc"
+                class="font-bold dark:text-white"
+                data-lang-key="zip"
                 >PSČ:</label
               >
               <input
                 type="text"
                 id="psc"
-                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                class="w-full h-10 p-2 dark:bg-primaryDark dark:text-white rounded-lg"
                 disabled
               />
-              <label for="street" class="font-bold" data-lang-key="street"
+              <label
+                for="street"
+                class="font-bold dark:text-white"
+                data-lang-key="street"
                 >Ulice:</label
               >
               <input
                 type="text"
                 id="street"
-                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                class="w-full h-10 p-2 dark:bg-primaryDark dark:text-white rounded-lg"
                 disabled
               />
-              <label for="cp" class="font-bold" data-lang-key="house_number"
+              <label
+                for="cp"
+                class="font-bold dark:text-white"
+                data-lang-key="house_number"
                 >Číslo popisné:</label
               >
               <input
                 type="text"
                 id="cp"
-                class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+                class="w-full h-10 p-2 dark:bg-primaryDark dark:text-white rounded-lg"
                 disabled
               />
             </div>
           </div>
           <button
             type="button"
-            class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600"
+            class="dark:text-white font-bold uppercase w-full h-10 rounded-lg dark:bg-secondaryDark dark:hover:bg-hoverDark"
             id="openModal"
             data-lang-key="edit_profile"
           >
@@ -429,22 +446,18 @@
       <!-- Modální okno -->
       <div
         id="modal"
-        class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 z-50 flex items-center justify-center w-full h-full p-4"
+        class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center w-full h-full p-4"
       >
         <div
-          class="relative w-full max-w-md bg-white rounded-lg shadow-lg flex flex-col max-h-[90vh]"
+          class="relative w-full max-w-md dark:bg-thirdDark rounded-lg shadow-lg flex flex-col max-h-[90vh]"
         >
           <div class="flex justify-between items-center p-4 border-b">
             <span
-              class="uppercase font-bold text-lg"
+              class="uppercase font-bold text-lg dark:text-white"
               data-lang-key="edit_profile"
               >Upravit profil</span
             >
-            <button
-              type="button"
-              id="closeModal"
-              class="text-gray-500 hover:text-gray-700"
-            >
+            <button type="button" id="closeModal">
               <img
                 src="../assets/cross-circle-svgrepo-com.svg"
                 alt="Zavřít"
@@ -459,7 +472,7 @@
           >
             <label
               for="editProfilePicture"
-              class="font-bold"
+              class="font-bold dark:text-white"
               data-lang-key="profile_picture"
             >
               Profilový obrázek:
@@ -469,11 +482,11 @@
               id="editProfilePicture"
               name="editProfilePicture"
               accept="image/*"
-              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+              class="w-full h-10 p-2 border-2 focus:outline-none dark:focus:border-secondaryDark dark:bg-primaryDark rounded-lg dark:text-white"
             />
             <label
               for="editFirstName"
-              class="font-bold"
+              class="font-bold dark:text-white"
               data-lang-key="first_name"
               >Jméno:</label
             >
@@ -481,12 +494,12 @@
               type="text"
               id="editFirstName"
               name="editFirstName"
-              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+              class="w-full h-10 p-2 border-2 focus:outline-none dark:focus:border-secondaryDark dark:bg-primaryDark rounded-lg dark:text-white"
             />
 
             <label
               for="editLastName"
-              class="font-bold"
+              class="font-bold dark:text-white"
               data-lang-key="last_name"
               >Příjmení:</label
             >
@@ -494,61 +507,76 @@
               type="text"
               id="editLastName"
               name="editLastName"
-              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+              class="w-full h-10 p-2 border-2 focus:outline-none dark:focus:border-secondaryDark dark:bg-primaryDark rounded-lg dark:text-white"
             />
 
-            <label for="editNumber" class="font-bold" data-lang-key="phone"
+            <label
+              for="editNumber"
+              class="font-bold dark:text-white"
+              data-lang-key="phone"
               >Telefon:</label
             >
             <input
               type="tel"
               id="editNumber"
               name="editNumber"
-              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+              class="w-full h-10 p-2 border-2 focus:outline-none dark:focus:border-secondaryDark dark:bg-primaryDark rounded-lg dark:text-white"
             />
 
             <h2
-              class="font-bold text-center w-full text-3xl"
+              class="font-bold text-center w-full text-3xl dark:text-white"
               data-lang-key="address"
             >
               Adresa
             </h2>
-            <label for="editCity" class="font-bold" data-lang-key="city"
+            <label
+              for="editCity"
+              class="font-bold dark:text-white"
+              data-lang-key="city"
               >Město:</label
             >
             <input
               type="text"
               id="editCity"
-              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+              class="w-full h-10 p-2 border-2 focus:outline-none dark:focus:border-secondaryDark dark:bg-primaryDark rounded-lg dark:text-white"
             />
-            <label for="editPsc" class="font-bold" data-lang-key="zip"
+            <label
+              for="editPsc"
+              class="font-bold dark:text-white"
+              data-lang-key="zip"
               >PSČ:</label
             >
             <input
               type="text"
               id="editPsc"
-              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+              class="w-full h-10 p-2 border-2 focus:outline-none dark:focus:border-secondaryDark dark:bg-primaryDark rounded-lg dark:text-white"
             />
-            <label for="editStreet" class="font-bold" data-lang-key="street"
+            <label
+              for="editStreet"
+              class="font-bold dark:text-white"
+              data-lang-key="street"
               >Ulice:</label
             >
             <input
               type="text"
               id="editStreet"
-              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+              class="w-full h-10 p-2 border-2 focus:outline-none dark:focus:border-secondaryDark dark:bg-primaryDark rounded-lg dark:text-white"
             />
-            <label for="editCp" class="font-bold" data-lang-key="house_number"
+            <label
+              for="editCp"
+              class="font-bold dark:text-white"
+              data-lang-key="house_number"
               >Číslo popisné:</label
             >
             <input
               type="text"
               id="editCp"
-              class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500 bg-white"
+              class="w-full h-10 p-2 border-2 focus:outline-none dark:focus:border-secondaryDark dark:bg-primaryDark rounded-lg dark:text-white"
             />
             <button
               type="submit"
               id="submit"
-              class="text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-700 mt-4"
+              class="dark:text-white font-bold uppercase w-full h-10 rounded-lg dark:bg-secondaryDark dark:hover:bg-hoverDark"
               data-lang-key="edit"
             >
               Upravit

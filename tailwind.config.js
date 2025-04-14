@@ -2,7 +2,14 @@
 module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primaryDark: "#3c364c",
+        secondaryDark: "#6d54b5",
+        thirdDark: "#2c2638",
+        hoverDark: "#524184",
+      },
+    },
   },
   plugins: [],
   darkMode: "class",

@@ -71,7 +71,7 @@ async function loadComments(rezervaceId) {
 
   if (comments.length === 0) {
     const li = document.createElement("li");
-    li.className = "text-gray-500 p-2";
+    li.className = "dark:text-white p-2";
     li.textContent = "Zatím žádné komentáře.";
     commentList.appendChild(li);
   } else {
@@ -411,7 +411,7 @@ async function displayPlayers(players) {
   for (const player of playersWithAttendance) {
     const li = document.createElement("li");
     li.className =
-      "text-gray-700 p-2 border-b border-gray-200 flex justify-between items-center";
+      "dark:text-white p-2 border-b border-gray-200 flex justify-between items-center";
 
     const playerNameSpan = document.createElement("span");
     playerNameSpan.textContent = player.Jmeno + " " + player.Prijmeni;

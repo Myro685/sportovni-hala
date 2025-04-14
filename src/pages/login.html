@@ -7,21 +7,19 @@
     <title data-lang-key="reserve_system">Rezervační systém</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
-  <body
-    class="bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 flex justify-center items-center p-4 bg-slate-600"
-  >
+  <body class="dark:bg-primaryDark flex justify-center items-center p-4">
     <form
       method="POST"
-      class="bg-white w-full sm:max-w-md px-8 py-12 rounded-lg flex justify-center items-center flex-col gap-4"
+      class="dark:bg-thirdDark dark:text-white dark:drop-shadow-2xl w-full sm:max-w-md px-8 py-12 rounded-lg flex justify-center items-center flex-col gap-4"
     >
-      <h1 class="text-3xl font-bold" data-lang-key="hall">HALA</h1>
+      <h1 class="text-3xl font-bold uppercase" data-lang-key="hall">HALA</h1>
       <div class="w-full flex justify-center items-center flex-col gap-2">
         <input
           placeholder="Jméno"
           type="text"
           name="firstname"
           id="firstname"
-          class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500"
+          class="w-full h-10 p-2 border-2 border-slate-400 focus:outline-none focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
           required
           data-lang-key="first_name"
         />
@@ -30,7 +28,7 @@
           type="text"
           name="lastname"
           id="lastname"
-          class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500"
+          class="w-full h-10 p-2 border-2 border-slate-400 focus:outline-none focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
           required
           data-lang-key="last_name"
         />
@@ -39,7 +37,7 @@
           type="email"
           name="email"
           id="email"
-          class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500"
+          class="w-full h-10 p-2 border-2 border-slate-400 focus:outline-none focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
           required
           data-lang-key="email"
         />
@@ -48,28 +46,32 @@
           type="password"
           name="password"
           id="password"
-          class="w-full h-10 p-2 border-b-2 border-slate-400 focus:outline-none focus:border-b-cyan-500"
+          class="w-full h-10 p-2 border-2 border-slate-400 focus:outline-none focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
           required
           data-lang-key="password"
         />
         <label for="team-select" id="team-label" data-lang-key="select_team"
           >Vyberte tým</label
         >
-        <select name="team-select" id="team-select"></select>
+        <select
+          name="team-select"
+          id="team-select"
+          class="dark:bg-secondaryDark rounded-lg p-2"
+        ></select>
       </div>
       <button
         type="button"
-        class="text-white font-bold uppercase w-full h-10 rounded-lg bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500"
+        class="text-white font-bold uppercase w-full h-10 rounded-lg dark:bg-secondaryDark dark:hover:bg-hoverDark"
         id="submit"
         data-lang-key="register"
       >
         Registrovat
       </button>
-      <p class="text-center text-gray-700">
+      <p class="text-center dark:text-white">
         <span id="acc" data-lang-key="have_account">Už máte účet?</span><br />
         <button
           type="button"
-          class="text-black"
+          class="dark:text-white"
           id="change"
           data-lang-key="login"
         >

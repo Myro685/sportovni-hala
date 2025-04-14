@@ -164,7 +164,7 @@ function displayEvents(events) {
 function createTrainingCard(event) {
   const card = document.createElement("div");
   card.className =
-    "bg-white px-7 py-8 rounded-lg border-2 border-gray-200 shadow-lg flex flex-col justify-between w-96 h-72";
+    "dark:bg-thirdDark px-7 py-8 rounded-lg border-2 shadow-lg flex flex-col justify-between w-96 h-72";
 
   const header = createCardHeader(event);
   const description = createCardDescription(event);
@@ -178,7 +178,7 @@ function createTrainingCard(event) {
 
 function createCardHeader(event) {
   const header = document.createElement("h2");
-  header.className = "text-xl font-bold";
+  header.className = "text-xl dark:text-white font-bold";
 
   const spanTraining = document.createElement("span");
   spanTraining.setAttribute("data-lang-key", "training");
@@ -191,7 +191,7 @@ function createCardHeader(event) {
 
 function createCardDescription(event) {
   const description = document.createElement("p");
-  description.className = "text-gray-600";
+  description.className = "dark:text-white";
   description.textContent = event.Popisakce;
   return description;
 }
@@ -201,7 +201,7 @@ function createCardTimeInfo(event) {
   const eventEnd = event.Konecrezervace?.slice(0, 5);
 
   const timeInfo = document.createElement("span");
-  timeInfo.className = "text-gray-500";
+  timeInfo.className = "dark:text-white";
 
   const spanTimeLabel = document.createElement("span");
   spanTimeLabel.setAttribute("data-lang-key", "time");
@@ -216,7 +216,7 @@ function createDetailsButton(event) {
   const button = document.createElement("button");
   button.type = "submit";
   button.className =
-    "text-white font-bold uppercase w-full h-10 rounded-lg bg-slate-600 hover:bg-slate-800";
+    "text-white font-bold uppercase w-full h-10 rounded-lg dark:bg-secondaryDark dark:hover:bg-hoverDark";
   button.setAttribute("data-lang-key", "details");
   button.textContent = "podrobnosti";
   button.onclick = () => {
@@ -228,7 +228,7 @@ function createDetailsButton(event) {
 function createDeleteButton(event, cardElement) {
   const deleteBtn = document.createElement("button");
   deleteBtn.className =
-    "font-bold uppercase w-full h-10 rounded-lg bg-red-600 hover:bg-red-800 mt-2";
+    "font-bold uppercase w-full dark:text-white h-10 rounded-lg bg-red-600 hover:bg-red-800 mt-2";
   deleteBtn.textContent = "🗑 Smazat";
 
   deleteBtn.onclick = async () => {
