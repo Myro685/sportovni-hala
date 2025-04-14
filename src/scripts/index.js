@@ -7,6 +7,7 @@ import {
 
 let currentTeam = null;
 let currentUserRole = null;
+let userID = null;
 
 const openBtn = document.getElementById("open-create-training");
 const cancelBtn = document.getElementById("cancel-create-training");
@@ -57,6 +58,7 @@ async function loadPicture() {
       .eq("Email", userEmail)
       .single();
 
+    userID = userData.UzivatelID;
     if (userError) {
       alert("Chyba při načítání uživatelských dat: " + userError.message);
       return;
@@ -254,3 +256,35 @@ function createDeleteButton(event, cardElement) {
 
   return deleteBtn;
 }
+
+async function deleteExpiredReservations(deletedBy) {
+  try {
+    const { data, error } = await supabaseClient.rpc(
+      "delete_expired_reservations",
+      {
+        p_deleted_by: deletedBy,
+      }
+    );
+
+    if (error) {
+      console.error("Error deleting expired reservations:", error);
+      alert("Chyba při mazání proběhlých rezervací: " + error.message);
+      return;
+    }
+
+    alert(
+      `Proběhlé rezervace byly úspěšně smazány! Počet smazaných rezervací: ${data}`
+    );
+    location.reload();
+    return data;
+  } catch (error) {
+    console.error("Unexpected error:", error);
+    alert("Chyba: " + error.message);
+    return null;
+  }
+}
+
+const deleteBtn = document.getElementById("delete-training");
+deleteBtn.addEventListener("click", async () => {
+  await deleteExpiredReservations(userID);
+});

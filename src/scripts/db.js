@@ -79,7 +79,16 @@ async function checkUserRole() {
   }
 }
 
-async function insertDataIntoRezervacehaly({ halaId = 1, uzivatelId, tymId, nazevAkce, popisAkce, datum, zacatek, konec }) {
+async function insertDataIntoRezervacehaly({
+  halaId = 1,
+  uzivatelId,
+  tymId,
+  nazevAkce,
+  popisAkce,
+  datum,
+  zacatek,
+  konec,
+}) {
   const { insertData, error } = await supabaseClient
     .from("Rezervacehaly")
     .insert([
@@ -91,16 +100,14 @@ async function insertDataIntoRezervacehaly({ halaId = 1, uzivatelId, tymId, naze
         Popisakce: popisAkce,
         Datumrezervace: datum,
         Zacatekrezervace: zacatek,
-        Konecrezervace: konec
-      }
+        Konecrezervace: konec,
+      },
     ])
     .select();
 
   if (error) throw error;
   return insertData[0];
 }
-
-
 
 export {
   supabaseClient,
