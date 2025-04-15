@@ -303,7 +303,12 @@
           class="hidden flex flex-row justify-center items-center space-x-4"
         >
           <div class="flex space-x-4 mt-4 items-center">
-            <p class="text-xl font-semibold dark:text-white" data-lang-key="will_you_come">Přijdeš?</p>
+            <p
+              class="text-xl font-semibold dark:text-white"
+              data-lang-key="will_you_come"
+            >
+              Přijdeš?
+            </p>
             <button
               type="button"
               class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
@@ -349,8 +354,8 @@
                   min=""
                 />
               </span>
-              <span class="text-xl font-bold tracking-wide" data-lang-key="start">
-                Začátek:
+              <span class="text-xl font-bold tracking-wide">
+                <span data-lang-key="start">Začátek:</span>
                 <span class="text-2xl">
                   <input
                     disabled
@@ -361,8 +366,8 @@
                   />
                 </span>
               </span>
-              <span class="text-sm" data-lang-key="end">
-                Konec:
+              <span class="text-sm">
+                <span data-lang-key="end">Konec:</span>
                 <input
                   disabled
                   id="training-end-time"
@@ -380,11 +385,15 @@
               id="bt-edit-training"
               class="hidden mt-1 text-center dark:bg-secondaryDark dark:hover:bg-hoverDark dark:text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-300"
               data-lang-key="edit_training"
-              >
+            >
               ✏️ Upravit trénink
             </button>
             <div class="flex flex-row">
-              <h3 id="title-my-attendance" class="text-xl font-bold hidden" data-lang-key="my_attendance">
+              <h3
+                id="title-my-attendance"
+                class="text-xl font-bold hidden"
+                data-lang-key="my_attendance"
+              >
                 Moje účast:
               </h3>
               <span id="span-current-user-attendance" class="hidden"></span>
@@ -393,14 +402,14 @@
               id="bt-change-attendance"
               class="hidden w-28 mt-1 text-center bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-300"
               data-lang-key="change_participation"
-              >
+            >
               ✏️ Změnit účast
             </button>
             <button
               id="bt-edit-attendance"
               class="hidden mt-1 text-center bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-300"
               data-lang-key="change_attendance"
-              >
+            >
               ✏️ Změnit docházku
             </button>
           </div>
@@ -430,7 +439,8 @@
               <button
                 id="bt-add-comment"
                 class="mt-2 dark:bg-secondaryDark dark:hover:bg-hoverDark dark:text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-300"
-                data-lang-key="add_comment">
+                data-lang-key="add_comment"
+              >
                 Přidat komentář
               </button>
             </div>
