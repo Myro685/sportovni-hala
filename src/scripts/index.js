@@ -229,8 +229,8 @@ function createDeleteButton(event, cardElement) {
   const deleteBtn = document.createElement("button");
   deleteBtn.className =
     "font-bold uppercase w-full dark:text-white h-10 rounded-lg bg-red-600 hover:bg-red-800 mt-2";
+  deleteBtn.setAttribute("data-lang-key", "remove");
   deleteBtn.textContent = "🗑 Smazat";
-
   deleteBtn.onclick = async () => {
     const confirmDelete = confirm("Opravdu chceš tento trénink smazat?");
     if (!confirmDelete) return;

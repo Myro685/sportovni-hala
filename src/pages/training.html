@@ -162,6 +162,7 @@
             <a
               id="logout"
               class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:bg-secondaryDark flex items-center justify-center p-5"
+              data-lang-key="logout"
               >Odhlásit
             </a>
           </li>
@@ -282,6 +283,7 @@
             <a
               id="logoutBig"
               class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:hover:bg-hoverDark dark:bg-secondaryDark flex items-center justify-center p-5"
+              data-lang-key="logout"
               >Odhlásit
             </a>
           </li>
@@ -301,11 +303,12 @@
           class="hidden flex flex-row justify-center items-center space-x-4"
         >
           <div class="flex space-x-4 mt-4 items-center">
-            <p class="text-xl font-semibold dark:text-white">Přijdeš?</p>
+            <p class="text-xl font-semibold dark:text-white" data-lang-key="will_you_come">Přijdeš?</p>
             <button
               type="button"
               class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
               id="bt-ucast-ano"
+              data-lang-key="yes"
             >
               Ano
             </button>
@@ -313,6 +316,7 @@
               type="button"
               class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
               id="bt-ucast-ne"
+              data-lang-key="no"
             >
               Ne
             </button>
@@ -326,7 +330,7 @@
             <div class="flex flex-col items-center">
               <h2 id="nazev-tymu" class="text-xl font-bold text-gray-800"></h2>
               <div class="mt-1 flex flex-col md:flex-row md:space-x-6">
-                <p>
+                <p data-lang-key="coach">
                   Trenér:
                   <span id="training-data-trainer" class="font-medium"></span>
                 </p>
@@ -345,7 +349,7 @@
                   min=""
                 />
               </span>
-              <span class="text-xl font-bold tracking-wide">
+              <span class="text-xl font-bold tracking-wide" data-lang-key="start">
                 Začátek:
                 <span class="text-2xl">
                   <input
@@ -357,7 +361,7 @@
                   />
                 </span>
               </span>
-              <span class="text-sm">
+              <span class="text-sm" data-lang-key="end">
                 Konec:
                 <input
                   disabled
@@ -375,11 +379,12 @@
               type="submit"
               id="bt-edit-training"
               class="hidden mt-1 text-center dark:bg-secondaryDark dark:hover:bg-hoverDark dark:text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-300"
-            >
+              data-lang-key="edit_training"
+              >
               ✏️ Upravit trénink
             </button>
             <div class="flex flex-row">
-              <h3 id="title-my-attendance" class="text-xl font-bold hidden">
+              <h3 id="title-my-attendance" class="text-xl font-bold hidden" data-lang-key="my_attendance">
                 Moje účast:
               </h3>
               <span id="span-current-user-attendance" class="hidden"></span>
@@ -387,25 +392,27 @@
             <button
               id="bt-change-attendance"
               class="hidden w-28 mt-1 text-center bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-300"
-            >
+              data-lang-key="change_participation"
+              >
               ✏️ Změnit účast
             </button>
             <button
               id="bt-edit-attendance"
               class="hidden mt-1 text-center bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-300"
-            >
+              data-lang-key="change_attendance"
+              >
               ✏️ Změnit docházku
             </button>
           </div>
         </div>
 
         <div id="obsah-treninku">
-          <p class="font-semibold">Seznam hráčů:</p>
+          <p class="font-semibold" data-lang-key="player_list">Seznam hráčů:</p>
           <ul id="player-list" class="max-h-44 overflow-y-auto"></ul>
 
           <!-- Nová sekce pro komentáře -->
           <div class="mt-6">
-            <p class="font-semibold">Komentáře:</p>
+            <p class="font-semibold" data-lang-key="comments">Komentáře:</p>
             <ul
               id="comment-list"
               class="mt-2 space-y-2 max-h-44 overflow-y-auto"
@@ -417,12 +424,13 @@
                 id="new-comment-text"
                 class="w-full p-2 border rounded-lg dark:bg-primaryDark dark:border-secondaryDark"
                 placeholder="Napiš svůj komentář..."
+                data-lang-key="write_your_comment"
                 rows="3"
               ></textarea>
               <button
                 id="bt-add-comment"
                 class="mt-2 dark:bg-secondaryDark dark:hover:bg-hoverDark dark:text-white font-semibold py-2 px-4 rounded-lg shadow transition-colors duration-300"
-              >
+                data-lang-key="add_comment">
                 Přidat komentář
               </button>
             </div>

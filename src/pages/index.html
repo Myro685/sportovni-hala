@@ -282,6 +282,7 @@
             <a
               id="logoutBig"
               class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:hover:bg-hoverDark dark:bg-secondaryDark flex items-center justify-center p-5"
+              data-lang-key="logout"
               >Odhlásit
             </a>
           </li>
@@ -296,13 +297,14 @@
         <button
           id="open-create-training"
           class="dark:text-white dark:bg-secondaryDark dark:hover:bg-hoverDark font-bold py-2 px-4 rounded w-72"
-        >
+          data-lang-key="add_new_training">
           ✅ Přidat nový trénink
         </button>
         <button
           id="delete-training"
           class="dark:text-white dark:bg-secondaryDark dark:hover:bg-hoverDark font-bold py-2 px-4 rounded w-72"
-        >
+          data-lang-key="delete_past_trainings">
+          >
           ❌ Odebrat proběhlé tréninky
         </button>
       </div>
@@ -314,11 +316,18 @@
         <div
           class="bg-white dark:bg-thirdDark dark:text-white p-6 rounded-lg shadow-md w-full max-w-md"
         >
-          <h2 class="text-xl font-bold mb-4">Nový trénink</h2>
+          <h2 class="text-xl font-bold mb-4"
+          data-lang-key="new_training">
+        </h2>>Nový trénink</h2>
+
           <form id="create-training-form" class="space-y-4">
             <div>
-              <label for="training-title" class="block text-sm font-medium"
-                >Název akce</label
+              <label 
+              for="training-title" 
+              class="block text-sm font-medium"
+              data-lang-key="event_title">
+              >Název akce
+              </label
               >
               <input
                 type="text"
@@ -333,7 +342,9 @@
               <label
                 for="training-description"
                 class="block text-sm font-medium"
-                >Popis akce</label
+                data-lang-key="event_description"
+                >Popis akce
+                </label
               >
               <textarea
                 id="event-description"
@@ -345,8 +356,12 @@
             </div>
 
             <div>
-              <label for="training-date" class="block text-sm font-medium"
-                >Datum</label
+              <label 
+                for="training-date" 
+                class="block text-sm font-medium"
+                data-lang-key="date"
+                >Datum
+              </label
               >
               <input
                 type="date"
@@ -359,7 +374,7 @@
 
             <div>
               <label for="start-time" class="block text-sm font-medium"
-                >Začátek</label
+                data-lang-key="start">Začátek</label
               >
               <input
                 type="time"
@@ -372,7 +387,7 @@
 
             <div>
               <label for="end-time" class="block text-sm font-medium"
-                >Konec</label
+                data-lang-key="end">Konec</label
               >
               <input
                 type="time"
@@ -388,13 +403,15 @@
                 type="button"
                 id="cancel-create-training"
                 class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-1 px-4 rounded"
-              >
+                data-lang-key="cancel"
+                >
                 Zrušit
               </button>
               <button
                 type="submit"
                 class="dark:bg-secondaryDark dark:hover:bg-hoverDark dark:text-white font-bold py-1 px-4 rounded"
-              >
+                data-lang-key="create"
+                >
                 Vytvořit
               </button>
             </div>
