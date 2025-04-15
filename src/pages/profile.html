@@ -478,13 +478,21 @@
             >
               Profilový obrázek:
             </label>
+
+            <label
+              for="editProfilePicture"
+              class="dark:text-white font-bold uppercase w-full h-10 rounded-lg dark:bg-secondaryDark dark:hover:bg-hoverDark flex items-center justify-center cursor-pointer"
+            >
+              <span data-lang-key="choose_profile_picture"></span>
+            </label>
             <input
               type="file"
               id="editProfilePicture"
               name="editProfilePicture"
               accept="image/*"
-              class="w-full h-10 p-2 border-2 focus:outline-none dark:focus:border-secondaryDark dark:bg-primaryDark rounded-lg dark:text-white"
+              class="hidden"
             />
+
             <label
               for="editFirstName"
               class="font-bold dark:text-white"
