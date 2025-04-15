@@ -31,6 +31,27 @@ async function updateAttendance(currentUserId, attendance) {
   }
   return;
 }
+ 
+
+
+//nacte data o hale
+async function getHallInformation(hallId) {
+  const { data: hallData, error: hallEror } =
+  await supabaseClient
+    .from("Hala")
+    .select(
+      "HalaID, Nazev, Pocatekoteviracidoby, Konecoteviracidoby"
+    )
+    .eq("HalaID", hallId);
+
+  if (hallEror) {
+    console.error("Chyba při načítání týmu:", hallEror);
+  return;
+  }
+  
+  return hallData[0];
+  
+}
 
 //nacte data o eventech pro aktualni tym (vsechny treninky)
 async function getTeamEventsData(tymID) {
@@ -119,4 +140,5 @@ export {
   getUserData,
   getTeamEventsData,
   insertDataIntoRezervacehaly,
+  getHallInformation,
 };

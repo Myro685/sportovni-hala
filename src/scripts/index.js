@@ -3,6 +3,7 @@ import {
   checkUserRole,
   getTeamEventsData,
   insertDataIntoRezervacehaly,
+  getHallInformation,
 } from "./db.js";
 
 let currentTeam = null;
@@ -28,6 +29,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 openBtn.addEventListener("click", () => {
   modal.classList.remove("hidden");
+  renderTimeline();
+  renderTimeLabels();
 });
 
 cancelBtn.addEventListener("click", () => {
@@ -295,3 +298,68 @@ const deleteBtn = document.getElementById("delete-training");
 deleteBtn.addEventListener("click", async () => {
   await deleteExpiredReservations(userID);
 });
+
+
+
+function renderTimeLabels() {
+  const container = document.getElementById("timeline-labels");
+  container.innerHTML = "";
+
+  const interval = 2; // Značky každé 2 hodiny, můžeš změnit třeba na 1
+  const markers = 24 / interval;
+
+  for (let i = 0; i <= markers; i++) {
+    const hour = i * interval;
+    const label = document.createElement("div");
+    label.style.width = (100 / markers) + "%";
+    label.textContent = hour.toString().padStart(2, '0'); // formát HH bez :00
+    label.classList.add("text-center");
+    container.appendChild(label);
+  }
+}
+
+async function renderTimeline() {
+  const timeline = document.getElementById("timeline");
+  timeline.innerHTML = ""; // vymazání předchozího zobrazení
+
+  const dnes = new Date().toISOString().split("T")[0];
+  const events = await getTeamEventsData(currentTeam); // všechny tréninky týmu
+  const dayEvents = events.filter((e) => e.Datumrezervace === dnes);
+
+  const halaId = 1; // TODO: získat dynamicky dle výběru
+  const hallData = await getHallInformation(halaId);
+
+  console.log(hallData.Pocatekoteviracidoby,hallData.Konecoteviracidoby );
+  
+
+  const openHour = parseInt(hallData.Pocatekoteviracidoby.split(":")[0], 10);
+  const closeHour = parseInt(hallData.Konecoteviracidoby.split(":")[0], 10);
+
+  for (let hour = 0; hour < 24; hour++) {
+    const block = document.createElement("div");
+    block.classList.add(
+      "h-full", "flex", "items-center", "justify-center", "text-[10px]", "text-white", "overflow-hidden"
+    );
+    block.style.width = (100 / 24) + "%";
+
+    const inOpeningHours = hour >= openHour && hour < closeHour;
+
+    const matchingEvent = dayEvents.find((e) => {
+      const startHour = parseInt(e.Zacatekrezervace?.split(":")[0], 10);
+      const endHour = parseInt(e.Konecrezervace?.split(":")[0], 10);
+      return hour >= startHour && hour < endHour;
+    });
+
+    if (!inOpeningHours) {
+      block.classList.add("bg-yellow-400");
+    } else if (matchingEvent) {
+      block.classList.add("bg-red-500");
+      block.textContent = matchingEvent.Nazevakce || "Obsazeno";
+      block.title = `${matchingEvent.Nazevakce} (${matchingEvent.Zacatekrezervace}–${matchingEvent.Konecrezervace})`;
+    } else {
+      block.classList.add("bg-green-500");
+    }
+
+    timeline.appendChild(block);
+  }
+}
