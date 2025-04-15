@@ -155,10 +155,13 @@ async function pushUsersIntoTable(eventId) {
 //treninky nemohou byt v minulosti
 function displayEvents(events) {
   const container = document.getElementById("training-container");
+  container.innerHTML = "";
   for (const event of events) {
     const card = createTrainingCard(event);
     container.appendChild(card);
   }
+  const savedLang = localStorage.getItem("preferredLanguage") || "cs";
+  changeLanguage(savedLang);
 }
 
 function createTrainingCard(event) {
@@ -180,12 +183,12 @@ function createCardHeader(event) {
   const header = document.createElement("h2");
   header.className = "text-xl dark:text-white font-bold";
 
-  const spanTraining = document.createElement("span");
-  spanTraining.setAttribute("data-lang-key", "training");
-  spanTraining.textContent = event.Nazevakce;
+  const trainingLabel = document.createElement("span");
+  trainingLabel.setAttribute("data-lang-key", "training"); 
 
-  header.appendChild(spanTraining);
-  header.append(" " + event.Datumrezervace);
+  const eventTitle = document.createElement("span");
+  eventTitle.textContent = event.Nazevakce;
+  header.append(eventTitle.textContent + " " + event.Datumrezervace);
   return header;
 }
 
@@ -205,7 +208,6 @@ function createCardTimeInfo(event) {
 
   const spanTimeLabel = document.createElement("span");
   spanTimeLabel.setAttribute("data-lang-key", "time");
-  spanTimeLabel.textContent = "Čas:";
 
   timeInfo.appendChild(spanTimeLabel);
   timeInfo.append(" " + eventStart + " - " + eventEnd);
@@ -217,8 +219,8 @@ function createDetailsButton(event) {
   button.type = "submit";
   button.className =
     "text-white font-bold uppercase w-full h-10 rounded-lg dark:bg-secondaryDark dark:hover:bg-hoverDark";
-  button.setAttribute("data-lang-key", "details");
-  button.textContent = "podrobnosti";
+  button.setAttribute("data-lang-key", "details"); 
+  button.textContent = "podrobnosti"; 
   button.onclick = () => {
     window.location.href = `training.html?id=${event.RezervacehalyID}`;
   };
@@ -229,8 +231,8 @@ function createDeleteButton(event, cardElement) {
   const deleteBtn = document.createElement("button");
   deleteBtn.className =
     "font-bold uppercase w-full dark:text-white h-10 rounded-lg bg-red-600 hover:bg-red-800 mt-2";
-  deleteBtn.setAttribute("data-lang-key", "remove");
-  deleteBtn.textContent = "🗑 Smazat";
+  deleteBtn.setAttribute("data-lang-key", "remove"); 
+  deleteBtn.textContent = "🗑 Smazat"; 
   deleteBtn.onclick = async () => {
     const confirmDelete = confirm("Opravdu chceš tento trénink smazat?");
     if (!confirmDelete) return;

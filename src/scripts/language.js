@@ -218,7 +218,10 @@ function changeLanguage(lang) {
 
   document.querySelectorAll("[data-lang-key]").forEach((element) => {
     const key = element.getAttribute("data-lang-key");
-    if (element.tagName === "INPUT" && element.hasAttribute("placeholder")) {
+    if (
+      (element.tagName === "INPUT" || element.tagName === "TEXTAREA") &&
+      element.hasAttribute("placeholder")
+    ) {
       element.setAttribute("placeholder", translations[lang][key]);
     } else {
       element.textContent = translations[lang][key];
