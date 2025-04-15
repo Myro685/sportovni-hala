@@ -8,6 +8,7 @@ import {
 let currentTeam = null;
 let currentUserRole = null;
 let userID = null;
+let currentTeamEventsData = []; 
 
 const openBtn = document.getElementById("open-create-training");
 const cancelBtn = document.getElementById("cancel-create-training");
@@ -19,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   currentTeam = roleData.currentUserData.TymID;
   currentUserRole = roleData.currentUserData.RoleuzivateluID;
-  const currentTeamEventsData = await getTeamEventsData(currentTeam);
+  currentTeamEventsData = await getTeamEventsData(currentTeam);
 
   displayEvents(currentTeamEventsData);
   loadPicture();
@@ -91,6 +92,7 @@ form.addEventListener("submit", async (e) => {
 
   try {
     const newEvent = await insertDataIntoRezervacehaly({
+      halaId: 1,
       uzivatelId: 27, // TODO: nahradit dynamicky
       tymId: currentTeam,
       nazevAkce,
@@ -101,12 +103,15 @@ form.addEventListener("submit", async (e) => {
     });
 
     await pushUsersIntoTable(newEvent.RezervacehalyID);
-    displayEvents([newEvent]);
+    currentTeamEventsData = await getTeamEventsData(currentTeam);
+    
+    displayEvents(currentTeamEventsData);
 
     alert("Trénink byl úspěšně vytvořen.");
     modal.classList.add("hidden");
     form.reset();
   } catch (err) {
+    console.error("Chyba při vytváření tréninku:", err); // pro lepší debug
     alert("Chyba při vytváření tréninku: " + err.message);
   }
 });

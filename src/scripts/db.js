@@ -89,7 +89,7 @@ async function insertDataIntoRezervacehaly({
   zacatek,
   konec,
 }) {
-  const { insertData, error } = await supabaseClient
+  const { data, error } = await supabaseClient
     .from("Rezervacehaly")
     .insert([
       {
@@ -106,7 +106,10 @@ async function insertDataIntoRezervacehaly({
     .select();
 
   if (error) throw error;
-  return insertData[0];
+  if (!data || data.length === 0) {
+    throw new Error("Žádná data nebyla vrácena po vložení rezervace");
+  }
+  return data[0];
 }
 
 export {
