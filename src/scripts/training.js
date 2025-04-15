@@ -35,7 +35,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await checkUserRole();
 
+
+  
+
   currentUserAttendance = await getAttendance(currentUserId, reservationId); // currentUserId nastavuju v checkUserRole()
+
+  console.log("current user  attendace" + currentUserAttendance);
+
 
   if (currentUserAttendance === null) {
     modalPotvrzeniUcasti.classList.remove("hidden");
@@ -153,6 +159,7 @@ async function changeMyAttendance(attendance) {
   if (error) {
     console.error("Chyba při aktualizaci účasti: ", error);
   } else {
+    currentUserAttendance = attendance;
     if (attendance === true) {
       spanCurrentUserAttendance.innerHTML = "ANO";
       spanCurrentUserAttendance.className = "font-bold text-green-500 ml-2";
@@ -192,6 +199,8 @@ async function getAttendance(userId, reservationId) {
     .eq("RezervacehalyID", reservationId)
     .eq("UzivatelID", userId);
 
+      console.log(data);
+      
   if (error || !data || data.length === 0) {
     console.error("Chyba při aktualizaci účasti: ", error);
     return null;
@@ -444,6 +453,7 @@ async function displayPlayers(players) {
 
 btChangeAttendance.addEventListener("click", async () => {
   const novyStav = !currentUserAttendance;
+  console.log(currentUserAttendance);
 
   const potvrzeni = confirm(
     `Opravdu chcete změnit svoji docházku na trénink na: ${
