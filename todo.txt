@@ -12,7 +12,5 @@ Webová aplikace bude v patičce zřetelně označena jako studentský zápočto
 
 Treninky jdou vytvaret mimo oteviraci dobu
 Vidim obsazenost jen sveho tymu
-Trener je furt Jan stastny
-odhlaseni na jinych strankach nefunguje
 Vypsat všechny treninky pro admina
 Mazání tréninků s kometáři
