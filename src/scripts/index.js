@@ -4,6 +4,7 @@ import {
   insertDataIntoRezervacehaly,
   getHallInformation,
   getUserData,
+  getAllEvents,
 } from "./db.js";
 
 const ROLE_ADMIN = 1;
@@ -16,16 +17,9 @@ let currentUserRole = storedUserData.RoleuzivateluID;
 const currentUserId = storedUserData.UzivatelID;
 let currentTeam = storedUserData.TymID;
 
-if (currentUserRole === ROLE_TRAINER) {
-} else if (currentUserRole === ROLE_ADMIN) {
-} else if (currentUserRole == ROLE_PLAYER) {
-  document.getElementById("open-create-training")?.classList.add("hidden");
-  document.getElementById("delete-training")?.classList.add("hidden");
-} else {
-}
-
 let userID = null; // je tady kvuli loadpicture
 let currentTeamEventsData = [];
+let getAllEventsData = [];
 
 const openBtn = document.getElementById("open-create-training");
 const cancelBtn = document.getElementById("cancel-create-training");
@@ -47,8 +41,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   currentTeamEventsData = await getTeamEventsData(currentTeam);
-
-  displayEvents(currentTeamEventsData);
+  getAllEventsData = await getAllEvents();
+  if (currentUserRole === ROLE_ADMIN) {
+    document.getElementById("open-create-training")?.classList.add("hidden");
+    displayEvents(currentTeamEventsData);
+  } else if (currentUserRole === ROLE_TRAINER) {
+    displayEvents(currentTeamEventsData);
+    document.getElementById("delete-training")?.classList.add("hidden");
+  } else if (currentUserRole == ROLE_PLAYER) {
+    document.getElementById("open-create-training")?.classList.add("hidden");
+    document.getElementById("delete-training")?.classList.add("hidden");
+    displayEvents(currentTeamEventsData);
+  }
   loadPicture();
 });
 

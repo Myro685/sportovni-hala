@@ -1,24 +1,17 @@
-2. Požadavky na nově tvořený systém
-
-• Rezervace tréninků: Trenéři budou moci prostřednictvím webového rozhraní
-rezervovat halu na konkrétní datum a čas.
-• Zobrazení dostupnosti: Systém zobrazí aktuálně volné termíny a zabrané sloty, aby se předešlo kolizím.
-• Správa rezervací: Administrátoři budou mít možnost upravovat, rušit a potvrzovat rezervace.
-• Trenéři: Mají právo rezervovat halu, měnit či rušit své rezervace.
-• Hráči: Budou moci potvrzovat svou účast na trénincích, které jsou v systému zaneseny.
-• Administrátoři: Disponují kompletní správou systému – nastavování pravidel pro využití haly, monitorování vytíženosti, úprava rezervací a řešení vzniklých
-problémů.
-3. Sledované údaje a notifikace
-Systém bude evidovat základní informace o rezervaci, jako je datum, čas, jméno trenéra, počet účastníků, status rezervace (čekající, potvrzená, zrušená).
-
 DBS2
 -vyzkoušet si použití datového typu JSON v moderních relačních databázích (rozumné použití včetně filtrace nad těmito sloupci může ovlivnit počet požadovaných databázových tabulek, případně odpuštění jednoho ze zde uvedených požadavků – záleží na domluvě se cvičícím)
 
 TNPW2
-
 ZOBRAZENÍ UŽIVATELSKÉHO OBSAHU
 Bude možné zobrazit i souhrnné údaje o uživatelském obsahu (dashboard), např. celkový počet položek, výběr několika položek podle vhodných kritérií (nejnovější, s nastaveným příznakem, a pod).
 DALŠÍ POŽADAVKY 
 Dokumentace projektu bude obsahovat požadavky na aplikaci, případy užití, použité endpointy.
 Zdrojový kód bude přehledný, logicky uspořádaný, vhodně organizovaný do podsložek, smysluplně okomentovaný.
 Webová aplikace bude v patičce zřetelně označena jako studentský zápočtový projekt.
+
+
+Treninky jdou vytvaret mimo oteviraci dobu
+Vidim obsazenost jen sveho tymu
+Trener je furt Jan stastny
+odhlaseni na jinych strankach nefunguje
+Vypsat všechny treninky pro admina
