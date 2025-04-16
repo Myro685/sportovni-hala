@@ -123,6 +123,34 @@ form.addEventListener("submit", async (e) => {
   const konec = document.getElementById("end-time").value;
 
   try {
+    
+
+    // 1. Získání otevírací doby haly
+    const halaId = 1; // Zatím přímo nastavíme ID haly, později to může být dynamické
+    const hallData = await getHallInformation(halaId);
+    const openTime = hallData.Pocatekoteviracidoby; // Formát: HH:mm:ss
+    const closeTime = hallData.Konecoteviracidoby; // Formát: HH:mm:ss
+
+    // 2. Převod časů na porovnatelné hodnoty (minuty od půlnoci)
+    const parseTimeToMinutes = (time) => {
+      const [hours, minutes] = time.split(":").map(Number);
+      return hours * 60 + minutes;
+    };
+
+    const zacatekMinutes = parseTimeToMinutes(zacatek);
+    const konecMinutes = parseTimeToMinutes(konec);
+    const openMinutes = parseTimeToMinutes(openTime);
+    const closeMinutes = parseTimeToMinutes(closeTime);
+
+    // 3. Kontrola, zda trénink spadá do otevírací doby
+    if (zacatekMinutes < openMinutes || konecMinutes > closeMinutes) {
+      alert(
+        `Trénink lze vytvořit pouze v otevírací době haly (${openTime.slice(0, 5)} - ${closeTime.slice(0, 5)}).`
+      );
+      return; // Zamezíme vytvoření tréninku
+    }
+
+    // 4. Pokud je vše v pořádku, pokračujeme s vytvořením tréninku
     const newEvent = await insertDataIntoRezervacehaly({
       halaId: 1,
       uzivatelId: 27, // TODO: nahradit dynamicky

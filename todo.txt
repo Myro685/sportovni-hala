@@ -10,5 +10,5 @@ Zdrojový kód bude přehledný, logicky uspořádaný, vhodně organizovaný do
 Webová aplikace bude v patičce zřetelně označena jako studentský zápočtový projekt.
 
 
-Treninky jdou vytvaret mimo oteviraci dobu
+
 Vidim obsazenost jen sveho tymu
