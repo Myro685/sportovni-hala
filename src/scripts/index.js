@@ -276,23 +276,43 @@ function createDeleteButton(event, cardElement) {
     const confirmDelete = confirm("Opravdu chceš tento trénink smazat?");
     if (!confirmDelete) return;
 
-    const { error } = await supabaseClient
-      .from("Seznamprihlasenychrezervacihracu")
-      .delete()
-      .eq("RezervacehalyID", event.RezervacehalyID);
+    try {
+          // 1. Smaž komentáře spojené s tímto tréninkem
+          const { error: commentError } = await supabaseClient
+          .from("Komentare")
+          .delete()
+          .eq("RezervacehalyID", event.RezervacehalyID);
 
-    const { errorRezervacehaly } = await supabaseClient
-      .from("Rezervacehaly")
-      .delete()
-      .eq("RezervacehalyID", event.RezervacehalyID);
+      if (commentError) {
+          throw new Error("Chyba při mazání komentářů: " + commentError.message);
+      }
 
-    if (error || errorRezervacehaly) {
-      alert("Chyba při mazání.");
-      console.error(error || errorRezervacehaly);
-    } else {
+      // 2. Smaž přihlášení hráčů k tréninku
+      const { error: playersError } = await supabaseClient
+          .from("Seznamprihlasenychrezervacihracu")
+          .delete()
+          .eq("RezervacehalyID", event.RezervacehalyID);
+
+      if (playersError) {
+          throw new Error("Chyba při mazání přihlášení hráčů: " + playersError.message);
+      }
+
+      // 3. Smaž samotný trénink
+      const { error: trainingError } = await supabaseClient
+          .from("Rezervacehaly")
+          .delete()
+          .eq("RezervacehalyID", event.RezervacehalyID);
+
+      if (trainingError) {
+          throw new Error("Chyba při mazání tréninku: " + trainingError.message);
+      }
+      // Pokud vše proběhlo úspěšně, odstraň kartu z UI
       cardElement.remove();
       alert("Trénink byl úspěšně smazán.");
+    }catch (error) {
+      alert("Chyba při mazání: " + error.message);
     }
+    
   };
 
   return deleteBtn;
