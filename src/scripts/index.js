@@ -149,11 +149,33 @@ form.addEventListener("submit", async (e) => {
       );
       return; // Zamezíme vytvoření tréninku
     }
+    
+    // 4. Kontrola kolizí s existujícími tréninky
+    const allEvents = await getAllEvents();
+    const dayEvents = allEvents.filter(
+      (e) => e.Datumrezervace === datum && e.HalaID === halaId
+    );
 
-    // 4. Pokud je vše v pořádku, pokračujeme s vytvořením tréninku
+    const isCollision = dayEvents.some((event) => {
+      const eventStartMinutes = parseTimeToMinutes(event.Zacatekrezervace);
+      const eventEndMinutes = parseTimeToMinutes(event.Konecrezervace);
+      // Kontrola překrytí: nový trénink začíná před koncem existujícího a končí po začátku existujícího
+      return (
+        zacatekMinutes < eventEndMinutes && konecMinutes > eventStartMinutes
+      );
+    });
+
+    if (isCollision) {
+      alert(
+        "Nelze vytvořit trénink, protože se překrývá s jiným tréninkem v hale."
+      );
+      return;
+    }
+
+    // 5. Pokud je vše v pořádku, pokračujeme s vytvořením tréninku
     const newEvent = await insertDataIntoRezervacehaly({
       halaId: 1,
-      uzivatelId: 27, // TODO: nahradit dynamicky
+      uzivatelId: currentUserId,
       tymId: currentTeam,
       nazevAkce,
       popisAkce,
@@ -402,8 +424,10 @@ async function renderTimeline(selectedDate = null) {
   const dnes = selectedDate || new Date().toISOString().split("T")[0];
   console.log("Zobrazujeme vytíženost pro datum:", dnes);
 
-  const events = await getTeamEventsData(currentTeam);
-  const dayEvents = events.filter((e) => e.Datumrezervace === dnes);
+  const allEvents = await getAllEvents();
+  const dayEvents = allEvents.filter(
+    (e) => e.Datumrezervace === dnes && e.HalaID === 1
+  );
 
   const halaId = 1;
   const hallData = await getHallInformation(halaId);

@@ -69,13 +69,13 @@ async function getAllEvents() {
     await supabaseClient
       .from("Rezervacehaly")
       .select(
-        "UzivatelID, Datumrezervace, Konecrezervace, Zacatekrezervace, RezervacehalyID, Nazevakce, Popisakce"
+        "UzivatelID, Datumrezervace, Konecrezervace, Zacatekrezervace, RezervacehalyID, Nazevakce, Popisakce, HalaID, TymID"
       );
 
-  console.log(RezervacehalyData);
+  console.log("Data z getAllEvents:", RezervacehalyData); // Ladící výpis
   if (RezervacehalyError) {
-    console.error("Chyba při načítání týmu:", RezervacehalyError);
-    return;
+    console.error("Chyba při načítání událostí:", RezervacehalyError);
+    return [];
   }
   return RezervacehalyData;
 }
