@@ -18,7 +18,6 @@ async function getUserData(userId) {
   return userData;
 }
 
-
 async function updateAttendance(currentUserId, attendance) {
   const { error } = await supabaseClient
     .from("Seznamprihlasenychrezervacihracu")
@@ -32,26 +31,20 @@ async function updateAttendance(currentUserId, attendance) {
   }
   return;
 }
- 
-
 
 //nacte data o hale
 async function getHallInformation(hallId) {
-  const { data: hallData, error: hallEror } =
-  await supabaseClient
+  const { data: hallData, error: hallEror } = await supabaseClient
     .from("Hala")
-    .select(
-      "HalaID, Nazev, Pocatekoteviracidoby, Konecoteviracidoby"
-    )
+    .select("HalaID, Nazev, Pocatekoteviracidoby, Konecoteviracidoby")
     .eq("HalaID", hallId);
 
   if (hallEror) {
     console.error("Chyba při načítání týmu:", hallEror);
-  return;
+    return;
   }
-  
+
   return hallData[0];
-  
 }
 
 //nacte data o eventech pro aktualni tym (vsechny treninky)
@@ -71,9 +64,23 @@ async function getTeamEventsData(tymID) {
   return RezervacehalyData;
 }
 
-async function checkUserRole() {
+async function getAllEvents() {
+  const { data: RezervacehalyData, error: RezervacehalyError } =
+    await supabaseClient
+      .from("Rezervacehaly")
+      .select(
+        "UzivatelID, Datumrezervace, Konecrezervace, Zacatekrezervace, RezervacehalyID, Nazevakce, Popisakce"
+      );
 
+  console.log(RezervacehalyData);
+  if (RezervacehalyError) {
+    console.error("Chyba při načítání týmu:", RezervacehalyError);
+    return;
+  }
+  return RezervacehalyData;
 }
+
+async function checkUserRole() {}
 
 async function insertDataIntoRezervacehaly({
   halaId = 1,
@@ -116,4 +123,5 @@ export {
   getTeamEventsData,
   insertDataIntoRezervacehaly,
   getHallInformation,
+  getAllEvents,
 };

@@ -1,60 +1,27 @@
-// Inicializace Supabase
 const supabaseClient = window.supabase.createClient(
   "https://xpxurtdkmufuemamajzl.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhweHVydGRrbXVmdWVtYW1hanpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5NTk3MzksImV4cCI6MjA1NzUzNTczOX0.uRPj22s06XSTvuuHGz-7oAqfTRp2LqUFTCKxC8QprMU"
 );
 
-// Globální proměnná pro uchování všech týmů a role uživatele
-let allPlayers = [];
-let isAdmin = false;
-let isTrainer = false;
+const ROLE_ADMIN = 1;
+const ROLE_TRAINER = 2;
+const ROLE_PLAYER = 3;
+
+// Načtení dat uživatele z localStorage
+const storedUserData = JSON.parse(localStorage.getItem("userData"));
+let currentUserRole = storedUserData?.RoleuzivateluID;
+const currentUserId = storedUserData?.UzivatelID;
+
+// Globální proměnná pro uchování všech týmů
+let allTeams = [];
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // Zjištění role přihlášeného uživatele
-  await checkUserRole();
-  loadTeams();
-  setupSearch();
-  setupAddTeamForm(); // Přidáno nastavení formuláře pro přidání týmu
-  loadPicture();
+  // Kontrola a aktualizace role uživatele
+  await loadTeams();
+  await setupSearch();
+  await setupAddTeamForm();
+  await loadPicture();
 });
-
-// Funkce pro zjištění role uživatele
-async function checkUserRole() {
-  try {
-    const {
-      data: { session },
-      error: sessionError,
-    } = await supabaseClient.auth.getSession();
-    if (sessionError || !session) {
-      alert("Uživatel není přihlášen!");
-      window.location.href = "../pages/login.html";
-      return;
-    }
-
-    const userEmail = session.user.email;
-    const { data: userData, error: userError } = await supabaseClient
-      .from("Uzivatel")
-      .select("RoleuzivateluID")
-      .eq("Email", userEmail)
-      .single();
-    //console.log(RoleuzivateluID);
-
-    if (userError) {
-      alert("Chyba při načítání role uživatele: " + userError.message);
-      return;
-    }
-
-    isAdmin = userData.RoleuzivateluID === 1; // Nastavení isAdmin na true, pokud je RoleuzivateluID = 1
-
-    // Skrytí/zobrazení formuláře pro přidání týmu podle role
-    const addTeamForm = document.getElementById("addTeamForm");
-    if (addTeamForm) {
-      addTeamForm.style.display = isAdmin ? "block" : "none";
-    }
-  } catch (error) {
-    alert("Chyba: " + error.message);
-  }
-}
 
 async function loadPicture() {
   const profilePicture = document.querySelectorAll(".profile-picture");
@@ -71,14 +38,12 @@ async function loadPicture() {
       return;
     }
 
-    const userEmail = session.user.email;
-
     const { data: userData, error: userError } = await supabaseClient
       .from("Uzivatel")
       .select(
         "UzivatelID, Jmeno, Prijmeni, Email, Telefon, TymID, AdresaID, profile_picture_url"
       )
-      .eq("Email", userEmail)
+      .eq("UzivatelID", currentUserId)
       .single();
 
     if (userError) {
@@ -105,7 +70,6 @@ async function loadPicture() {
 async function loadTeams() {
   const teamList = document.getElementById("teamList");
 
-  // Kontrola, zda element existuje
   if (!teamList) {
     console.error("Element s ID 'teamList' nebyl nalezen v HTML.");
     return;
@@ -114,7 +78,7 @@ async function loadTeams() {
   try {
     const { data: teams, error } = await supabaseClient
       .from("Tym")
-      .select("TymID, Nazevtymu"); // Načítáme TymID a Nazevtymu
+      .select("TymID, Nazevtymu");
 
     if (error) {
       alert("Chyba při načítání týmů: " + error.message);
@@ -137,22 +101,21 @@ function displayTeams(teams) {
     return;
   }
 
-  teamList.innerHTML = ""; // Vymazání stávajícího obsahu
+  teamList.innerHTML = "";
 
   teams.forEach((team) => {
     const li = document.createElement("li");
     li.className =
       "dark:text-white p-2 border-b-2 border-secondaryLight dark:border-secondaryDark flex justify-between";
 
-    // Zobrazení názvu týmu
     const teamNameSpan = document.createElement("span");
     teamNameSpan.textContent = team.Nazevtymu;
     li.appendChild(teamNameSpan);
 
     // Přidání křížku pro smazání, pouze pokud je uživatel admin
-    if (isAdmin) {
+    if (currentUserRole === ROLE_ADMIN) {
       const deleteButton = document.createElement("button");
-      deleteButton.innerHTML = "✖"; // Křížek
+      deleteButton.innerHTML = "✖";
       deleteButton.className = "text-red-500 hover:text-red-700 ml-2";
       deleteButton.onclick = () => deleteTeam(team.TymID);
       li.appendChild(deleteButton);
@@ -161,7 +124,6 @@ function displayTeams(teams) {
     teamList.appendChild(li);
   });
 
-  // Pokud nejsou žádné týmy
   if (teams.length === 0) {
     const li = document.createElement("li");
     li.className = "text-gray-500 p-2";
@@ -187,7 +149,6 @@ async function deleteTeam(teamId) {
       return;
     }
 
-    // Aktualizace seznamu týmů po smazání
     allTeams = allTeams.filter((team) => team.TymID !== teamId);
     displayTeams(allTeams);
     alert("Tým byl úspěšně smazán!");
@@ -200,14 +161,13 @@ async function deleteTeam(teamId) {
 function setupAddTeamForm() {
   const addTeamForm = document.getElementById("addTeamForm");
 
-  // Kontrola, zda formulář existuje
   if (!addTeamForm) {
     console.error("Element s ID 'addTeamForm' nebyl nalezen v HTML.");
     return;
   }
 
   addTeamForm.addEventListener("submit", async (event) => {
-    event.preventDefault(); // Zabrání odeslání formuláře
+    event.preventDefault();
 
     const teamNameInput = document.getElementById("teamNameInput");
     const teamName = teamNameInput.value.trim();
@@ -229,11 +189,10 @@ function setupAddTeamForm() {
         return;
       }
 
-      // Přidání nového týmu do seznamu
       allTeams.push(newTeam);
       displayTeams(allTeams);
       alert("Tým byl úspěšně přidán!");
-      teamNameInput.value = ""; // Vyčištění pole po přidání
+      teamNameInput.value = "";
     } catch (error) {
       alert("Chyba: " + error.message);
     }
@@ -244,7 +203,6 @@ function setupAddTeamForm() {
 function setupSearch() {
   const searchInput = document.getElementById("teamSearch");
 
-  // Kontrola, zda element existuje
   if (!searchInput) {
     console.error("Element s ID 'teamSearch' nebyl nalezen v HTML.");
     return;

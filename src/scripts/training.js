@@ -47,13 +47,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     titleMyAttendance.classList.remove("hidden");
     spanCurrentUserAttendance.classList.remove("hidden");
     currentUserAttendance = await getAttendance(currentUserId, reservationId);
-  } else {
   }
 
-  if (currentUserAttendance === null) {
+  if (currentUserAttendance === null && currentUserRole === ROLE_PLAYER) {
     modalPotvrzeniUcasti.classList.remove("hidden");
     btChangeAttendance.classList.add("hidden");
-  } else {
+  } else if (
+    currentUserAttendance === !null &&
+    currentUserRole === ROLE_PLAYER
+  ) {
     btChangeAttendance.classList.remove("hidden");
     modalPotvrzeniUcasti.classList.add("hidden");
   }
@@ -165,7 +167,7 @@ async function changeMyAttendance(attendance) {
 
   if (error) {
     console.error("Chyba při aktualizaci účasti: ", error);
-  } else {
+  } else if (!error && currentUserRole === ROLE_PLAYER) {
     currentUserAttendance = attendance;
     if (attendance === true) {
       spanCurrentUserAttendance.innerHTML = "ANO";
