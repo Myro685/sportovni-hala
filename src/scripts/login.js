@@ -21,14 +21,6 @@ const teamLabel = document.getElementById("team-label");
 const team = document.getElementById("team-select");
 let isRegister = true;
 
-
-// načte data o přihlašeném uživateli, ktere jsme uložili do LS
-const userData = JSON.parse(localStorage.getItem("userData"));
-const currentUserRole = userData.RoleuzivateluID;
-const currentUserId = userData.UzivatelID;
-const currentTeam = userData.TymID;
-
-
 // Funkce pro validaci hesla
 function validatePassword(password) {
   // Minimální délka
@@ -80,8 +72,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   } = await supabaseClient.auth.getSession();
   if (session) {
     console.log(session.user.email);
-    
+
     await getUserData(session.user.email);
+    window.location.href = "../pages/index.html";
   }
 });
 
@@ -189,25 +182,23 @@ submit.addEventListener("click", async (e) => {
   } catch (error) {
     alert("Chyba: " + error.message);
   }
-
 });
 
 async function getUserData(email) {
   const { data: userData, error: userError } = await supabaseClient
-        .from("Uzivatel")
-        .select("RoleuzivateluID, UzivatelID, TymID")
-        .eq("Email", email)
-        .single();
-  
-      if (userError) {
-        alert("Chyba při načítani dat " + userError.message);
-        console.error(userError.message);
-        
-        return null;
-      }
-      
-      localStorage.setItem("userData", JSON.stringify(userData));
-      console.log("Uloženo do localStorage:", userData);
-      return userData;
-}
+    .from("Uzivatel")
+    .select("RoleuzivateluID, UzivatelID, TymID")
+    .eq("Email", email)
+    .single();
 
+  if (userError) {
+    alert("Chyba při načítani dat " + userError.message);
+    console.error(userError.message);
+
+    return null;
+  }
+
+  localStorage.setItem("userData", JSON.stringify(userData));
+  console.log("Uloženo do localStorage:", userData);
+  return userData;
+}
