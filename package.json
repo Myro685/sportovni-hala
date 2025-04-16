@@ -14,12 +14,9 @@
   "devDependencies": {
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.3",
-    "prisma": "^6.4.1",
     "tailwindcss": "^3.4.17"
   },
   "dependencies": {
-    "@prisma/client": "^6.4.1",
-    "@supabase/supabase-js": "^2.49.3",
-    "i18n": "^0.15.1"
+    "@supabase/supabase-js": "^2.49.3"
   }
 }
