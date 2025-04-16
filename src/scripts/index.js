@@ -3,7 +3,7 @@ import {
   getTeamEventsData,
   insertDataIntoRezervacehaly,
   getHallInformation,
-  getUserData
+  getUserData,
 } from "./db.js";
 
 const ROLE_ADMIN = 1;
@@ -17,20 +17,15 @@ const currentUserId = storedUserData.UzivatelID;
 let currentTeam = storedUserData.TymID;
 
 if (currentUserRole === ROLE_TRAINER) {
-
-}
-else if (currentUserRole === ROLE_ADMIN) {
-
-} 
-else if (currentUserRole == ROLE_PLAYER) {
+} else if (currentUserRole === ROLE_ADMIN) {
+} else if (currentUserRole == ROLE_PLAYER) {
   document.getElementById("open-create-training")?.classList.add("hidden");
   document.getElementById("delete-training")?.classList.add("hidden");
 } else {
-
 }
 
 let userID = null; // je tady kvuli loadpicture
-let currentTeamEventsData = []; 
+let currentTeamEventsData = [];
 
 const openBtn = document.getElementById("open-create-training");
 const cancelBtn = document.getElementById("cancel-create-training");
@@ -42,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const selectedDate = e.target.value;
     renderTimeline(selectedDate);
   });
-  
+
   const userData = await getUserData(currentUserId);
   if (userData.RoleuzivateluID !== storedUserData.RoleuzivateluID) {
     storedUserData.RoleuzivateluID = userData.RoleuzivateluID;
@@ -50,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     currentUserRole = userData.RoleuzivateluID;
     console.log("Role uživatele byla aktualizována v localStorage.");
   }
-  
+
   currentTeamEventsData = await getTeamEventsData(currentTeam);
 
   displayEvents(currentTeamEventsData);
@@ -137,7 +132,7 @@ form.addEventListener("submit", async (e) => {
 
     await pushUsersIntoTable(newEvent.RezervacehalyID);
     currentTeamEventsData = await getTeamEventsData(currentTeam);
-    
+
     displayEvents(currentTeamEventsData);
 
     alert("Trénink byl úspěšně vytvořen.");
@@ -205,7 +200,7 @@ function displayEvents(events) {
 function createTrainingCard(event) {
   const card = document.createElement("div");
   card.className =
-    "dark:bg-thirdDark px-7 py-8 rounded-lg border-2 shadow-lg flex flex-col justify-between w-96 h-72";
+    "bg-thirdLight dark:bg-thirdDark px-7 py-8 rounded-lg border-2 shadow-lg flex flex-col justify-between w-96 h-72";
 
   const header = createCardHeader(event);
   const description = createCardDescription(event);
@@ -222,7 +217,7 @@ function createCardHeader(event) {
   header.className = "text-xl dark:text-white font-bold";
 
   const trainingLabel = document.createElement("span");
-  trainingLabel.setAttribute("data-lang-key", "training"); 
+  trainingLabel.setAttribute("data-lang-key", "training");
 
   const eventTitle = document.createElement("span");
   eventTitle.textContent = event.Nazevakce;
@@ -256,9 +251,9 @@ function createDetailsButton(event) {
   const button = document.createElement("button");
   button.type = "submit";
   button.className =
-    "text-white font-bold uppercase w-full h-10 rounded-lg dark:bg-secondaryDark dark:hover:bg-hoverDark";
-  button.setAttribute("data-lang-key", "details"); 
-  button.textContent = "podrobnosti"; 
+    "text-white bg-secondaryLight hover:bg-hoverLight font-bold uppercase w-full h-10 rounded-lg dark:bg-secondaryDark dark:hover:bg-hoverDark";
+  button.setAttribute("data-lang-key", "details");
+  button.textContent = "podrobnosti";
   button.onclick = () => {
     window.location.href = `training.html?id=${event.RezervacehalyID}`;
   };
@@ -266,14 +261,13 @@ function createDetailsButton(event) {
 }
 
 function createDeleteButton(event, cardElement) {
-  if (currentUserRole === ROLE_PLAYER)
-     return document.createElement("div");
+  if (currentUserRole === ROLE_PLAYER) return document.createElement("div");
 
   const deleteBtn = document.createElement("button");
   deleteBtn.className =
-    "font-bold uppercase w-full dark:text-white h-10 rounded-lg bg-red-600 hover:bg-red-800 mt-2";
-  deleteBtn.setAttribute("data-lang-key", "remove"); 
-  deleteBtn.textContent = "🗑 Smazat"; 
+    "font-bold uppercase w-full text-white h-10 rounded-lg bg-red-600 hover:bg-red-800 mt-2";
+  deleteBtn.setAttribute("data-lang-key", "remove");
+  deleteBtn.textContent = "🗑 Smazat";
   deleteBtn.onclick = async () => {
     const confirmDelete = confirm("Opravdu chceš tento trénink smazat?");
     if (!confirmDelete) return;
@@ -332,8 +326,6 @@ deleteBtn.addEventListener("click", async () => {
   await deleteExpiredReservations(currentUserId);
 });
 
-
-
 function renderTimeLabels() {
   const container = document.getElementById("timeline-labels");
   container.innerHTML = "";
@@ -344,8 +336,8 @@ function renderTimeLabels() {
   for (let i = 0; i <= markers; i++) {
     const hour = i * interval;
     const label = document.createElement("div");
-    label.style.width = (100 / markers) + "%";
-    label.textContent = hour.toString().padStart(2, '0'); // formát HH bez :00
+    label.style.width = 100 / markers + "%";
+    label.textContent = hour.toString().padStart(2, "0"); // formát HH bez :00
     label.classList.add("text-center");
     container.appendChild(label);
   }
@@ -370,8 +362,13 @@ async function renderTimeline(selectedDate = null) {
   for (let hour = 0; hour < 24; hour++) {
     const block = document.createElement("div");
     block.classList.add(
-      "h-full", "flex", "items-center", "justify-center",
-      "text-[10px]", "text-white", "overflow-hidden"
+      "h-full",
+      "flex",
+      "items-center",
+      "justify-center",
+      "text-[10px]",
+      "text-white",
+      "overflow-hidden"
     );
 
     const inOpeningHours = hour >= openHour && hour < closeHour;
@@ -383,7 +380,10 @@ async function renderTimeline(selectedDate = null) {
     });
 
     if (startingEvent) {
-      const startHour = parseInt(startingEvent.Zacatekrezervace.split(":")[0], 10);
+      const startHour = parseInt(
+        startingEvent.Zacatekrezervace.split(":")[0],
+        10
+      );
       const endHour = parseInt(startingEvent.Konecrezervace.split(":")[0], 10);
       const duration = endHour - startHour;
 
@@ -395,7 +395,7 @@ async function renderTimeline(selectedDate = null) {
       timeline.appendChild(block);
       hour += duration - 1; // přeskoč další hodiny této události
     } else {
-      block.style.width = (100 / 24) + "%";
+      block.style.width = 100 / 24 + "%";
       if (!inOpeningHours) {
         block.classList.add("bg-yellow-400");
       } else {
@@ -405,4 +405,3 @@ async function renderTimeline(selectedDate = null) {
     }
   }
 }
-

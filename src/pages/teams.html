@@ -7,9 +7,11 @@
     <title data-lang-key="reserve_system">Rezervační systém</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
-  <body class="h-screen flex flex-col lg:flex-row dark:bg-primaryDark">
+  <body
+    class="h-screen flex flex-col lg:flex-row bg-primaryLight dark:bg-primaryDark transition-colors"
+  >
     <nav
-      class="relative flex flex-col p-4 lg:w-48 lg:items-cente dark:bg-thirdDark lg:flex-shrink-0 lg:h-screen min-h-[71px] box-border"
+      class="relative flex flex-col p-4 lg:w-48 lg:items-cente bg-thirdLight dark:bg-thirdDark lg:flex-shrink-0 lg:h-screen min-h-[71px] box-border"
     >
       <div class="flex items-center whitespace-nowrap text-2lg font-black">
         <a
@@ -123,13 +125,13 @@
 
       <div
         aria-label="Header Navigation"
-        class="absolute top-full left-0 z-10 w-full dark:bg-thirdDark peer-checked:max-h-screen max-h-0 flex flex-col items-center overflow-hidden transition-all duration-300 ease-in-out lg:hidden"
+        class="absolute top-full left-0 z-10 w-full bg-thirdLight dark:bg-thirdDark peer-checked:max-h-screen max-h-0 flex flex-col items-center overflow-hidden transition-all duration-300 ease-in-out lg:hidden"
       >
         <ul class="flex flex-col items-center space-y-2 w-full px-4">
           <li class="w-full">
             <a
               href="index.html"
-              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:bg-secondaryDark flex items-center justify-center p-5"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-secondaryLight dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="home"
               >Domů</a
             >
@@ -137,7 +139,7 @@
           <li class="w-full">
             <a
               href="teams.html"
-              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:bg-secondaryDark flex items-center justify-center p-5"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-secondaryLight dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="teams"
               >Týmy</a
             >
@@ -145,7 +147,7 @@
           <li class="w-full">
             <a
               href="players.html"
-              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:bg-secondaryDark flex items-center justify-center p-5"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-secondaryLight dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="players"
               >Hráči</a
             >
@@ -153,7 +155,7 @@
           <li class="w-full">
             <a
               href="profile.html"
-              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:bg-secondaryDark flex items-center justify-center p-5"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-secondaryLight dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="profile"
               >Profil
             </a>
@@ -161,7 +163,7 @@
           <li class="w-full">
             <a
               id="logout"
-              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:bg-secondaryDark flex items-center justify-center p-5"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-secondaryLight dark:bg-secondaryDark flex items-center justify-center p-5"
               >Odhlásit
             </a>
           </li>
@@ -173,7 +175,7 @@
           <li class="w-full">
             <a
               href="index.html"
-              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:hover:bg-hoverDark dark:bg-secondaryDark flex items-center justify-center p-5"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-secondaryLight dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="home"
               >Domů</a
             >
@@ -181,7 +183,7 @@
           <li class="w-full">
             <a
               href="teams.html"
-              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:hover:bg-hoverDark dark:bg-secondaryDark flex items-center justify-center p-5"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-secondaryLight dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="teams"
               >Týmy</a
             >
@@ -189,7 +191,7 @@
           <li class="w-full">
             <a
               href="players.html"
-              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:hover:bg-hoverDark dark:bg-secondaryDark flex items-center justify-center p-5"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-secondaryLight dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="players"
               >Hráči</a
             >
@@ -197,7 +199,7 @@
           <li class="w-full">
             <a
               href="profile.html"
-              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:hover:bg-hoverDark dark:bg-secondaryDark flex items-center justify-center p-5"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-secondaryLight dark:bg-secondaryDark flex items-center justify-center p-5"
               data-lang-key="profile"
               >Profil</a
             >
@@ -281,8 +283,9 @@
           <li class="w-full">
             <a
               id="logoutBig"
-              class="text-center dark:text-white font-bold uppercase w-full h-12 rounded-lg dark:hover:bg-hoverDark dark:bg-secondaryDark flex items-center justify-center p-5"
-              data-lang-key="logout">Odhlásit
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg bg-secondaryLight dark:bg-secondaryDark flex items-center justify-center p-5"
+              data-lang-key="logout"
+              >Odhlásit
             </a>
           </li>
         </ul>
@@ -298,11 +301,11 @@
               type="text"
               id="teamNameInput"
               placeholder="Název nového týmu..."
-              class="flex-1 h-10 p-2 border-2 border-slate-400 focus:outline-none focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
+              class="flex-1 h-10 p-2 border-2 border-slate-400 focus:outline-none focus:border-secondaryLight dark:focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
             />
             <button
               type="submit"
-              class="dark:bg-secondaryDark dark:text-white px-4 py-2 rounded-lg dark:hover:bg-hoverDark"
+              class="bg-secondaryLight hover:bg-hoverDark dark:bg-secondaryDark text-white px-4 py-2 rounded-lg dark:hover:bg-hoverDark"
               data-lang-key="add_team"
             >
               Přidat tým
@@ -320,11 +323,11 @@
           id="teamSearch"
           placeholder="Vyhledat tým..."
           data-lang-key="search_team"
-          class="w-full h-10 p-2 mb-4 border-2 border-slate-400 focus:outline-none focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
+          class="w-full h-10 p-2 mb-4 border-2 border-slate-400 focus:outline-none focus:border-s-secondaryLight bg-thirdLight dark:focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
         />
         <ul
           id="teamList"
-          class="dark:bg-thirdDark rounded-lg p-4 space-y-2 max-h-96 overflow-y-auto"
+          class="dark:bg-thirdDark bg-thirdLight rounded-lg p-4 space-y-2 max-h-96 overflow-y-auto"
         ></ul>
       </div>
     </div>

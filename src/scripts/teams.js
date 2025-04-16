@@ -142,7 +142,7 @@ function displayTeams(teams) {
   teams.forEach((team) => {
     const li = document.createElement("li");
     li.className =
-      "dark:text-white p-2 border-b-2 dark:border-secondaryDark flex justify-between";
+      "dark:text-white p-2 border-b-2 border-secondaryLight dark:border-secondaryDark flex justify-between";
 
     // Zobrazení názvu týmu
     const teamNameSpan = document.createElement("span");

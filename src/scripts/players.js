@@ -102,7 +102,8 @@ function displayPlayers(players) {
 
   players.forEach((player) => {
     const li = document.createElement("li");
-    li.className = "dark:text-white p-2 border-b-2 dark:border-secondaryDark";
+    li.className =
+      "dark:text-white p-2 border-b-2 border-secondaryLight dark:border-secondaryDark";
     // Zobrazení jména, příjmení a e-mailu
     li.textContent = `${player.Jmeno} ${player.Prijmeni} (${
       player.Email || "Není uveden e-mail"

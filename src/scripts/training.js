@@ -14,10 +14,6 @@ const currentUserRole = userData.RoleuzivateluID;
 const currentUserId = userData.UzivatelID;
 const currentTeam = userData.TymID;
 
-
-
-
-
 // Globální proměnné
 let allPlayers = [];
 let isEditing = false;
@@ -45,18 +41,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   if (currentUserRole === ROLE_ADMIN) {
     btEditTraining.classList.remove("hidden");
-  
-  }
-  else if (currentUserRole === ROLE_TRAINER) {
+  } else if (currentUserRole === ROLE_TRAINER) {
     btEditTraining.classList.remove("hidden");
-  
-  } 
-  else if (currentUserRole == ROLE_PLAYER) {
+  } else if (currentUserRole == ROLE_PLAYER) {
     titleMyAttendance.classList.remove("hidden");
     spanCurrentUserAttendance.classList.remove("hidden");
-    currentUserAttendance = await getAttendance(currentUserId, reservationId); 
+    currentUserAttendance = await getAttendance(currentUserId, reservationId);
   } else {
-  
   }
 
   if (currentUserAttendance === null) {
@@ -72,8 +63,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadPlayers();
   loadPicture();
   await loadComments(reservationId); // Přidáváme načítání komentářů
-
-
 });
 
 // Funkce pro načtení komentářů k dané rezervaci
@@ -217,7 +206,6 @@ async function getAttendance(userId, reservationId) {
     .eq("RezervacehalyID", reservationId)
     .eq("UzivatelID", userId);
 
-      
   if (error || !data || data.length === 0) {
     console.error("Chyba při aktualizaci účasti: ", error);
     return null;
@@ -320,7 +308,6 @@ async function setTrainingData(reservationId) {
   trainingEndTimeInput.value = hallRezervationData.Konecrezervace;
 }
 
-
 // Načte z DB seznam hráčů, jejich TymID je stejný jako ID přihlášeného uživatele, vypíše pouze uživatele s idRole 3 (hráč)
 async function loadPlayers() {
   const playerList = document.getElementById("player-list");
@@ -386,7 +373,7 @@ async function displayPlayers(players) {
   for (const player of playersWithAttendance) {
     const li = document.createElement("li");
     li.className =
-      "dark:text-white p-2 border-b border-gray-200 flex justify-between items-center";
+      "dark:text-white p-2 border-b border-secondaryLight dark:border-secondaryDark flex justify-between items-center";
 
     const playerNameSpan = document.createElement("span");
     playerNameSpan.textContent = player.Jmeno + " " + player.Prijmeni;
@@ -508,4 +495,3 @@ async function loadPicture() {
     alert("Chyba: " + error.message);
   }
 }
-

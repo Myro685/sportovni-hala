@@ -7,10 +7,12 @@
     <title data-lang-key="reserve_system">Rezervační systém</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
-  <body class="dark:bg-primaryDark flex justify-center items-center p-4">
+  <body
+    class="bg-primaryLight dark:bg-primaryDark flex justify-center items-center p-4 transition-colors"
+  >
     <form
       method="POST"
-      class="dark:bg-thirdDark dark:text-white dark:drop-shadow-2xl w-full sm:max-w-md px-8 py-12 rounded-lg flex justify-center items-center flex-col gap-4"
+      class="bg-thirdLight text-black drop-shadow-2xl dark:bg-thirdDark dark:text-white dark:drop-shadow-2xl w-full sm:max-w-md px-8 py-12 rounded-lg flex justify-center items-center flex-col gap-4"
     >
       <h1 class="text-3xl font-bold uppercase" data-lang-key="hall">HALA</h1>
       <div class="w-full flex justify-center items-center flex-col gap-2">
@@ -19,7 +21,7 @@
           type="text"
           name="firstname"
           id="firstname"
-          class="w-full h-10 p-2 border-2 border-slate-400 focus:outline-none focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
+          class="w-full h-10 p-2 border-2 border-slate-400 focus:outline-none focus:border-secondaryLight dark:focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
           required
           data-lang-key="first_name"
         />
@@ -28,7 +30,7 @@
           type="text"
           name="lastname"
           id="lastname"
-          class="w-full h-10 p-2 border-2 border-slate-400 focus:outline-none focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
+          class="w-full h-10 p-2 border-2 border-slate-400 focus:outline-none focus:border-secondaryLight dark:focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
           required
           data-lang-key="last_name"
         />
@@ -37,7 +39,7 @@
           type="email"
           name="email"
           id="email"
-          class="w-full h-10 p-2 border-2 border-slate-400 focus:outline-none focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
+          class="w-full h-10 p-2 border-2 border-slate-400 focus:outline-none focus:border-secondaryLight dark:focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
           required
           data-lang-key="email"
         />
@@ -46,7 +48,7 @@
           type="password"
           name="password"
           id="password"
-          class="w-full h-10 p-2 border-2 border-slate-400 focus:outline-none focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
+          class="w-full h-10 p-2 border-2 border-slate-400 focus:outline-none focus:border-secondaryLight dark:focus:border-secondaryDark rounded-lg dark:bg-thirdDark"
           required
           data-lang-key="password"
         />
@@ -61,17 +63,17 @@
       </div>
       <button
         type="button"
-        class="text-white font-bold uppercase w-full h-10 rounded-lg dark:bg-secondaryDark dark:hover:bg-hoverDark"
+        class="text-white font-bold bg-secondaryLight hover:bg-hoverLight uppercase w-full h-10 rounded-lg dark:bg-secondaryDark dark:hover:bg-hoverDark"
         id="submit"
         data-lang-key="register"
       >
         Registrovat
       </button>
-      <p class="text-center dark:text-white">
+      <p class="text-center text-black dark:text-white">
         <span id="acc" data-lang-key="have_account">Už máte účet?</span><br />
         <button
           type="button"
-          class="dark:text-white"
+          class="dark:text-white text-black"
           id="change"
           data-lang-key="login"
         >
