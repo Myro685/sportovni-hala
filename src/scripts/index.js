@@ -17,6 +17,11 @@ const modal = document.getElementById("modal-create-training");
 const form = document.getElementById("create-training-form");
 
 document.addEventListener("DOMContentLoaded", async () => {
+  document.getElementById("training-date").addEventListener("change", (e) => {
+    const selectedDate = e.target.value;
+    renderTimeline(selectedDate);
+  });
+  
   const roleData = await checkUserRole();
 
   currentTeam = roleData.currentUserData.TymID;
@@ -318,19 +323,18 @@ function renderTimeLabels() {
   }
 }
 
-async function renderTimeline() {
+async function renderTimeline(selectedDate = null) {
   const timeline = document.getElementById("timeline");
-  timeline.innerHTML = ""; // vymazání předchozího zobrazení
+  timeline.innerHTML = "";
 
-  const dnes = new Date().toISOString().split("T")[0];
-  const events = await getTeamEventsData(currentTeam); // všechny tréninky týmu
+  const dnes = selectedDate || new Date().toISOString().split("T")[0];
+  console.log("Zobrazujeme vytíženost pro datum:", dnes);
+
+  const events = await getTeamEventsData(currentTeam);
   const dayEvents = events.filter((e) => e.Datumrezervace === dnes);
 
-  const halaId = 1; // TODO: získat dynamicky dle výběru
+  const halaId = 1;
   const hallData = await getHallInformation(halaId);
-
-  console.log(hallData.Pocatekoteviracidoby,hallData.Konecoteviracidoby );
-  
 
   const openHour = parseInt(hallData.Pocatekoteviracidoby.split(":")[0], 10);
   const closeHour = parseInt(hallData.Konecoteviracidoby.split(":")[0], 10);
@@ -338,28 +342,39 @@ async function renderTimeline() {
   for (let hour = 0; hour < 24; hour++) {
     const block = document.createElement("div");
     block.classList.add(
-      "h-full", "flex", "items-center", "justify-center", "text-[10px]", "text-white", "overflow-hidden"
+      "h-full", "flex", "items-center", "justify-center",
+      "text-[10px]", "text-white", "overflow-hidden"
     );
-    block.style.width = (100 / 24) + "%";
 
     const inOpeningHours = hour >= openHour && hour < closeHour;
 
-    const matchingEvent = dayEvents.find((e) => {
+    // Zjisti, jestli v tuto hodinu začíná událost
+    const startingEvent = dayEvents.find((e) => {
       const startHour = parseInt(e.Zacatekrezervace?.split(":")[0], 10);
-      const endHour = parseInt(e.Konecrezervace?.split(":")[0], 10);
-      return hour >= startHour && hour < endHour;
+      return startHour === hour;
     });
 
-    if (!inOpeningHours) {
-      block.classList.add("bg-yellow-400");
-    } else if (matchingEvent) {
-      block.classList.add("bg-red-500");
-      block.textContent = matchingEvent.Nazevakce || "Obsazeno";
-      block.title = `${matchingEvent.Nazevakce} (${matchingEvent.Zacatekrezervace}–${matchingEvent.Konecrezervace})`;
-    } else {
-      block.classList.add("bg-green-500");
-    }
+    if (startingEvent) {
+      const startHour = parseInt(startingEvent.Zacatekrezervace.split(":")[0], 10);
+      const endHour = parseInt(startingEvent.Konecrezervace.split(":")[0], 10);
+      const duration = endHour - startHour;
 
-    timeline.appendChild(block);
+      block.style.width = (100 / 24) * duration + "%";
+      block.classList.add("bg-red-500");
+      block.textContent = startingEvent.Nazevakce || "Obsazeno";
+      block.title = `${startingEvent.Nazevakce} (${startingEvent.Zacatekrezervace}–${startingEvent.Konecrezervace})`;
+
+      timeline.appendChild(block);
+      hour += duration - 1; // přeskoč další hodiny této události
+    } else {
+      block.style.width = (100 / 24) + "%";
+      if (!inOpeningHours) {
+        block.classList.add("bg-yellow-400");
+      } else {
+        block.classList.add("bg-green-500");
+      }
+      timeline.appendChild(block);
+    }
   }
 }
+
