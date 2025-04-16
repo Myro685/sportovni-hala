@@ -4,6 +4,10 @@ const supabaseClient = window.supabase.createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhweHVydGRrbXVmdWVtYW1hanpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5NTk3MzksImV4cCI6MjA1NzUzNTczOX0.uRPj22s06XSTvuuHGz-7oAqfTRp2LqUFTCKxC8QprMU"
 );
 
+const ROLE_ADMIN = 1;
+const ROLE_TRAINER = 2;
+const ROLE_PLAYER = 3;
+
 // Výběr elementů
 const form = document.querySelector("form");
 const firstName = document.getElementById("firstname");
@@ -16,6 +20,14 @@ const changeBtn = document.getElementById("change");
 const teamLabel = document.getElementById("team-label");
 const team = document.getElementById("team-select");
 let isRegister = true;
+
+
+// načte data o přihlašeném uživateli, ktere jsme uložili do LS
+const userData = JSON.parse(localStorage.getItem("userData"));
+const currentUserRole = userData.RoleuzivateluID;
+const currentUserId = userData.UzivatelID;
+const currentTeam = userData.TymID;
+
 
 // Funkce pro validaci hesla
 function validatePassword(password) {
@@ -67,7 +79,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     data: { session },
   } = await supabaseClient.auth.getSession();
   if (session) {
-    window.location.href = "../pages/index.html";
+    console.log(session.user.email);
+    
+    await getUserData(session.user.email);
   }
 });
 
@@ -165,6 +179,7 @@ submit.addEventListener("click", async (e) => {
         alert("Přihlášení selhala: " + error.message);
         return;
       } else {
+        await getUserData(data.user.email);
         alert("Úspěšně přihlášen!");
         window.location.href = "../pages/index.html";
       }
@@ -174,4 +189,25 @@ submit.addEventListener("click", async (e) => {
   } catch (error) {
     alert("Chyba: " + error.message);
   }
+
 });
+
+async function getUserData(email) {
+  const { data: userData, error: userError } = await supabaseClient
+        .from("Uzivatel")
+        .select("RoleuzivateluID, UzivatelID, TymID")
+        .eq("Email", email)
+        .single();
+  
+      if (userError) {
+        alert("Chyba při načítani dat " + userError.message);
+        console.error(userError.message);
+        
+        return null;
+      }
+      
+      localStorage.setItem("userData", JSON.stringify(userData));
+      console.log("Uloženo do localStorage:", userData);
+      return userData;
+}
+

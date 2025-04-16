@@ -1,14 +1,35 @@
 import {
   supabaseClient,
-  checkUserRole,
   getTeamEventsData,
   insertDataIntoRezervacehaly,
   getHallInformation,
+  getUserData
 } from "./db.js";
 
-let currentTeam = null;
-let currentUserRole = null;
-let userID = null;
+const ROLE_ADMIN = 1;
+const ROLE_TRAINER = 2;
+const ROLE_PLAYER = 3;
+
+// načte data o přihlašeném uživateli, ktere jsme uložili do LS
+const storedUserData = JSON.parse(localStorage.getItem("userData"));
+let currentUserRole = storedUserData.RoleuzivateluID;
+const currentUserId = storedUserData.UzivatelID;
+let currentTeam = storedUserData.TymID;
+
+if (currentUserRole === ROLE_TRAINER) {
+
+}
+else if (currentUserRole === ROLE_ADMIN) {
+
+} 
+else if (currentUserRole == ROLE_PLAYER) {
+  document.getElementById("open-create-training")?.classList.add("hidden");
+  document.getElementById("delete-training")?.classList.add("hidden");
+} else {
+
+}
+
+let userID = null; // je tady kvuli loadpicture
 let currentTeamEventsData = []; 
 
 const openBtn = document.getElementById("open-create-training");
@@ -22,10 +43,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     renderTimeline(selectedDate);
   });
   
-  const roleData = await checkUserRole();
-
-  currentTeam = roleData.currentUserData.TymID;
-  currentUserRole = roleData.currentUserData.RoleuzivateluID;
+  const userData = await getUserData(currentUserId);
+  if (userData.RoleuzivateluID !== storedUserData.RoleuzivateluID) {
+    storedUserData.RoleuzivateluID = userData.RoleuzivateluID;
+    localStorage.setItem("userData", JSON.stringify(storedUserData));
+    currentUserRole = userData.RoleuzivateluID;
+    console.log("Role uživatele byla aktualizována v localStorage.");
+  }
+  
   currentTeamEventsData = await getTeamEventsData(currentTeam);
 
   displayEvents(currentTeamEventsData);
@@ -79,7 +104,7 @@ async function loadPicture() {
       const timestamp = new Date().getTime();
       profilePictureUrl = `${userData.profile_picture_url}?t=${timestamp}`;
     }
-    console.log("Nastavovaná URL pro obrázek:", profilePictureUrl);
+    //console.log("Nastavovaná URL pro obrázek:", profilePictureUrl);
     profilePicture.forEach((img) => {
       img.src = profilePictureUrl;
     });
@@ -241,6 +266,9 @@ function createDetailsButton(event) {
 }
 
 function createDeleteButton(event, cardElement) {
+  if (currentUserRole === ROLE_PLAYER)
+     return document.createElement("div");
+
   const deleteBtn = document.createElement("button");
   deleteBtn.className =
     "font-bold uppercase w-full dark:text-white h-10 rounded-lg bg-red-600 hover:bg-red-800 mt-2";
@@ -301,7 +329,7 @@ async function deleteExpiredReservations(deletedBy) {
 
 const deleteBtn = document.getElementById("delete-training");
 deleteBtn.addEventListener("click", async () => {
-  await deleteExpiredReservations(userID);
+  await deleteExpiredReservations(currentUserId);
 });
 
 

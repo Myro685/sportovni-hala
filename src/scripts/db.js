@@ -18,6 +18,7 @@ async function getUserData(userId) {
   return userData;
 }
 
+
 async function updateAttendance(currentUserId, attendance) {
   const { error } = await supabaseClient
     .from("Seznamprihlasenychrezervacihracu")
@@ -71,33 +72,7 @@ async function getTeamEventsData(tymID) {
 }
 
 async function checkUserRole() {
-  try {
-    const {
-      data: { session },
-      error: sessionError,
-    } = await supabaseClient.auth.getSession();
 
-    if (sessionError || !session) {
-      alert("Uživatel není přihlášen!");
-      window.location.href = "../pages/login.html";
-      return;
-    }
-
-    const userEmail = session.user.email;
-
-    const { data: userData, error: userError } = await supabaseClient
-      .from("Uzivatel")
-      .select("RoleuzivateluID, UzivatelID, TymID")
-      .eq("Email", userEmail)
-      .single();
-
-    const currentUserData = userData;
-
-    return { currentUserData };
-  } catch (error) {
-    alert("Chyba: " + error.message);
-    return;
-  }
 }
 
 async function insertDataIntoRezervacehaly({

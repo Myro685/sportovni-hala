@@ -4,12 +4,22 @@ const supabaseClient = window.supabase.createClient(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhweHVydGRrbXVmdWVtYW1hanpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5NTk3MzksImV4cCI6MjA1NzUzNTczOX0.uRPj22s06XSTvuuHGz-7oAqfTRp2LqUFTCKxC8QprMU"
 );
 
+const ROLE_ADMIN = 1;
+const ROLE_TRAINER = 2;
+const ROLE_PLAYER = 3;
+
+// načte data o přihlašeném uživateli, ktere jsme uložili do LS
+const userData = JSON.parse(localStorage.getItem("userData"));
+const currentUserRole = userData.RoleuzivateluID;
+const currentUserId = userData.UzivatelID;
+const currentTeam = userData.TymID;
+
+
+
+
+
 // Globální proměnné
 let allPlayers = [];
-let isAdmin = false;
-let isTrainer = false;
-let tymID = 0;
-let currentUserId = null;
 let isEditing = false;
 let currentUserAttendance;
 let reservationId = null;
@@ -33,15 +43,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   const trainingId = params.get("id");
   reservationId = trainingId;
 
-  await checkUserRole();
-
-
+  if (currentUserRole === ROLE_ADMIN) {
+    btEditTraining.classList.remove("hidden");
   
-
-  currentUserAttendance = await getAttendance(currentUserId, reservationId); // currentUserId nastavuju v checkUserRole()
-
-  console.log("current user  attendace" + currentUserAttendance);
-
+  }
+  else if (currentUserRole === ROLE_TRAINER) {
+    btEditTraining.classList.remove("hidden");
+  
+  } 
+  else if (currentUserRole == ROLE_PLAYER) {
+    titleMyAttendance.classList.remove("hidden");
+    spanCurrentUserAttendance.classList.remove("hidden");
+    currentUserAttendance = await getAttendance(currentUserId, reservationId); 
+  } else {
+  
+  }
 
   if (currentUserAttendance === null) {
     modalPotvrzeniUcasti.classList.remove("hidden");
@@ -56,6 +72,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   await loadPlayers();
   loadPicture();
   await loadComments(reservationId); // Přidáváme načítání komentářů
+
+
 });
 
 // Funkce pro načtení komentářů k dané rezervaci
@@ -199,7 +217,6 @@ async function getAttendance(userId, reservationId) {
     .eq("RezervacehalyID", reservationId)
     .eq("UzivatelID", userId);
 
-      console.log(data);
       
   if (error || !data || data.length === 0) {
     console.error("Chyba při aktualizaci účasti: ", error);
@@ -286,7 +303,7 @@ async function saveTrainingChanges() {
 }
 
 async function setTrainingData(reservationId) {
-  const teamData = await getTeamData(tymID);
+  const teamData = await getTeamData(currentTeam);
   nazevTymu.innerHTML = teamData.Nazevtymu;
 
   const hallRezervationData = await getHallReservationData(reservationId);
@@ -303,57 +320,6 @@ async function setTrainingData(reservationId) {
   trainingEndTimeInput.value = hallRezervationData.Konecrezervace;
 }
 
-// Funkce pro zjištění role uživatele
-async function checkUserRole() {
-  try {
-    const {
-      data: { session },
-      error: sessionError,
-    } = await supabaseClient.auth.getSession();
-
-    if (sessionError || !session) {
-      alert("Uživatel není přihlášen!");
-      window.location.href = "../pages/login.html";
-      return;
-    }
-
-    const userEmail = session.user.email;
-    const { data: userData, error: userError } = await supabaseClient
-      .from("Uzivatel")
-      .select("RoleuzivateluID, UzivatelID, TymID")
-      .eq("Email", userEmail)
-      .single();
-
-    if (userError) {
-      alert("Chyba při načítání role uživatele: " + userError.message);
-      return;
-    }
-
-    currentUserId = userData.UzivatelID;
-    tymID = userData.TymID;
-
-    isAdmin = userData.RoleuzivateluID === 1;
-    isTrainer = userData.RoleuzivateluID === 2;
-
-    // Zobrazení obsahu podle role
-    if (isAdmin) {
-      btEditTraining.classList.remove("hidden");
-    } else if (isTrainer) {
-      btEditTraining.classList.remove("hidden");
-    } else {
-      if ((await getAttendance(currentUserId, reservationId)) === null) {
-        document
-          .getElementById("modal-potvrzeni-ucasti")
-          .classList.remove("hidden");
-      } else {
-        titleMyAttendance.classList.remove("hidden");
-        spanCurrentUserAttendance.classList.remove("hidden");
-      }
-    }
-  } catch (error) {
-    alert("Chyba: " + error.message);
-  }
-}
 
 // Načte z DB seznam hráčů, jejich TymID je stejný jako ID přihlášeného uživatele, vypíše pouze uživatele s idRole 3 (hráč)
 async function loadPlayers() {
@@ -368,8 +334,8 @@ async function loadPlayers() {
     const { data: players, error } = await supabaseClient
       .from("Uzivatel")
       .select("UzivatelID, Jmeno, Prijmeni, TymID")
-      .eq("TymID", tymID)
-      .eq("RoleuzivateluID", 3);
+      .eq("TymID", currentTeam)
+      .eq("RoleuzivateluID", ROLE_PLAYER);
 
     if (error) {
       alert("Chyba při načítání hráčů: " + error.message);
@@ -542,3 +508,4 @@ async function loadPicture() {
     alert("Chyba: " + error.message);
   }
 }
+
