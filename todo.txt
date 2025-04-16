@@ -18,7 +18,6 @@ TNPW2
 
 ZOBRAZENÍ UŽIVATELSKÉHO OBSAHU
 Bude možné zobrazit i souhrnné údaje o uživatelském obsahu (dashboard), např. celkový počet položek, výběr několika položek podle vhodných kritérií (nejnovější, s nastaveným příznakem, a pod).
-GUI aplikace bude obsahovat oblast s podmíněným vykreslováním obsahu (například navigace, závislá na stavu přihlášen/ nepřihlášen, nebo dashboard s obsahem podle role uživatele).
 DALŠÍ POŽADAVKY 
 Dokumentace projektu bude obsahovat požadavky na aplikaci, případy užití, použité endpointy.
 Zdrojový kód bude přehledný, logicky uspořádaný, vhodně organizovaný do podsložek, smysluplně okomentovaný.
