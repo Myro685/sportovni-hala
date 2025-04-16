@@ -15,3 +15,4 @@ Vidim obsazenost jen sveho tymu
 Trener je furt Jan stastny
 odhlaseni na jinych strankach nefunguje
 Vypsat všechny treninky pro admina
+Mazání tréninků s kometáři

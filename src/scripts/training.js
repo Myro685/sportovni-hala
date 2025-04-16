@@ -1,4 +1,3 @@
-// Inicializace Supabase
 const supabaseClient = window.supabase.createClient(
   "https://xpxurtdkmufuemamajzl.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhweHVydGRrbXVmdWVtYW1hanpsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE5NTk3MzksImV4cCI6MjA1NzUzNTczOX0.uRPj22s06XSTvuuHGz-7oAqfTRp2LqUFTCKxC8QprMU"
@@ -8,11 +7,11 @@ const ROLE_ADMIN = 1;
 const ROLE_TRAINER = 2;
 const ROLE_PLAYER = 3;
 
-// načte data o přihlašeném uživateli, ktere jsme uložili do LS
-const userData = JSON.parse(localStorage.getItem("userData"));
-const currentUserRole = userData.RoleuzivateluID;
-const currentUserId = userData.UzivatelID;
-const currentTeam = userData.TymID;
+// Načtení dat uživatele z localStorage
+const storedUserData = JSON.parse(localStorage.getItem("userData"));
+let currentUserRole = storedUserData?.RoleuzivateluID;
+const currentUserId = storedUserData?.UzivatelID;
+const currentTeam = storedUserData?.TymID;
 
 // Globální proměnné
 let allPlayers = [];
@@ -35,6 +34,8 @@ const btNe = document.getElementById("bt-ucast-ne");
 
 // Načtení dat
 document.addEventListener("DOMContentLoaded", async () => {
+  await checkUserRole();
+
   const params = new URLSearchParams(window.location.search);
   const trainingId = params.get("id");
   reservationId = trainingId;
@@ -43,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     btEditTraining.classList.remove("hidden");
   } else if (currentUserRole === ROLE_TRAINER) {
     btEditTraining.classList.remove("hidden");
-  } else if (currentUserRole == ROLE_PLAYER) {
+  } else if (currentUserRole === ROLE_PLAYER) {
     titleMyAttendance.classList.remove("hidden");
     spanCurrentUserAttendance.classList.remove("hidden");
     currentUserAttendance = await getAttendance(currentUserId, reservationId);
@@ -53,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     modalPotvrzeniUcasti.classList.remove("hidden");
     btChangeAttendance.classList.add("hidden");
   } else if (
-    currentUserAttendance === !null &&
+    currentUserAttendance !== null &&
     currentUserRole === ROLE_PLAYER
   ) {
     btChangeAttendance.classList.remove("hidden");
@@ -64,12 +65,46 @@ document.addEventListener("DOMContentLoaded", async () => {
   await setTrainingData(reservationId);
   await loadPlayers();
   loadPicture();
-  await loadComments(reservationId); // Přidáváme načítání komentářů
+  await loadComments(reservationId);
 });
+
+// Funkce pro zjištění a aktualizaci role uživatele
+async function checkUserRole() {
+  try {
+    const {
+      data: { session },
+      error: sessionError,
+    } = await supabaseClient.auth.getSession();
+    if (sessionError || !session) {
+      alert("Uživatel není přihlášen!");
+      window.location.href = "../pages/login.html";
+      return;
+    }
+
+    const { data: userData, error: userError } = await supabaseClient
+      .from("Uzivatel")
+      .select("UzivatelID, RoleuzivateluID")
+      .eq("UzivatelID", currentUserId)
+      .single();
+
+    if (userError) {
+      alert("Chyba při načítání role uživatele: " + userError.message);
+      return;
+    }
+
+    if (userData.RoleuzivateluID !== storedUserData.RoleuzivateluID) {
+      storedUserData.RoleuzivateluID = userData.RoleuzivateluID;
+      localStorage.setItem("userData", JSON.stringify(storedUserData));
+      currentUserRole = userData.RoleuzivateluID;
+      console.log("Role uživatele byla aktualizována v localStorage.");
+    }
+  } catch (error) {
+    alert("Chyba: " + error.message);
+  }
+}
 
 // Funkce pro načtení komentářů k dané rezervaci
 async function loadComments(rezervaceId) {
-  // Načteme komentáře bez relace
   const { data: comments, error: commentError } = await supabaseClient
     .from("Komentare")
     .select("Text, UzivatelID")
@@ -82,7 +117,7 @@ async function loadComments(rezervaceId) {
   }
 
   const commentList = document.getElementById("comment-list");
-  commentList.innerHTML = ""; // Vyčistíme seznam
+  commentList.innerHTML = "";
 
   if (comments.length === 0) {
     const li = document.createElement("li");
@@ -90,7 +125,6 @@ async function loadComments(rezervaceId) {
     li.textContent = "Zatím žádné komentáře.";
     commentList.appendChild(li);
   } else {
-    // Načteme jména uživatelů
     const userIds = comments.map((comment) => comment.UzivatelID);
     const { data: users, error: userError } = await supabaseClient
       .from("Uzivatel")
@@ -103,13 +137,11 @@ async function loadComments(rezervaceId) {
       return;
     }
 
-    // Vytvoříme mapu UživatelID -> Jmeno
     const userMap = {};
     users.forEach((user) => {
       userMap[user.UzivatelID] = user.Jmeno;
     });
 
-    // Zobrazíme komentáře
     comments.forEach((comment) => {
       const jmeno = userMap[comment.UzivatelID] || "Není známo";
       const li = document.createElement("li");
@@ -131,12 +163,11 @@ async function addComment(rezervaceId, uzivatelId, text) {
   if (error) {
     console.error("Chyba při přidávání komentáře:", error);
     alert("Nepodařilo se přidat komentář: " + error.message);
-    return false; // Vracíme false, pokud došlo k chybě
+    return false;
   }
 
-  // Po přidání komentáře znovu načteme seznam
   await loadComments(rezervaceId);
-  return true; // Vracíme true, pokud bylo přidání úspěšné
+  return true;
 }
 
 // Přidání event listeneru na tlačítko pro přidání komentáře
@@ -154,7 +185,7 @@ document
 
     const success = await addComment(reservationId, currentUserId, commentText);
     if (success) {
-      document.getElementById("new-comment-text").value = ""; // Vyčistíme textové pole pouze při úspěchu
+      document.getElementById("new-comment-text").value = "";
     }
   });
 
@@ -188,19 +219,16 @@ async function changeMyAttendance(attendance) {
 
 async function rejectAttendance() {
   changeMyAttendance(false);
-
   modalPotvrzeniUcasti.classList.add("hidden");
   btChangeAttendance.classList.remove("hidden");
 }
 
 async function acceptAttendance() {
   changeMyAttendance(true);
-
   modalPotvrzeniUcasti.classList.add("hidden");
   btChangeAttendance.classList.remove("hidden");
 }
 
-// Tahá data z DB a vrací stavPrihlasení uživatele na trénink
 async function getAttendance(userId, reservationId) {
   const { data, error } = await supabaseClient
     .from("Seznamprihlasenychrezervacihracu")
@@ -215,22 +243,20 @@ async function getAttendance(userId, reservationId) {
   return data[0].Stavprihlaseni;
 }
 
-// Načte data uživatele podle jeho id
 async function getUserData(userId) {
   const { data: userData, error: error } = await supabaseClient
     .from("Uzivatel")
-    .select("UzivatelID, Jmeno, Prijmeni, TymID")
+    .select("UzivatelID, Jmeno, Prijmeni, TymID, RoleuzivateluID")
     .eq("UzivatelID", userId)
     .single();
 
   if (error) {
-    console.error("Chyba při načítání hráče:", error);
-    return;
+    console.error("Chyba při načítání uživatele:", error);
+    return null;
   }
   return userData;
 }
 
-// Načte data o týmu
 async function getTeamData(teamId) {
   const { data: teamData, error: teamError } = await supabaseClient
     .from("Tym")
@@ -240,31 +266,29 @@ async function getTeamData(teamId) {
 
   if (teamError) {
     console.error("Chyba při načítání týmu:", teamError);
-    return;
+    return null;
   }
   return teamData;
 }
 
-// Načte data o rezervaci haly (eventu, co se v hale koná)
 async function getHallReservationData(reservationId) {
   const { data: RezervacehalyData, error: RezervacehalyError } =
     await supabaseClient
       .from("Rezervacehaly")
       .select(
-        "UzivatelID, RezervacehalyID, Datumrezervace, Konecrezervace, Zacatekrezervace"
+        "UzivatelID, RezervacehalyID, Datumrezervace, Konecrezervace, Zacatekrezervace, TymID"
       )
       .eq("RezervacehalyID", reservationId)
       .single();
 
   if (RezervacehalyError) {
-    console.error("Chyba při načítání týmu:", RezervacehalyError);
-    return;
+    console.error("Chyba při načítání rezervace haly:", RezervacehalyError);
+    return null;
   }
 
   return RezervacehalyData;
 }
 
-// Uloží hodnoty z inputu do DB
 async function saveTrainingChanges() {
   const trainingDateInput = document.getElementById("training-date");
   const trainingStartTimeInput = document.getElementById("training-start-time");
@@ -294,12 +318,43 @@ async function saveTrainingChanges() {
 
 async function setTrainingData(reservationId) {
   const teamData = await getTeamData(currentTeam);
-  nazevTymu.innerHTML = teamData.Nazevtymu;
+  if (teamData) {
+    nazevTymu.innerHTML = teamData.Nazevtymu;
+  } else {
+    nazevTymu.innerHTML = "Není znám tým";
+  }
 
   const hallRezervationData = await getHallReservationData(reservationId);
-  const trainer = await getUserData(hallRezervationData.UzivatelID);
+  if (!hallRezervationData) {
+    spanTrainigDataTrainer.textContent = "Není znám trenér";
+    return;
+  }
 
-  spanTrainigDataTrainer.textContent = trainer.Jmeno + " " + trainer.Prijmeni;
+  // Načtení trenéra podle UzivatelID a ověření, že má roli trenéra
+  const trainer = await getUserData(hallRezervationData.UzivatelID);
+  if (
+    trainer &&
+    trainer.RoleuzivateluID === ROLE_TRAINER &&
+    trainer.TymID === hallRezervationData.TymID
+  ) {
+    spanTrainigDataTrainer.textContent = trainer.Jmeno + " " + trainer.Prijmeni;
+  } else {
+    // Pokud uživatel není trenér nebo není ze stejného týmu, hledáme trenéra v týmu
+    const { data: teamTrainer, error: trainerError } = await supabaseClient
+      .from("Uzivatel")
+      .select("UzivatelID, Jmeno, Prijmeni")
+      .eq("TymID", hallRezervationData.TymID)
+      .eq("RoleuzivateluID", ROLE_TRAINER)
+      .single();
+
+    if (trainerError || !teamTrainer) {
+      console.error("Chyba při načítání trenéra týmu:", trainerError);
+      spanTrainigDataTrainer.textContent = "Není znám trenér";
+    } else {
+      spanTrainigDataTrainer.textContent =
+        teamTrainer.Jmeno + " " + teamTrainer.Prijmeni;
+    }
+  }
 
   const trainingDateInput = document.getElementById("training-date");
   const trainingStartTimeInput = document.getElementById("training-start-time");
@@ -310,7 +365,6 @@ async function setTrainingData(reservationId) {
   trainingEndTimeInput.value = hallRezervationData.Konecrezervace;
 }
 
-// Načte z DB seznam hráčů, jejich TymID je stejný jako ID přihlášeného uživatele, vypíše pouze uživatele s idRole 3 (hráč)
 async function loadPlayers() {
   const playerList = document.getElementById("player-list");
 
