@@ -12,4 +12,3 @@ Webová aplikace bude v patičce zřetelně označena jako studentský zápočto
 
 Treninky jdou vytvaret mimo oteviraci dobu
 Vidim obsazenost jen sveho tymu
-Vypsat všechny treninky pro admina

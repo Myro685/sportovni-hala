@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   getAllEventsData = await getAllEvents();
   if (currentUserRole === ROLE_ADMIN) {
     document.getElementById("open-create-training")?.classList.add("hidden");
-    displayEvents(currentTeamEventsData);
+    displayEvents(getAllEventsData);
   } else if (currentUserRole === ROLE_TRAINER) {
     displayEvents(currentTeamEventsData);
     document.getElementById("delete-training")?.classList.add("hidden");
