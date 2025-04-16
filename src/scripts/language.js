@@ -234,9 +234,14 @@ function changeLanguage(lang) {
     }
   });
 
-  // Remove ring styling from language buttons
+  
   document.querySelectorAll(".language-btn").forEach((button) => {
-    button.classList.remove("ring-2", "ring-cyan-500", "p-1");
+    const buttonLang = button.getAttribute("data-lang");
+    if (buttonLang === lang) {
+      button.classList.remove("grayscale-[0.9]");
+    } else {
+      button.classList.add("grayscale-[0.9]");
+    }
   });
 
   localStorage.setItem("preferredLanguage", lang); // Save preference to localStorage
