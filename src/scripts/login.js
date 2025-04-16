@@ -103,7 +103,7 @@ function switcher() {
   form.reset();
 }
 
-// Logika odeslání formuláře
+
 // Logika odeslání formuláře
 submit.addEventListener("click", async (e) => {
   e.preventDefault();
