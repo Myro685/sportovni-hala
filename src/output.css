@@ -1290,6 +1290,11 @@ body {
   background-color: rgb(82 65 132 / var(--tw-bg-opacity, 1));
 }
 
+.hover\:dark\:bg-yellow-50:is(.dark *):hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 252 232 / var(--tw-bg-opacity, 1));
+}
+
 .dark\:focus\:border-secondaryDark:focus:is(.dark *) {
   --tw-border-opacity: 1;
   border-color: rgb(109 84 181 / var(--tw-border-opacity, 1));
