@@ -7,9 +7,11 @@
     <link rel="stylesheet" href="../output.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
-  <body class="h-screen flex flex-col lg:flex-row bg-primaryLight dark:bg-primaryDark transition-colors">
+  <body
+    class="h-screen flex flex-col lg:flex-row bg-primaryLight dark:bg-primaryDark transition-colors"
+  >
     <nav
-      class="relative flex flex-col p-4 lg:w-48 lg:items-cente bg-thirdLight dark:bg-thirdDark lg:flex-shrink-0 lg:h-screen min-h-[71px] box-border"
+      class="relative flex flex-col p-4 lg:w-48 lg:items-center bg-thirdLight dark:bg-thirdDark lg:flex-shrink-0 lg:h-screen min-h-[71px] box-border"
     >
       <div class="flex items-center whitespace-nowrap text-2lg font-black">
         <a
@@ -49,10 +51,10 @@
               />
             </button>
             <button id="lightMobile">
-              <img src="../assets/sun.svg" alt="sun">
+              <img src="../assets/sun.svg" alt="sun" />
             </button>
             <button id="darkMobile">
-              <img src="../assets/dark.svg" alt="dark">
+              <img src="../assets/dark.svg" alt="dark" />
             </button>
           </div>
         </div>
@@ -63,7 +65,7 @@
         for="navbar-open"
         class="absolute top-4 right-7 cursor-pointer lg:hidden"
       >
-      <img src="../assets/navbar-open.svg" alt="navbar-open">
+        <img src="../assets/navbar-open.svg" alt="navbar-open" />
       </label>
 
       <div
@@ -100,20 +102,20 @@
               href="profile.html"
               class="text-center text-white font-bold uppercase w-full h-12 rounded-lg hover:bg-hoverLight bg-secondaryLight dark:bg-secondaryDark dark:hover:bg-hoverDark flex items-center justify-center p-5"
               data-lang-key="profile"
-              >Profil
-            </a>
+              >Profil</a
+            >
           </li>
           <li class="w-full">
             <a
               id="logout"
               class="cursor-pointer text-center text-white font-bold uppercase w-full h-12 rounded-lg hover:bg-hoverLight bg-secondaryLight dark:bg-secondaryDark dark:hover:bg-hoverDark flex items-center justify-center p-5"
-              >Odhlásit
-            </a>
+              >Odhlásit</a
+            >
           </li>
         </ul>
         <br />
       </div>
-      <div class="hidden lg:flex lg:w-full lg:mt-8">
+      <div class="hidden lg:flex lg:w-full lg:mt-8 lg:h-full">
         <ul class="flex flex-col gap-4 w-full">
           <li class="w-full">
             <a
@@ -126,7 +128,7 @@
           <li class="w-full">
             <a
               href="teams.html"
-              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg hover:bg-hoverLight bg-secondaryLight dark:bg-secondaryDark  dark:hover:bg-hoverDark flex items-center justify-center p-5"
+              class="text-center text-white font-bold uppercase w-full h-12 rounded-lg hover:bg-hoverLight bg-secondaryLight dark:bg-secondaryDark dark:hover:bg-hoverDark flex items-center justify-center p-5"
               data-lang-key="teams"
               >Týmy</a
             >
@@ -149,22 +151,30 @@
           </li>
           <li>
             <div class="flex justify-center gap-2 mt-4 lg:flex">
-              <button class="language-btn transition duration-300" data-lang="cs">
+              <button
+                class="language-btn transition duration-300"
+                data-lang="cs"
+              >
                 <img
                   src="../assets/cs.png"
                   alt="Czech"
                   class="w-6 h-6 rounded-full"
                 />
               </button>
-              <button class="language-btn transition duration-300" data-lang="en">
+              <button
+                class="language-btn transition duration-300"
+                data-lang="en"
+              >
                 <img
                   src="../assets/en.png"
                   alt="English"
                   class="w-6 h-6 rounded-full"
                 />
               </button>
-
-              <button class="language-btn transition duration-300" data-lang="de">
+              <button
+                class="language-btn transition duration-300"
+                data-lang="de"
+              >
                 <img
                   src="../assets/de.png"
                   alt="German"
@@ -172,41 +182,41 @@
                 />
               </button>
               <button id="lightPc">
-                <img src="../assets/sun.svg" alt="sun">
+                <img src="../assets/sun.svg" alt="sun" />
               </button>
               <button id="darkPc">
-                <img src="../assets/dark.svg" alt="dark">
+                <img src="../assets/dark.svg" alt="dark" />
               </button>
             </div>
           </li>
-
-          <li class="w-full">
+          <li class="w-full mt-auto">
             <a
               id="logoutBig"
               class="cursor-pointer text-center text-white font-bold uppercase w-full h-12 rounded-lg hover:bg-hoverLight bg-secondaryLight dark:bg-secondaryDark dark:hover:bg-hoverDark flex items-center justify-center p-5"
               data-lang-key="logout"
-              >Odhlásit
-            </a>
+              >Odhlásit</a
+            >
           </li>
         </ul>
       </div>
     </nav>
 
-    <main class="p-6 gap-5 w-full">
+    <main class="p-4 md:p-6 gap-4 md:gap-5 w-full overflow-y-auto">
       <div
-        class="flex w-full justify-center items-center gap-6 mb-6 flex-col lg:flex-row"
+        class="flex w-full justify-center items-center gap-4 md:gap-6 mb-4 md:mb-6 flex-col lg:flex-row"
       >
         <button
           id="open-create-training"
-          class="text-white bg-secondaryLight hover:bg-hoverLight dark:bg-secondaryDark dark:hover:bg-hoverDark font-bold py-2 px-4 rounded w-72"
-          data-lang-key="add_new_training">
+          class="text-white bg-secondaryLight hover:bg-hoverLight dark:bg-secondaryDark dark:hover:bg-hoverDark font-bold py-2 px-4 rounded w-full sm:w-72"
+          data-lang-key="add_new_training"
+        >
           Přidat nový trénink
         </button>
         <button
           id="delete-training"
-          class="text-white bg-secondaryLight hover:bg-hoverLight dark:bg-secondaryDark dark:hover:bg-hoverDark font-bold py-2 px-4 rounded w-72"
-          data-lang-key="delete_past_trainings">
-          >
+          class="text-white bg-secondaryLight hover:bg-hoverLight dark:bg-secondaryDark dark:hover:bg-hoverDark font-bold py-2 px-4 rounded w-full sm:w-72"
+          data-lang-key="delete_past_trainings"
+        >
           Odebrat proběhlé tréninky
         </button>
       </div>
@@ -218,19 +228,19 @@
         <div
           class="bg-thirdLight dark:bg-thirdDark dark:text-white p-6 rounded-lg shadow-md w-full max-w-md"
         >
-          <h2 class="text-xl font-bold mb-4"
-          data-lang-key="new_training">
-        </h2>Nový trénink</h2>
+          <h2 class="text-xl font-bold mb-4" data-lang-key="new_training">
+            Nový trénink
+          </h2>
 
           <form id="create-training-form" class="space-y-4">
             <div>
-              <label 
-              for="training-title" 
-              class="block text-sm font-medium"
-              data-lang-key="event_title">
-              >Název akce
-              </label
+              <label
+                for="training-title"
+                class="block text-sm font-medium"
+                data-lang-key="event_title"
               >
+                Název akce
+              </label>
               <input
                 type="text"
                 id="event-title"
@@ -245,9 +255,9 @@
                 for="training-description"
                 class="block text-sm font-medium"
                 data-lang-key="event_description"
-                >Popis akce
-                </label
               >
+                Popis akce
+              </label>
               <textarea
                 id="event-description"
                 name="event-description"
@@ -258,13 +268,13 @@
             </div>
 
             <div>
-              <label 
-                for="training-date" 
+              <label
+                for="training-date"
                 class="block text-sm font-medium"
                 data-lang-key="date"
-                >Datum
-              </label
               >
+                Datum
+              </label>
               <input
                 type="date"
                 id="training-date"
@@ -273,22 +283,25 @@
                 required
               />
             </div>
-            <label for=""><span> Vytíženost haly</span></label>
-            <div 
-              
-              id="timeline" 
+            <label for=""><span>Vytíženost haly</span></label>
+            <div
+              id="timeline"
               class="w-full h-6 mt-4 rounded-lg flex overflow-hidden border border-gray-300"
-              >
-              
-            </div>
+            ></div>
 
-            <div id="timeline-labels" class="flex justify-between text-xs mt-1"></div>
-
+            <div
+              id="timeline-labels"
+              class="flex justify-between text-xs mt-1"
+            ></div>
 
             <div>
-              <label for="start-time" class="block text-sm font-medium"
-                data-lang-key="start">Začátek</label
+              <label
+                for="start-time"
+                class="block text-sm font-medium"
+                data-lang-key="start"
               >
+                Začátek
+              </label>
               <input
                 type="time"
                 id="start-time"
@@ -299,9 +312,13 @@
             </div>
 
             <div>
-              <label for="end-time" class="block text-sm font-medium"
-                data-lang-key="end">Konec</label
+              <label
+                for="end-time"
+                class="block text-sm font-medium"
+                data-lang-key="end"
               >
+                Konec
+              </label>
               <input
                 type="time"
                 id="end-time"
@@ -317,14 +334,14 @@
                 id="cancel-create-training"
                 class="bg-gray-400 hover:bg-gray-600 text-white font-bold py-1 px-4 rounded"
                 data-lang-key="cancel"
-                >
+              >
                 Zrušit
               </button>
               <button
                 type="submit"
                 class="bg-secondaryLight hover:bg-hoverLight dark:bg-secondaryDark dark:hover:bg-hoverDark text-white font-bold py-1 px-4 rounded"
                 data-lang-key="create"
-                >
+              >
                 Vytvořit
               </button>
             </div>
@@ -334,8 +351,46 @@
 
       <div
         id="training-container"
-        class="flex flex-wrap gap-6 justify-center items-center"
+        class="flex flex-wrap gap-4 md:gap-6 justify-center items-center"
       ></div>
+      <!-- Denní kalendář (timeline) s novým designem -->
+      <div class="flex justify-center items-center w-full mt-4 md:mt-6">
+        <div
+          id="daily-schedule-container"
+          class="w-full max-w-full sm:max-w-3xl lg:max-w-5xl"
+        >
+          <div
+            class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3"
+          >
+            <button
+              id="prev-day"
+              class="text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 font-bold py-2 px-4 rounded-lg shadow-md transition-all duration-200 w-full sm:w-auto"
+              data-lang-key="previousDay"
+            >
+              Předchozí den
+            </button>
+            <h2
+              id="schedule-date"
+              class="text-lg sm:text-2xl font-semibold text-gray-800 dark:text-gray-100 text-center"
+            ></h2>
+            <button
+              id="next-day"
+              class="text-white bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 font-bold py-2 px-4 rounded-lg shadow-md transition-all duration-200 w-full sm:w-auto"
+              data-lang-key="nextDay"
+            >
+              Následující den
+            </button>
+          </div>
+          <div
+            id="schedule-timeline"
+            class="w-full h-12 sm:h-14 bg-white dark:bg-gray-800 rounded-xl flex overflow-hidden border-2 border-gray-200 dark:border-gray-700 shadow-lg"
+          ></div>
+          <div
+            id="schedule-labels"
+            class="flex justify-between text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-300 mt-2"
+          ></div>
+        </div>
+      </div>
     </main>
     <script src="../scripts/language.js"></script>
     <script src="../scripts/logout.js"></script>

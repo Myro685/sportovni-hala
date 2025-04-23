@@ -5,7 +5,7 @@ const translations = {
     teams: "Teams",
     players: "Players",
     profile: "Profile",
-    profile_picture:"Profile Picture:",
+    profile_picture: "Profile Picture:",
     choose_profile_picture: "Select a picture",
     my_profile: "My Profile",
     first_name: "First Name:",
@@ -32,6 +32,11 @@ const translations = {
     end: "End",
     cancel: "Cancel",
     create: "Create",
+    free: "Free",
+    closed: "Closed",
+    occupied: "Occupied",
+    nextDay: "Next Day",
+    previousDay: "Previous Day",
     // Players.html
     player_list: "Player List",
     search_players: "Search for a player or team...",
@@ -104,6 +109,11 @@ const translations = {
     end: "Konec",
     cancel: "Zrušit",
     create: "Vytvořit",
+    free: "Volno",
+    closed: "Zavřeno",
+    occupied: "Obsazeno",
+    nextDay: "Následující den",
+    previousDay: "Předchozí den",
     // Players.html
     player_list: "Seznam hráčů",
     search_players: "Vyhledat hráče nebo tým...",
@@ -176,6 +186,11 @@ const translations = {
     end: "Ende",
     cancel: "Abbrechen",
     create: "Erstellen",
+    free: "Frei",
+    closed: "Geschlossen",
+    occupied: "Belegt",
+    nextDay: "Nächster Tag",
+    previousDay: "Vorheriger Tag",
     // Players.html
     player_list: "Spielerliste",
     search_players: "Spieler oder Team suchen...",
@@ -234,7 +249,6 @@ function changeLanguage(lang) {
     }
   });
 
-  
   document.querySelectorAll(".language-btn").forEach((button) => {
     const buttonLang = button.getAttribute("data-lang");
     if (buttonLang === lang) {
@@ -247,7 +261,7 @@ function changeLanguage(lang) {
   localStorage.setItem("preferredLanguage", lang); // Save preference to localStorage
 }
 
-// Initialization on  load
+// Initialization on load
 document.addEventListener("DOMContentLoaded", () => {
   // Adding event listeners to language buttons
   document.querySelectorAll(".language-btn").forEach((button) => {
