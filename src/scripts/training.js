@@ -308,10 +308,10 @@ async function saveTrainingChanges() {
     .eq("RezervacehalyID", reservationId);
 
   if (error) {
-    console.error("Chyba při aktualizaci rezervace haly:", error);
+    alert("Chyba při aktualizaci rezervace haly");
     return error;
   } else {
-    console.log("Trénink byl upraven");
+    alert("Trénink byl upraven");
     return null;
   }
 }

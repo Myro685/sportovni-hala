@@ -39,7 +39,7 @@ function setupRoleBasedVisibility(role) {
     },
     [ROLE_TRAINER]: () => {
       openBtn?.classList.remove("hidden"); // Trenér může vytvářet tréninky
-      deleteBtn?.classList.remove("hidden"); // Trenér může mazat
+      deleteBtn?.classList.add("hidden"); // Trenér nemůže mazat
     },
     [ROLE_PLAYER]: () => {
       openBtn?.classList.add("hidden"); // Hráč nemůže vytvářet tréninky
